@@ -51,5 +51,4 @@ public class TestsProcesamientoLenguajeNatural {
 									    		+ "Resolución de 8 de Junio de 2009, de la Secretaría General de Universidades (BOE de 4 de agosto de 2009) y se orienta, "
 									    		+ "por un lado, hacia el perfil que allí se denomina Computación."));
 	}	
-
 }
