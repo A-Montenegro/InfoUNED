@@ -41,13 +41,12 @@ public class Conversacion {
 		//primerProcesoUltimoMensaje(mensajeRecibido);
 		//segundoProcesoUltimoMensaje(mensajeRecibido);
 		//tercerProcesoUltimoMensaje(mensajeRecibido);
-		if(origen.equals("Facebook")) {
-			respuestaActual = obtenerMensajeGenericoFacebook(mensajeRecibido);
-			
-		} else {
+		if(mensajeRecibido.charAt(0) == '_') {
 			ProcesadorLenguajeNatural procesadorLenguajeNatural = Main.getProcesadorLenguajeNatural();
 			procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(mensajeRecibido);
 			respuestaActual= procesadorLenguajeNatural.obtenerAnaliticaVisualDeTexto(saltoDeLinea);
+		} else {
+			respuestaActual = obtenerMensajeGenerico(mensajeRecibido);
 		}
 	}
 	
@@ -59,8 +58,8 @@ public class Conversacion {
 		return chatID;
 	}
 	
-	//Provisional: Eliminar este código cuando se hallan conseguido los permisos de pages_messaging
-	public String obtenerMensajeGenericoFacebook(String mensajeRecibido) {
+	//Provisional
+	public String obtenerMensajeGenerico(String mensajeRecibido) {
 		String mensajeGenerico = new String();
 		switch(mensajeRecibido) {
 		case "Hola":
