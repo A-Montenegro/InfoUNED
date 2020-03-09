@@ -1,0 +1,10 @@
+@RELATION mensajes
+
+
+@ATTRIBUTE cadenaTexto	String
+@ATTRIBUTE class 	{saludos,despedidas,informativas}
+
+@DATA
+%
+%
+%

@@ -50,5 +50,7 @@
 	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/stanford-corenlp-3.9.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/joda-time.jar"/>
 	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/protobuf.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/weka-stable-3.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/bounce-0.18.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

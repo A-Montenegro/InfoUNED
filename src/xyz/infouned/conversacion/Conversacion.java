@@ -20,7 +20,6 @@ import xyz.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
  */
 public class Conversacion {
 	private String chatID;
-	private String origen;
 	private String saltoDeLinea;
 	private Stack<String> mensajes;
 	private String respuestaActual;
@@ -28,7 +27,6 @@ public class Conversacion {
 	
 	public Conversacion(String idConversacion, String origen) {
 		this.chatID = idConversacion;
-		this.origen = origen;
 		this.saltoDeLinea = SaltoDeLinea.obtenerSaltoDeLinea(origen);
 		this.interlocutor = new Interlocutor();
 		interlocutor.setNombre("Berto");

@@ -23,6 +23,17 @@ public class FactoriaDeSolicitudInformacion {
 		return solicitudInformacion;
 	}
 	
+	public static SolicitudInformacion obtenerSolicitudInformacion(String tipo, String idInformacionGenerica){
+		SolicitudInformacion solicitudInformacion = null;
+		switch(tipo) {
+		case "informacionGenerica":
+			solicitudInformacion = new SolicitudInformacionGenerica(idInformacionGenerica);
+		break;
+		}
+		assertFalse(solicitudInformacion == null);
+		return solicitudInformacion;
+	}
+	
 	public static SolicitudInformacion obtenerSolicitudInformacion(String tipoSolicitud, Titulacion titulacion){
 		SolicitudInformacion solicitudInformacion = null;
 		switch(tipoSolicitud) {

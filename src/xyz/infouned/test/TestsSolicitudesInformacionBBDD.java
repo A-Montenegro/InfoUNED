@@ -17,7 +17,6 @@ import xyz.infouned.baseDeDatos.ConexionMySQL;
 import xyz.infouned.baseDeDatos.InstruccionSelect;
 import xyz.infouned.configuracion.PropiedadesConfiguracion;
 import xyz.infouned.configuracion.PropiedadesListaDeConsultasSQL;
-import xyz.infouned.conversacion.Conversacion;
 import xyz.infouned.estudios.Asignatura;
 import xyz.infouned.estudios.Titulacion;
 import xyz.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
@@ -91,9 +90,11 @@ public class TestsSolicitudesInformacionBBDD {
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("matriculadosTitulacion", titulacion);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("El número de matriculados en la titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN en los últimos años son los siguientes:\n" + 
-				"-Curso 2017 - 2018: 970 matriculados.\n" + 
+				"-Curso 2019 - 2020: 958 matriculados.\n" + 
+				"-Curso 2018 - 2019: 1009 matriculados.\n" + 
+				"-Curso 2017 - 2018: 971 matriculados.\n" + 
 				"-Curso 2016 - 2017: 1073 matriculados.\n" + 
-				"-Curso 2015 - 2016: 1169 matriculados.\n"));
+				"-Curso 2015 - 2016: 1165 matriculados.\n"));
 	}
 	
 	@Test
@@ -103,11 +104,11 @@ public class TestsSolicitudesInformacionBBDD {
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("matriculadosAsignatura", titulacion, asignatura);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("El número de matriculados en la asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA de la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son los siguientes:\n" + 
-				"-Curso 2018 - 2019: 991 matriculados.\n" + 
-				"-Curso 2017 - 2018: 758 matriculados.\n" + 
-				"-Curso 2016 - 2017: 766 matriculados.\n" + 
-				"-Curso 2015 - 2016: 847 matriculados.\n" + 
-				"-Curso 2014 - 2015: 829 matriculados.\n"));
+				"-Curso 2019 - 2020: 872 matriculados.\n" + 
+				"-Curso 2018 - 2019: 799 matriculados.\n" + 
+				"-Curso 2017 - 2018: 754 matriculados.\n" + 
+				"-Curso 2016 - 2017: 765 matriculados.\n" + 
+				"-Curso 2015 - 2016: 846 matriculados.\n"));
 	}
 	
 	@Test
@@ -116,6 +117,7 @@ public class TestsSolicitudesInformacionBBDD {
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("valoracionEstudiantilTitulacion", titulacion);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las calificaciones que ha obtenido la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años según los cuestionarios de satisfacción de los estudiantes son las siguientes:\n" + 
+				"-Curso 2018 - 2019: 66,53 puntos sobre 100.\n" + 
 				"-Curso 2017 - 2018: 67,11 puntos sobre 100.\n" + 
 				"-Curso 2016 - 2017: 64,82 puntos sobre 100.\n" + 
 				"-Curso 2015 - 2016: 73,98 puntos sobre 100.\n"));
@@ -125,17 +127,17 @@ public class TestsSolicitudesInformacionBBDD {
 	public void testMensajeConversacionSobreTopValoracionesEstudiantiles(){
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("valoracionEstudiantilTopTitulacion", "grado", "menores");
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2017 - 2018), estas fueron los estudios de GRADO que menores calificaciones obtuvieron según las encuestas de los estudiantes:\n" + 
-				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS INDUSTRIALES obtuvo una calificación de 56,25 sobre 100.\n" + 
-				"-La titulación GRADO EN INGENIERÍA MECÁNICA obtuvo una calificación de 62,33 sobre 100.\n" + 
-				"-La titulación GRADO EN CRIMINOLOGÍA obtuvo una calificación de 62,43 sobre 100.\n" + 
-				"-La titulación GRADO EN FÍSICA obtuvo una calificación de 64,31 sobre 100.\n" + 
-				"-La titulación GRADO EN CIENCIA POLÍTICA Y DE LA ADMINISTRACIÓN obtuvo una calificación de 64,31 sobre 100.\n" + 
-				"-La titulación GRADO EN ING. EN  ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA obtuvo una calificación de 64,75 sobre 100.\n" + 
-				"-La titulación GRADO EN ADMINISTRACIÓN Y DIRECCIÓN DE EMPRESAS obtuvo una calificación de 65,34 sobre 100.\n" + 
-				"-La titulación GRADO EN SOCIOLOGÍA obtuvo una calificación de 66,02 sobre 100.\n" + 
-				"-La titulación GRADO EN CIENCIAS AMBIENTALES obtuvo una calificación de 66,20 sobre 100.\n" + 
-				"-La titulación GRADO EN MATEMÁTICAS obtuvo una calificación de 66,30 sobre 100.\n"));
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que menores calificaciones obtuvieron según las encuestas de los estudiantes:\n" + 
+				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS INDUSTRIALES obtuvo una calificación de 58,45 sobre 100.\n" + 
+				"-La titulación GRADO EN INGENIERÍA MECÁNICA obtuvo una calificación de 59,53 sobre 100.\n" + 
+				"-La titulación GRADO EN ING. EN  ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA obtuvo una calificación de 59,94 sobre 100.\n" + 
+				"-La titulación GRADO EN INGENIERÍA ELÉCTRICA obtuvo una calificación de 60,74 sobre 100.\n" + 
+				"-La titulación GRADO EN FÍSICA obtuvo una calificación de 64,51 sobre 100.\n" + 
+				"-La titulación GRADO EN MATEMÁTICAS obtuvo una calificación de 64,92 sobre 100.\n" + 
+				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN obtuvo una calificación de 65,15 sobre 100.\n" + 
+				"-La titulación GRADO EN QUÍMICA obtuvo una calificación de 65,59 sobre 100.\n" + 
+				"-La titulación GRADO EN CIENCIA POLÍTICA Y DE LA ADMINISTRACIÓN obtuvo una calificación de 65,62 sobre 100.\n" + 
+				"-La titulación GRADO EN TRABAJO SOCIAL obtuvo una calificación de 65,89 sobre 100.\n"));
 	}
 	
 	@Test
@@ -144,6 +146,7 @@ public class TestsSolicitudesInformacionBBDD {
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTitulacion", titulacion, "TASA_EXITOS");
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las estadísticas de TASA_EXITOS para la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son las siguientes:\n" + 
+				"-Curso 2018 - 2019: 78,19.\n" + 
 				"-Curso 2017 - 2018: 80,17.\n" + 
 				"-Curso 2016 - 2017: 78,16.\n" + 
 				"-Curso 2015 - 2016: 78,47.\n"));
@@ -153,17 +156,17 @@ public class TestsSolicitudesInformacionBBDD {
 	public void testMensajeConversacionSobreTopEstadisticaRendimientoTitulacion(){
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTopTitulacion", "grado", "TASA_EXITOS", "mayores");
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2017 - 2018), estas fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a TASA_EXITOS :\n" + 
-				"-La titulación GRADO EN FILOSOFÍA obtuvo unos resultados de 92,00.\n" + 
-				"-La titulación GRADO EN HISTORIA DEL ARTE obtuvo unos resultados de 91,88.\n" + 
-				"-La titulación GRADO EN ANTROPOLOGÍA SOCIAL Y CULTURAL obtuvo unos resultados de 90,15.\n" + 
-				"-La titulación GRADO EN GEOGRAFÍA E HISTORIA obtuvo unos resultados de 90,15.\n" + 
-				"-La titulación GRADO EN ESTUDIOS INGLESES: LENGUA, LITERATURA Y CULTURA obtuvo unos resultados de 90,12.\n" + 
-				"-La titulación GRADO EN SOCIOLOGÍA obtuvo unos resultados de 89,71.\n" + 
-				"-La titulación GRADO EN CC. JURÍDICAS DE LAS ADMINISTRACIONES PÚBLICAS obtuvo unos resultados de 89,65.\n" + 
-				"-La titulación GRADO EN PEDAGOGÍA obtuvo unos resultados de 89,62.\n" + 
-				"-La titulación GRADO EN EDUCACIÓN SOCIAL obtuvo unos resultados de 89,45.\n" + 
-				"-La titulación GRADO EN TRABAJO SOCIAL obtuvo unos resultados de 88,29.\n"));
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a TASA_EXITOS :\n" + 
+				"-La titulación GRADO EN FILOSOFÍA obtuvo unos resultados de 92,84.\n" + 
+				"-La titulación GRADO EN ANTROPOLOGÍA SOCIAL Y CULTURAL obtuvo unos resultados de 92,19.\n" + 
+				"-La titulación GRADO EN HISTORIA DEL ARTE obtuvo unos resultados de 92,08.\n" + 
+				"-La titulación GRADO EN LENGUA Y LITERATURA ESPAÑOLAS obtuvo unos resultados de 91,11.\n" + 
+				"-La titulación GRADO EN GEOGRAFÍA E HISTORIA obtuvo unos resultados de 90,56.\n" + 
+				"-La titulación GRADO EN CC. JURÍDICAS DE LAS ADMINISTRACIONES PÚBLICAS obtuvo unos resultados de 90,33.\n" + 
+				"-La titulación GRADO EN ESTUDIOS INGLESES: LENGUA, LITERATURA Y CULTURA obtuvo unos resultados de 89,39.\n" + 
+				"-La titulación GRADO EN EDUCACIÓN SOCIAL obtuvo unos resultados de 89,37.\n" + 
+				"-La titulación GRADO EN CIENCIA POLÍTICA Y DE LA ADMINISTRACIÓN obtuvo unos resultados de 88,76.\n" + 
+				"-La titulación GRADO EN PEDAGOGÍA obtuvo unos resultados de 88,67.\n"));
 	}
 	
 	@Test
@@ -173,6 +176,7 @@ public class TestsSolicitudesInformacionBBDD {
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoAsignatura", titulacion, asignatura, "PORCENTAJE_TASA_SOBRESALIENTES");
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las estadísticas de PORCENTAJE_TASA_SOBRESALIENTES para la asignatura FUNDAMENTOS DE PSICOBIOLOGÍA de la titulación GRADO EN PSICOLOGÍA en los últimos años son las siguientes:\n" + 
+				"-Curso 2018-2019: 0,36.\n" + 
 				"-Curso 2017-2018: 0,69.\n" + 
 				"-Curso 2016-2017: 0,74.\n" + 
 				"-Curso 2015-2016: 0,85.\n"));
@@ -183,27 +187,34 @@ public class TestsSolicitudesInformacionBBDD {
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTopAsignatura", titulacion, "PORCENTAJE_TASA_EXITO", "menores", new Stack<String>());
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2017-2018), estas fueron las asignaturas de la titulación GRADO EN INGENIERÍA INFORMÁTICA que obtuvieron menores resultados en las estadísticas de PORCENTAJE_TASA_EXITO:\n" + 
-				"-La asignatura FUNDAMENTOS FÍSICOS DE LA INFORMÁTICA obtuvo unos resultados de 38,36.\n" + 
-				"-La asignatura DISEÑO DEL SOFTWARE obtuvo unos resultados de 53,24.\n" + 
-				"-La asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA obtuvo unos resultados de 55,95.\n" + 
-				"-La asignatura FUNDAMENTOS DE SISTEMAS DIGITALES obtuvo unos resultados de 59,39.\n" + 
-				"-La asignatura INGENIERÍA DE COMPUTADORES I obtuvo unos resultados de 66,67.\n" + 
-				"-La asignatura BASES DE DATOS obtuvo unos resultados de 71,43.\n" + 
-				"-La asignatura SISTEMAS DISTRIBUIDOS obtuvo unos resultados de 74,73.\n" + 
-				"-La asignatura FUNDAMENTOS DE PROGRAMACIÓN obtuvo unos resultados de 75,23.\n" + 
-				"-La asignatura TEORÍA DE LOS LENGUAJES DE PROGRAMACIÓN obtuvo unos resultados de 77,27.\n" + 
-				"-La asignatura FUNDAMENTOS DE INTELIGENCIA ARTIFICIAL obtuvo unos resultados de 77,30.\n"));
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018-2019), estas fueron las asignaturas de la titulación GRADO EN INGENIERÍA INFORMÁTICA que obtuvieron menores resultados en las estadísticas de PORCENTAJE_TASA_EXITO:\n" + 
+				"-La asignatura FUNDAMENTOS DE CONTROL AUTOMÁTICO obtuvo unos resultados de 0,00.\n" + 
+				"-La asignatura TRATAMIENTO DIGITAL DE SEÑALES obtuvo unos resultados de 0,00.\n" + 
+				"-La asignatura FUNDAMENTOS FÍSICOS DE LA INFORMÁTICA obtuvo unos resultados de 37,34.\n" + 
+				"-La asignatura REDES DE COMPUTADORES obtuvo unos resultados de 50,00.\n" + 
+				"-La asignatura INGENIERÍA DE COMPUTADORES I obtuvo unos resultados de 55,95.\n" + 
+				"-La asignatura INGENIERÍA DE COMPUTADORES II obtuvo unos resultados de 61,24.\n" + 
+				"-La asignatura BASES DE DATOS obtuvo unos resultados de 63,20.\n" + 
+				"-La asignatura PROGRAMACIÓN Y ESTRUCTURAS DE DATOS AVANZADAS obtuvo unos resultados de 66,12.\n" + 
+				"-La asignatura FUNDAMENTOS DE PROGRAMACIÓN obtuvo unos resultados de 68,68.\n" + 
+				"-La asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA obtuvo unos resultados de 70,65.\n"));
 	}
 	
 	@Test
-	public void testMensajesGenericosFacebook(){
-		Conversacion conversacion = new Conversacion("1234","Facebook");
-		System.out.println(conversacion.obtenerMensajeGenericoFacebook("Hola"));
-		System.out.println(conversacion.obtenerMensajeGenericoFacebook("Quiero saber cuántos alumnos están matriculados de la asignatura Fundamentos matemáticos de la informática en el grado en ingeniería informática."));
-		System.out.println(conversacion.obtenerMensajeGenericoFacebook("Ok, gracias."));
-		System.out.println(conversacion.obtenerMensajeGenericoFacebook("¿cual es la asignatura más difícil del grado en derecho?"));
-		
+	public void testMensajeConversacionSobreInformacionGenerica(){
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("informacionGenerica","matriculaAdmisionPorInternet");
+		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018-2019), estas fueron las asignaturas de la titulación GRADO EN INGENIERÍA INFORMÁTICA que obtuvieron menores resultados en las estadísticas de PORCENTAJE_TASA_EXITO:\n" + 
+				"-La asignatura FUNDAMENTOS DE CONTROL AUTOMÁTICO obtuvo unos resultados de 0,00.\n" + 
+				"-La asignatura TRATAMIENTO DIGITAL DE SEÑALES obtuvo unos resultados de 0,00.\n" + 
+				"-La asignatura FUNDAMENTOS FÍSICOS DE LA INFORMÁTICA obtuvo unos resultados de 37,34.\n" + 
+				"-La asignatura REDES DE COMPUTADORES obtuvo unos resultados de 50,00.\n" + 
+				"-La asignatura INGENIERÍA DE COMPUTADORES I obtuvo unos resultados de 55,95.\n" + 
+				"-La asignatura INGENIERÍA DE COMPUTADORES II obtuvo unos resultados de 61,24.\n" + 
+				"-La asignatura BASES DE DATOS obtuvo unos resultados de 63,20.\n" + 
+				"-La asignatura PROGRAMACIÓN Y ESTRUCTURAS DE DATOS AVANZADAS obtuvo unos resultados de 66,12.\n" + 
+				"-La asignatura FUNDAMENTOS DE PROGRAMACIÓN obtuvo unos resultados de 68,68.\n" + 
+				"-La asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA obtuvo unos resultados de 70,65.\n"));
 	}
 	
 }

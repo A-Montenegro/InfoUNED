@@ -9,7 +9,6 @@ import java.util.Properties;
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
-import edu.stanford.nlp.pipeline.CoreNLPProtos.Relation;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
@@ -42,7 +41,7 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	//@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void procesarTextoObjetivoDeAnalisis(String textoObjetivoDeAnalisis) {
 	    documentoNucleo = new CoreDocument(textoObjetivoDeAnalisis);
 	    pipeline.annotate(documentoNucleo);
@@ -57,7 +56,6 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 	    	frase.setTokens(tokens);
 	    	frase.setPosTags((ArrayList<String>)coreSentence.posTags());
 	    	frase.setNerTags((ArrayList<String>)coreSentence.nerTags());
-	    	frase.setGrafoDependencias(coreSentence.dependencyParse().toString());
 	    	ArrayList<String> relations = new ArrayList<String>();
 			for(RelationTriple relation: coreSentence.relations()) {
 				relations.add(relation.toString());
@@ -94,9 +92,6 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 		    List<String> nerTags = frase.getNerTags();
 		    cadenaDeTextoResultados += "NER tags: ";
 		    cadenaDeTextoResultados += nerTags;
-		    cadenaDeTextoResultados += saltoDeLinea;
-		    cadenaDeTextoResultados += "Dependencias: ";
-		    cadenaDeTextoResultados += frase.getGrafoDependencias();
 		    cadenaDeTextoResultados += saltoDeLinea;
 		    ArrayList<String> relations = frase.getRelaciones();
 		    if (relations.size() >0) {

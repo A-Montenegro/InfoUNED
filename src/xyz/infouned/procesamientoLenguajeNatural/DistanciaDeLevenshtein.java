@@ -22,6 +22,7 @@ public class DistanciaDeLevenshtein {
 	 
 	    for (int numeroFilaMatriz = 0; numeroFilaMatriz <= primerString.length(); numeroFilaMatriz++) {
 	        for (int numeroColumnaMatriz = 0; numeroColumnaMatriz <= segundoString.length(); numeroColumnaMatriz++) {
+	        	
 	            if (numeroFilaMatriz == 0) {
 	                matrizDeCaracteres[numeroFilaMatriz][numeroColumnaMatriz] = numeroColumnaMatriz;
 	            }
@@ -56,4 +57,5 @@ public class DistanciaDeLevenshtein {
     	int numeroEnteroMinimo = streamNumerosEnteros.min().orElse(Integer.MAX_VALUE);
         return numeroEnteroMinimo;
     }
+    
 }

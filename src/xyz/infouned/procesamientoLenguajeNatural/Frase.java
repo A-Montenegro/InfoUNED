@@ -7,7 +7,6 @@ public class Frase {
 	private ArrayList<String> tokens;
 	private ArrayList<String> posTags;
 	private ArrayList<String> nerTags;
-	private String grafoDependencias;
 	private ArrayList<String> relaciones;
 	
 	public Frase() {
@@ -15,7 +14,6 @@ public class Frase {
 		tokens = new ArrayList<String>();
 		posTags = new ArrayList<String>();
 		nerTags = new ArrayList<String>();
-		grafoDependencias = new String();
 		relaciones = new ArrayList<String>();
 	}
 	
@@ -35,14 +33,9 @@ public class Frase {
 		return nerTags;
 	}
 	
-	public String getGrafoDependencias() {
-		return grafoDependencias;
-	}
-	
 	public ArrayList<String> getRelaciones(){
 		return relaciones;
 	}
-
 	
 	public void setTextoFrase(String textoFrase) {
 		this.textoFrase = textoFrase;
@@ -58,10 +51,6 @@ public class Frase {
 	
 	public void setNerTags(ArrayList<String> nerTags){
 		this.nerTags = nerTags;
-	}
-	
-	public void setGrafoDependencias(String grafoDependencias) {
-		this.grafoDependencias = grafoDependencias;
 	}
 	
 	public void setRelaciones(ArrayList<String> relaciones){
