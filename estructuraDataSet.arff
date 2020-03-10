@@ -2,7 +2,7 @@
 
 
 @ATTRIBUTE cadenaTexto	String
-@ATTRIBUTE class 	{saludos,despedidas,informativas}
+@ATTRIBUTE class 	{saludo, despedida, informacionContacto, informacionMatricula, solicitudEstadisticaRendimientoAsignatura, solicitudEstadisticaRendimientoTitulacion, solicitudEstadisticaRendimientoTopAsignatura, solicitudEstadisticaRendimientoTopTitulacion, solicitudInformacionGenerica, solicitudMatriculadosAsignatura, solicitudMatriculadosTitulacion, solicitudPreciosTitulacion, solicitudValoracionEstudiantilAsignatura, solicitudValoracionEstudiantilTitulacion, solicitudValoracionEstudiantilTopAsignatura, solicitudValoracionEstudiantilTopTitulacion}
 
 @DATA
 %

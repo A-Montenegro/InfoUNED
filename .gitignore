@@ -2,3 +2,5 @@
 target/classes/config.properties
 target/classes/consultasSQL.properties
 edu/
+modeloNaiveBayesEntrenado.model
+estructuraDataSet.arff
