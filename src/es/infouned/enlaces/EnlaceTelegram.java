@@ -4,10 +4,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import es.infouned.configuracion.PropiedadesConfiguracion;
 import es.infouned.conversacion.Conversacion;
 import es.infouned.conversacion.HistoricoConversaciones;
+import es.infouned.principal.Configuracion;
 
 /**
  * 
@@ -43,15 +42,15 @@ import es.infouned.conversacion.HistoricoConversaciones;
     }
     
     private void obtenerDatosBotDesdePropiedadesConfiguracion() {
-    	botUserName = PropiedadesConfiguracion.getPropiedad("telegram_botUserName");
-    	botToken = PropiedadesConfiguracion.getPropiedad("telegram_botToken");
+    	botUserName = Configuracion.getPropiedad("telegram_botUserName");
+    	botToken = Configuracion.getPropiedad("telegram_botToken");
     }
     
     public void procesarTextoRecibido(Update update) {
     	String chat_id = update.getMessage().getChatId().toString();
         String textoMensaje = update.getMessage().getText();
 		Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(chat_id, "Telegram");
-		conversacion.procesarMensaje(textoMensaje);
+		conversacion.procesarTextoRecibido(textoMensaje);
         String respuestaBot= conversacion.obtenerRespuestaActual();
         enviarMensaje(respuestaBot, chat_id);
     }

@@ -1,8 +1,13 @@
 package es.infouned.procesamientoLenguajeNatural;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +16,9 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import es.infouned.estudios.Asignatura;
+import es.infouned.estudios.Estudio;
+import es.infouned.estudios.FactoriaEstudio;
 
 /**
  * Clase que carga los modelos de procesamiento de lenguaje natural necesarios para hacer funcionar el StanfordCoreNLP.
@@ -61,6 +69,34 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 				relations.add(relation.toString());
 			}
 	    	frase.setRelaciones(relations);
+	    	ArrayList<Estudio> estudiosAludidos = new ArrayList<Estudio>();
+	    	for (String nerTag: (ArrayList<String>)coreSentence.nerTags()) {
+	    		String[] partesNerTag = nerTag.split("_");
+	    		if(partesNerTag.length == 3 && partesNerTag[0].equals("INFOUNED")) {
+	    			switch(partesNerTag[1]) {
+	    			case "TITULACION":
+	    				
+
+	    				
+	    				
+	    				
+	    				
+	    				
+	    				
+	    				
+	    			case "ASIGNATURA":
+	    				String idAsignatura = partesNerTag[2];
+	    				Asignatura asignatura = FactoriaEstudio.crearAsignaturaPorConsultaSQL(idAsignatura);
+	    				return asignatura;
+	    				
+	    				
+	    				
+	    				
+	    			default:
+	    				
+	    			}
+	    		}
+	    	}
 	    	frases.add(frase);
 	    }
 	}

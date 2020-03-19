@@ -2,12 +2,17 @@ package es.infouned.procesamientoLenguajeNatural;
 
 import java.util.ArrayList;
 
+import es.infouned.estudios.Estudio;
+
+
 public class Frase {
 	private String textoFrase;
 	private ArrayList<String> tokens;
 	private ArrayList<String> posTags;
 	private ArrayList<String> nerTags;
 	private ArrayList<String> relaciones;
+	private String clasificacion;
+	private ArrayList<Estudio> estudiosAludidos;
 	
 	public Frase() {
 		textoFrase = new String();
@@ -15,6 +20,7 @@ public class Frase {
 		posTags = new ArrayList<String>();
 		nerTags = new ArrayList<String>();
 		relaciones = new ArrayList<String>();
+		estudiosAludidos = new ArrayList<Estudio>();
 	}
 	
 	public String getTextoFrase() {
@@ -37,6 +43,14 @@ public class Frase {
 		return relaciones;
 	}
 	
+	public String getClasificacion() {
+		return clasificacion;
+	}
+	
+	public ArrayList<Estudio> getEstudiosAludidos() {
+		return estudiosAludidos;
+	}
+	
 	public void setTextoFrase(String textoFrase) {
 		this.textoFrase = textoFrase;
 	}
@@ -55,6 +69,14 @@ public class Frase {
 	
 	public void setRelaciones(ArrayList<String> relaciones){
 		this.relaciones = relaciones;
+	}
+	
+	public void setClasificacion(String clasificacion) {
+		this.clasificacion = clasificacion;
+	}
+	
+	public void setEstudiosAludidos(ArrayList<Estudio> estudiosAludidos) {
+		this.estudiosAludidos = estudiosAludidos;
 	}
 
 }

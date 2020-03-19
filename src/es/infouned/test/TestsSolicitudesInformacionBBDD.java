@@ -14,10 +14,9 @@ import org.junit.jupiter.api.Test;
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
-import es.infouned.configuracion.PropiedadesConfiguracion;
-import es.infouned.configuracion.PropiedadesListaDeConsultasSQL;
 import es.infouned.estudios.Asignatura;
 import es.infouned.estudios.Titulacion;
+import es.infouned.principal.Configuracion;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 
@@ -27,9 +26,7 @@ public class TestsSolicitudesInformacionBBDD {
 	@BeforeAll
 	private static void inicializarPropiedades() {
 		String rutaFicheroConfiguracion = "/config.properties";
-		PropiedadesConfiguracion.establecerPropiedadesConfiguracionAPartirDeFichero(rutaFicheroConfiguracion);
-		String rutaFicheroConsultasSQL = "/consultasSQL.properties";
-	    PropiedadesListaDeConsultasSQL.establecerPropiedadesDeListaDeConsultasSQLAPartirDeFichero(rutaFicheroConsultasSQL);
+		Configuracion.establecerPropiedadesConfiguracionAPartirDeFichero(rutaFicheroConfiguracion);
 	}
 	
 	@Test
@@ -39,7 +36,7 @@ public class TestsSolicitudesInformacionBBDD {
 		InstruccionSelect instruccionSelect = new InstruccionSelect(conexionBaseDeDatos);
 		HashMap<String, String> sustituciones = new HashMap<String, String>();
 		sustituciones.put("idTitulacionObjetivo", "6103");
-		String cadenaTextoConsultaSQL = PropiedadesListaDeConsultasSQL.obtenerConsultaSQL("SolicitudPreciosTitulacionPorIdTitulacion");
+		String cadenaTextoConsultaSQL = Configuracion.obtenerConsultaSQL("SolicitudPreciosTitulacionPorIdTitulacion");
     	for(Entry<String, String> entradaDelHashMap : sustituciones.entrySet()) {
     		cadenaTextoConsultaSQL = cadenaTextoConsultaSQL.replaceAll(entradaDelHashMap.getKey(), entradaDelHashMap.getValue());
     	}
@@ -203,17 +200,8 @@ public class TestsSolicitudesInformacionBBDD {
 	public void testMensajeConversacionSobreInformacionGenerica(){
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("informacionGenerica","matriculaAdmisionPorInternet");
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018-2019), estas fueron las asignaturas de la titulación GRADO EN INGENIERÍA INFORMÁTICA que obtuvieron menores resultados en las estadísticas de PORCENTAJE_TASA_EXITO:\n" + 
-				"-La asignatura FUNDAMENTOS DE CONTROL AUTOMÁTICO obtuvo unos resultados de 0,00.\n" + 
-				"-La asignatura TRATAMIENTO DIGITAL DE SEÑALES obtuvo unos resultados de 0,00.\n" + 
-				"-La asignatura FUNDAMENTOS FÍSICOS DE LA INFORMÁTICA obtuvo unos resultados de 37,34.\n" + 
-				"-La asignatura REDES DE COMPUTADORES obtuvo unos resultados de 50,00.\n" + 
-				"-La asignatura INGENIERÍA DE COMPUTADORES I obtuvo unos resultados de 55,95.\n" + 
-				"-La asignatura INGENIERÍA DE COMPUTADORES II obtuvo unos resultados de 61,24.\n" + 
-				"-La asignatura BASES DE DATOS obtuvo unos resultados de 63,20.\n" + 
-				"-La asignatura PROGRAMACIÓN Y ESTRUCTURAS DE DATOS AVANZADAS obtuvo unos resultados de 66,12.\n" + 
-				"-La asignatura FUNDAMENTOS DE PROGRAMACIÓN obtuvo unos resultados de 68,68.\n" + 
-				"-La asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA obtuvo unos resultados de 70,65.\n"));
+		assertTrue(respuesta.equals("Para matricularse de cualquier estudio impartido en la UNED, puede realizar el trámite a través de Internet siguiendo el siguiente enlace:\r\n" + 
+				"https://app.uned.es/portal/admision-matricula-por-internet"));
 	}
 	
 }

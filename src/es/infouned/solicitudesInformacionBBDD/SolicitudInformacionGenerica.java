@@ -12,7 +12,7 @@ public class SolicitudInformacionGenerica extends SolicitudInformacion{
 	
 	public String generarCadenaRespuesta(String saltoDeLinea){
 		conexionBaseDeDatos.abrirConexion();
-		ResultSet resultSet = generarResultSetConsultaSQL("SolicitudMatriculadosAsignaturaPorIdAsignatura");
+		ResultSet resultSet = generarResultSetConsultaSQL("SolicitudInformacionGenerica");
 		String cadenaRespuesta = new String("");
 		try {
 			if (resultSet.next() == false) {

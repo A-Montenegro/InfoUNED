@@ -12,7 +12,7 @@ public class HistoricoConversaciones {
 	
 	/**
 	 * Este método devuelve una conversación a partir de su chat_id, si no hay ninguna conversación con el chat_id que se le pase como parámetro devolverá una nueva conversación.
-	 * Se trata de un método 'synchronized', por no podrá ser invocado de nuevo si ya está en uso hasta que finalice su ejecución.
+	 * Se trata de un método 'synchronized', por lo no podrá ser invocado de nuevo si ya está en uso hasta que finalice su ejecución.
 	 * @param chat_id
 	 * @param origen
 	 * @return

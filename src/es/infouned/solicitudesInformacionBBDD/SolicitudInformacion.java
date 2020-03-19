@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
-import es.infouned.configuracion.PropiedadesListaDeConsultasSQL;
+import es.infouned.principal.Configuracion;
 
 public abstract class SolicitudInformacion {
 	protected ConexionBaseDeDatos conexionBaseDeDatos;
@@ -22,7 +22,7 @@ public abstract class SolicitudInformacion {
 	}
 	
 	protected ResultSet generarResultSetConsultaSQL(String identificadorConsulta) {
-		String cadenaTextoConsultaSQL = PropiedadesListaDeConsultasSQL.obtenerConsultaSQL(identificadorConsulta);
+		String cadenaTextoConsultaSQL = Configuracion.obtenerConsultaSQL(identificadorConsulta);
     	for(Entry<String, String> entradaDelHashMap : sustitucionesConsultaSQL.entrySet()) {
     		cadenaTextoConsultaSQL = cadenaTextoConsultaSQL.replaceAll(entradaDelHashMap.getKey(), entradaDelHashMap.getValue());
     	}

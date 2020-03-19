@@ -1,10 +1,14 @@
 package es.infouned.conversacion;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
+import es.infouned.aprendizajeAutomatico.Clasificador;
 import es.infouned.estudios.Asignatura;
 import es.infouned.estudios.Titulacion;
+import es.infouned.principal.Configuracion;
 import es.infouned.principal.Main;
+import es.infouned.procesamientoLenguajeNatural.Frase;
 import es.infouned.procesamientoLenguajeNatural.ProcesadorLenguajeNatural;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
@@ -21,7 +25,7 @@ import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 public class Conversacion {
 	private String chatID;
 	private String saltoDeLinea;
-	private Stack<String> mensajes;
+	private Stack<Mensaje> mensajes;
 	private String respuestaActual;
 	private Interlocutor interlocutor;
 	
@@ -30,23 +34,26 @@ public class Conversacion {
 		this.saltoDeLinea = SaltoDeLinea.obtenerSaltoDeLinea(origen);
 		this.interlocutor = new Interlocutor();
 		interlocutor.setNombre("Berto");
-		mensajes = new Stack<String>();
+		mensajes = new Stack<Mensaje>();
 		respuestaActual = new String("");
 	}
 	
-	public void procesarMensaje(String mensajeRecibido) {
-		mensajes.push(mensajeRecibido);
-		//primerProcesoUltimoMensaje(mensajeRecibido);
-		//segundoProcesoUltimoMensaje(mensajeRecibido);
-		//tercerProcesoUltimoMensaje(mensajeRecibido);
-		if(mensajeRecibido.charAt(0) == '_') {
-			ProcesadorLenguajeNatural procesadorLenguajeNatural = Main.getProcesadorLenguajeNatural();
-			procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(mensajeRecibido);
-			respuestaActual= procesadorLenguajeNatural.obtenerAnaliticaVisualDeTexto(saltoDeLinea);
-		} else {
-			respuestaActual = obtenerMensajeGenerico(mensajeRecibido);
-		}
+	public void procesarTextoRecibido(String textoRecibido) {
+		Mensaje mensaje = new Mensaje(textoRecibido);
+		mensajes.push(mensaje);
+		SolicitudInformacion solicitudInformacion = inferirSolicitudInformacion();
+		respuestaActual = solicitudInformacion.generarCadenaRespuesta(saltoDeLinea);
 	}
+	
+	private SolicitudInformacion inferirSolicitudInformacion() {
+		Mensaje ultimoMensaje = mensajes.firstElement();
+		int numeroFrasesMensaje = ultimoMensaje.getFrases().size();
+		for (Frase frase: ultimoMensaje.getFrases()) {
+			
+		}
+
+	}
+
 	
 	public String obtenerRespuestaActual() {
 		return respuestaActual;
@@ -54,35 +61,6 @@ public class Conversacion {
 	
 	public String getIdConversacion() {
 		return chatID;
-	}
-	
-	//Provisional
-	public String obtenerMensajeGenerico(String mensajeRecibido) {
-		String mensajeGenerico = new String();
-		switch(mensajeRecibido) {
-		case "Hola":
-			mensajeGenerico = "Hola, soy InfoUNED, un chatbot que puede darte información sobre los estudios impartidos en la UNED. ¿En qué puedo ayudarte?";
-		break;
-		case "Quiero saber cuántos alumnos están matriculados de la asignatura Fundamentos matemáticos de la informática en el grado en ingeniería informática.":
-			Titulacion titulacion = new Titulacion(7101, "GRADO EN INGENIERÍA INFORMÁTICA", "GRADO");
-			Asignatura asignatura = new Asignatura("7101102-", "Fundamentos matemáticos de la informática");
-			SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("matriculadosAsignatura", titulacion, asignatura);
-			mensajeGenerico = solicitudInformacion.generarCadenaRespuesta(saltoDeLinea);
-		break;
-		case "Ok, gracias.":
-			mensajeGenerico = "No hay de qué.";
-		break;
-		case "¿Cuales son las asignaturas más fáciles del grado en derecho?":
-			titulacion = new Titulacion(6602, "GRADO EN DERECHO", "GRADO");
-			solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTopAsignatura", titulacion, "PORCENTAJE_TASA_EXITO", "mayores", new Stack<String>());
-			mensajeGenerico = solicitudInformacion.generarCadenaRespuesta(saltoDeLinea);
-		break;
-		default:
-			solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("aleatoria");
-			mensajeGenerico = solicitudInformacion.generarCadenaRespuesta(saltoDeLinea);
-		break;
-		}
-		return mensajeGenerico;
 	}
 	
 }

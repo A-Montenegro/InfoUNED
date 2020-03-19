@@ -61,7 +61,7 @@ public class EnlaceFacebook{
                 MessageTemplate message_tpl = platform.getBaseSender().getMessageTemplate();
                 Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(user_id, "Facebook");
     	        message_tpl.setRecipientId(message.getUserId());
-    	        conversacion.procesarMensaje(message_text);
+    	        conversacion.procesarTextoRecibido(message_text);
     	        String respuestaBot= conversacion.obtenerRespuestaActual();
     	        message_tpl.setMessageText(respuestaBot);
     	        message_tpl.setNotificationType("REGULAR");

@@ -6,6 +6,6 @@ package es.infouned.aprendizajeAutomatico;
  * @author Alberto Martínez Montenegro
  */
 public interface Clasificador {
-	String clasificar(String instancia);
+	String clasificarInstancia(String instancia);
 	// TO-DO Valorar si procede o no la existencia de esta interfaz.
 }

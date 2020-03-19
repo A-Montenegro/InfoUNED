@@ -20,15 +20,16 @@ public class HiloEjecucionClienteEnlaceWeb extends Thread {
     	try {
     		
 	        BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-	        String chat_id = entrada.readLine(); //En la primera línea del mensaje envíado figura la dirección IP pública del cliente, que se usará como chat_id.
+	        String direccionIP = entrada.readLine(); //En la primera línea del mensaje envíado figura la dirección IP pública del cliente.
+	        String chat_id = entrada.readLine(); //En la segunda línea del mensaje envíado figura el token javascript, que se usará como chat_id.
 			Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(chat_id, "Web");
-	        String textoMensaje= new String("");
+	        String textoRecibido= new String("");
 	        String lineaTexto;
 	        while(entrada.ready()){
 	        	lineaTexto = entrada.readLine();
-	        	textoMensaje += lineaTexto + "\n";
+	        	textoRecibido += lineaTexto + "\n";
 	        }
-	        conversacion.procesarMensaje(textoMensaje);
+	        conversacion.procesarTextoRecibido(textoRecibido);
 	        String respuestaBot = conversacion.obtenerRespuestaActual();
 	        DataOutputStream salida = new DataOutputStream((socket.getOutputStream()));
 	        salida.writeUTF(respuestaBot);

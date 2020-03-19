@@ -11,9 +11,9 @@ import java.util.Map.Entry;
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
-import es.infouned.configuracion.PropiedadesListaDeConsultasSQL;
 import es.infouned.estudios.Asignatura;
 import es.infouned.estudios.Titulacion;
+import es.infouned.principal.Configuracion;
 
 import java.util.Random;
 import java.util.Stack;
@@ -223,11 +223,10 @@ public class SolicitudInformacionAleatoria{
 	
 	private  ResultSet generarResultSetConsultaSQL(String identificadorConsulta, HashMap<String, String> sustitucionesConsultaSQL) {
 		InstruccionSelect instruccionSelect =  new InstruccionSelect(conexionBaseDeDatos);
-		String cadenaTextoConsultaSQL = PropiedadesListaDeConsultasSQL.obtenerConsultaSQL(identificadorConsulta);
+		String cadenaTextoConsultaSQL = Configuracion.obtenerConsultaSQL(identificadorConsulta);
 		for(Entry<String, String> entradaDelHashMap : sustitucionesConsultaSQL.entrySet()) {
     		cadenaTextoConsultaSQL = cadenaTextoConsultaSQL.replaceAll(entradaDelHashMap.getKey(), entradaDelHashMap.getValue());
     	}
-    	System.out.println(cadenaTextoConsultaSQL);
 		instruccionSelect.ejecutarConsulta(cadenaTextoConsultaSQL);
 		ResultSet resultSet = instruccionSelect.getResultSet();
 		return resultSet;

@@ -3,8 +3,7 @@ package es.infouned.baseDeDatos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import es.infouned.configuracion.PropiedadesConfiguracion;
+import es.infouned.principal.Configuracion;
 
 /**
  * Clase que implementa a la interfaz ConexionBaseDeDatos ofreciendo una conexión MySQL
@@ -18,9 +17,9 @@ public class ConexionMySQL implements ConexionBaseDeDatos{
 	 * Método que inicializa la conexión, la clase PropiedadesConfiguracion debe haber cargado previamente las propiedades necesarias (Debe hacerse desde la clase Main).
 	 */
 	public void abrirConexion(){  	
-		String urlConexion = PropiedadesConfiguracion.getPropiedad("url_conexion_mysql");
-		String usuarioMySQL = PropiedadesConfiguracion.getPropiedad("usuario_base_de_datos_mysql");
-		String passwordMySQL = PropiedadesConfiguracion.getPropiedad("password_base_de_datos_mysql");
+		String urlConexion = Configuracion.getPropiedad("url_conexion_mysql");
+		String usuarioMySQL = Configuracion.getPropiedad("usuario_base_de_datos_mysql");
+		String passwordMySQL = Configuracion.getPropiedad("password_base_de_datos_mysql");
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexion = DriverManager.getConnection(urlConexion, usuarioMySQL, passwordMySQL);

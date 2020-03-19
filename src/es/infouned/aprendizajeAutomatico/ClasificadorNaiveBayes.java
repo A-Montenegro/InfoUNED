@@ -5,15 +5,15 @@ import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
-public class ClasificadorNaiveBayes {
+public class ClasificadorNaiveBayes implements Clasificador{
 	private FilteredClassifier clasificadorNaiveBayes;
 	private DataSource estructuraDataSet;
 	private Instances dataset;
 	
-	public ClasificadorNaiveBayes(String rutaModeloEntrenado, String rutaFicheroestructuraDataSet) {
+	public ClasificadorNaiveBayes(String rutaModeloEntrenado, String rutaFicheroEstructuraDataSet) {
 		try {
-			this.clasificadorNaiveBayes = (FilteredClassifier) weka.core.SerializationHelper.read(rutaModeloEntrenado);
-			this.estructuraDataSet = new DataSource(rutaFicheroestructuraDataSet);
+			this.clasificadorNaiveBayes = (FilteredClassifier) weka.core.SerializationHelper.read(rutaModeloEntrenado.substring(1, rutaModeloEntrenado.length()));
+			this.estructuraDataSet = new DataSource(rutaFicheroEstructuraDataSet.substring(1, rutaFicheroEstructuraDataSet.length()));
 			this.dataset = estructuraDataSet.getDataSet();
 		    dataset.setClassIndex(dataset.numAttributes()-1);
 		}catch(Exception excepcion) {
@@ -23,7 +23,7 @@ public class ClasificadorNaiveBayes {
 	
 	public String clasificarInstancia(String instancia) {
 	    double[] valorInstancia = new double[dataset.numAttributes()];
-	    valorInstancia[0] = dataset.attribute(0).addStringValue("Que precio tiene la asignatura programación orientada a objetos");
+	    valorInstancia[0] = dataset.attribute(0).addStringValue(instancia);
         dataset.add(new DenseInstance(1.0, valorInstancia));
 	    double resultadoClasificacion=-1;
 		try {
@@ -32,7 +32,8 @@ public class ClasificadorNaiveBayes {
 			// TODO Auto-generated catch block
 			excepcion.printStackTrace();
 		}
-    	return obtenerNombreClase((int) resultadoClasificacion);
+		String nombreClase = obtenerNombreClase((int) resultadoClasificacion);
+    	return nombreClase;
 	}
 	
 	private String obtenerNombreClase(int indice) {
