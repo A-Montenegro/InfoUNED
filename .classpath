@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" output="target/classes" path="src">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/httpasyncclient-4.0-beta4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/httpclient-4.5.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/httpcore-nio-4.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/javax.servlet-api-3.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-client-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-http-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-io-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-security-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-server-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-servlet-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-util-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-webapp-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/jetty-xml-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/json-20180813.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/mysql-connector-java-8.0.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/racter-1.0.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/slf4j-api-1.7.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/slf4j-simple-1.7.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/spark-core-2.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/unirest-java-1.4.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/websocket-api-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/websocket-client-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/websocket-common-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/websocket-server-9.4.4.v20170414.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/websocket-servlet-9.4.4.v20170414.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/telegrambots-4.1-jar-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/stanford-corenlp-3.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/joda-time.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/protobuf.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/weka-stable-3.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-latest-released/eclipse/dropins/bounce-0.18.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/bounce-0.18.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/httpasyncclient-4.0-beta4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/httpclient-4.5.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/httpcore-nio-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-client-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-http-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-io-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-security-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-server-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-servlet-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-util-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-webapp-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/jetty-xml-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/joda-time.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/json-20180813.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/mysql-connector-java-8.0.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/opennlp-tools-1.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/racter-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/spark-core-2.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/spring-2.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/stanford-corenlp-3.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/telegrambots-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/unirest-java-1.4.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/websocket-api-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/websocket-client-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/websocket-common-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/websocket-server-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/websocket-servlet-9.4.4.v20170414.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/weka-stable-3.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/slf4j-simple-1.7.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alber/eclipse/java-2020-03/eclipse/dropins/protobuf.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

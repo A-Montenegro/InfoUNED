@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
-import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
 import es.infouned.estudios.Asignatura;
+import es.infouned.estudios.CriterioConsultaSQL;
+import es.infouned.estudios.Estudio.TipoEstudio;
+import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
 import es.infouned.principal.Configuracion;
 
@@ -19,7 +21,7 @@ import java.util.Random;
 import java.util.Stack;
 
 public class SolicitudInformacionAleatoria{
-	private  ConexionBaseDeDatos conexionBaseDeDatos = new ConexionMySQL();
+	private  ConexionBaseDeDatos conexionBaseDeDatos = Configuracion.getConexionBaseDeDatos();
 	
 	public  SolicitudInformacion obtenerSolicitudInformacionAleatoria(){
 		conexionBaseDeDatos.abrirConexion();
@@ -28,9 +30,9 @@ public class SolicitudInformacionAleatoria{
 		Asignatura asignatura;
 		String nivelEstudios = new String();
 		String ordenamiento = new String();
-		String parametroEstadisticoTitulacion = new String();
-		String parametroEstadisticoAsignatura = new String();
-		Stack <String> criteriosConsultaSQL = new Stack<String>();
+		ParametroEstadistico parametroEstadisticoTitulacion = null;
+		ParametroEstadistico parametroEstadisticoAsignatura = null;
+		Stack <CriterioConsultaSQL> criteriosConsultaSQL = new Stack<CriterioConsultaSQL>();
 		int numeroAleatorioEntre1y11 = obtenerNumeroAleatorio(1,11);
 		switch(numeroAleatorioEntre1y11) {
 			case 1:
@@ -68,7 +70,7 @@ public class SolicitudInformacionAleatoria{
 			case 8:
 				titulacion = obtenerTitulacionAleatoria();
 				ordenamiento = obtenerOrdenamientoAleatorio();
-				criteriosConsultaSQL.push("CURSO='4º'");
+				criteriosConsultaSQL.push(new CriterioConsultaSQL("Pertenece al 4º curso","CURSO='4º'",new Stack<String>()));
 				solicitudInformacion = new SolicitudValoracionEstudiantilTopAsignatura(titulacion, ordenamiento, criteriosConsultaSQL);
 				break;
 			case 9:
@@ -87,7 +89,7 @@ public class SolicitudInformacionAleatoria{
 				titulacion = obtenerTitulacionAleatoria();
 				parametroEstadisticoAsignatura = obtenerParametroEstadisticoRendimientoAsignaturaAleatorio();
 				ordenamiento = obtenerOrdenamientoAleatorio();
-				criteriosConsultaSQL.push("CURSO='4º'");
+				criteriosConsultaSQL.push(new CriterioConsultaSQL("Pertenece al 4º curso","CURSO='4º'",new Stack<String>()));
 				solicitudInformacion = new SolicitudEstadisticaRendimientoTopAsignatura(titulacion, parametroEstadisticoAsignatura, ordenamiento, criteriosConsultaSQL);
 				break;
 		}
@@ -155,7 +157,7 @@ public class SolicitudInformacionAleatoria{
 		}
 	}
 	
-	private  String obtenerParametroEstadisticoRendimientoTitulacionAleatorio() {	
+	private  ParametroEstadistico obtenerParametroEstadisticoRendimientoTitulacionAleatorio() {	
 		ResultSet resultSet = generarResultSetConsultaSQL("SolicitudNombreColumnasTablaRendimientoTitulaciones", new HashMap<String, String>());
 		ArrayList<String> totalParametroEstadisticosRendimientoTitulacion = new  ArrayList<String>(); 
 		try {
@@ -166,8 +168,8 @@ public class SolicitudInformacionAleatoria{
 			e.printStackTrace();
 		}
 		int numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoTitulacion = obtenerNumeroAleatorio(0,totalParametroEstadisticosRendimientoTitulacion.size() - 1); 
-		String ParametroEstadisticoRendimientoAsignaturaAleatorio = totalParametroEstadisticosRendimientoTitulacion.get(numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoTitulacion);
-		return ParametroEstadisticoRendimientoAsignaturaAleatorio;
+		String parametroEstadisticoRendimientoTitulacionAleatorio = totalParametroEstadisticosRendimientoTitulacion.get(numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoTitulacion);
+		return new ParametroEstadistico(TipoEstudio.TITULACION, parametroEstadisticoRendimientoTitulacionAleatorio, parametroEstadisticoRendimientoTitulacionAleatorio, new Stack<String>());
 	}
 	
 	private Asignatura obtenerAsignaturaAleatoriaDeTitulacion(int idTitulacion) {
@@ -206,7 +208,7 @@ public class SolicitudInformacionAleatoria{
 		return String.valueOf(idAsignaturaAleatoria);
 	}
 	
-	private  String obtenerParametroEstadisticoRendimientoAsignaturaAleatorio() {	
+	private  ParametroEstadistico obtenerParametroEstadisticoRendimientoAsignaturaAleatorio() {	
 		ResultSet resultSet = generarResultSetConsultaSQL("SolicitudNombreColumnasTablaRendimientoAsignaturas", new HashMap<String,String>());
 		ArrayList<String> totalParametroEstadisticosRendimientoAsignatura = new  ArrayList<String>(); 
 		try {
@@ -217,8 +219,8 @@ public class SolicitudInformacionAleatoria{
 			e.printStackTrace();
 		}
 		int numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoAsignatura = obtenerNumeroAleatorio(0,totalParametroEstadisticosRendimientoAsignatura.size() - 1); 
-		String ParametroEstadisticoRendimientoAsignaturaAleatorio = totalParametroEstadisticosRendimientoAsignatura.get(numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoAsignatura);
-		return ParametroEstadisticoRendimientoAsignaturaAleatorio;
+		String parametroEstadisticoRendimientoAsignaturaAleatorio = totalParametroEstadisticosRendimientoAsignatura.get(numeroAleatorioEntre0ytotalParametroEstadisticosRendimientoAsignatura);
+		return new ParametroEstadistico(TipoEstudio.ASIGNATURA, parametroEstadisticoRendimientoAsignaturaAleatorio, parametroEstadisticoRendimientoAsignaturaAleatorio, new Stack<String>());
 	}
 	
 	private  ResultSet generarResultSetConsultaSQL(String identificadorConsulta, HashMap<String, String> sustitucionesConsultaSQL) {

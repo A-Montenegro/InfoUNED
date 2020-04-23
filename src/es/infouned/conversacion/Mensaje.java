@@ -1,11 +1,11 @@
 package es.infouned.conversacion;
 
 import java.util.ArrayList;
-
 import es.infouned.aprendizajeAutomatico.Clasificador;
 import es.infouned.principal.Configuracion;
 import es.infouned.procesamientoLenguajeNatural.Frase;
 import es.infouned.procesamientoLenguajeNatural.ProcesadorLenguajeNatural;
+import es.infouned.utilidades.ProcesamientoDeTexto;
 
 public class Mensaje {
 	private String texto;
@@ -15,9 +15,15 @@ public class Mensaje {
 		this.texto = textoRecibido;
 		procesarLenguajeNatural();
 		clasificarFrases();
-		
 	}
-
+	
+	private void procesarLenguajeNatural() {
+		ProcesadorLenguajeNatural procesadorLenguajeNatural = Configuracion.getProcesadorLenguajeNatural();
+		String textoNormalizado = ProcesamientoDeTexto.normalizarTexto(texto);
+		procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(textoNormalizado);
+		frases = procesadorLenguajeNatural.obtenerFrases();
+	}
+	
 	private void clasificarFrases() {
 		Clasificador clasificador = Configuracion.getClasificador();
 		for(Frase frase: frases) {
@@ -25,12 +31,6 @@ public class Mensaje {
 			String clasificacionFrase = clasificador.clasificarInstancia(textoFrase);
 			frase.setClasificacion(clasificacionFrase);
 		}
-	}
-	
-	private void procesarLenguajeNatural() {
-		ProcesadorLenguajeNatural procesadorLenguajeNatural = Configuracion.getProcesadorLenguajeNatural();
-		procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(texto);
-		frases = procesadorLenguajeNatural.obtenerFrases();
 	}
 	
 	public String getTexto() {
@@ -41,3 +41,6 @@ public class Mensaje {
 		return frases;
 	}
 }
+
+
+

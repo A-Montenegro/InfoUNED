@@ -26,7 +26,7 @@ public class SolicitudPreciosTitulacion extends SolicitudInformacion{
 				String precioMatricula2 = String.format("%.02f", resultSet.getFloat(2)) ;
 				String precioMatricula3 = String.format("%.02f", resultSet.getFloat(3)) ;
 				String precioMatricula4 = String.format("%.02f", resultSet.getFloat(4)) ;
-				cadenaRespuesta = "El precio de las asignaturas de la titulación " + titulacion.getNombreTitulacion() + " es de:" + saltoDeLinea
+				cadenaRespuesta = "El precio de las asignaturas de la titulación " + titulacion.getNombre() + " es de:" + saltoDeLinea
 						+ "-" + precioMatricula1 +"€ por cada crédito ECTS la primera vez que el alumno se matricula de la asignatura." + saltoDeLinea
 						+ "-" + precioMatricula2 +"€ por cada crédito ECTS la segunda vez que el alumno se matricula de la asignatura." + saltoDeLinea
 						+ "-" + precioMatricula3 +"€ por cada crédito ECTS la tercera vez que el alumno se matricula de la asignatura." + saltoDeLinea

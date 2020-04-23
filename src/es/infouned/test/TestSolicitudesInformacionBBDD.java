@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,18 +16,30 @@ import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
 import es.infouned.estudios.Asignatura;
+import es.infouned.estudios.Estudio.TipoEstudio;
+import es.infouned.estudios.IndicadorOrdenamiento;
+import es.infouned.estudios.NivelEstudios;
+import es.infouned.estudios.NivelEstudios.NombreNivelEstudios;
+import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
 import es.infouned.principal.Configuracion;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
+import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.NombreParametro;
+import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 
 
-public class TestsSolicitudesInformacionBBDD {
+public class TestSolicitudesInformacionBBDD {
 	
 	@BeforeAll
 	private static void inicializarPropiedades() {
 		String rutaFicheroConfiguracion = "/config.properties";
 		Configuracion.establecerPropiedadesConfiguracionAPartirDeFichero(rutaFicheroConfiguracion);
+	}
+	
+	@AfterAll
+	private static void eliminarConfiguracion() {
+		Configuracion.eliminarTodo();
 	}
 	
 	@Test
@@ -71,7 +84,9 @@ public class TestsSolicitudesInformacionBBDD {
 	@Test
 	public void testMensajeConversacionSobrePrecios(){
 		Titulacion titulacion = new Titulacion(6103,"GRADO EN QUÍMICA","GRADO");
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("preciosTitulacion", titulacion);
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.PRECIOSTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("El precio de las asignaturas de la titulación GRADO EN QUÍMICA es de:\n" + 
 				"-20,48€ por cada crédito ECTS la primera vez que el alumno se matricula de la asignatura.\n" + 
@@ -83,7 +98,9 @@ public class TestsSolicitudesInformacionBBDD {
 	@Test
 	public void testMensajeConversacionSobreMatriculadosTitulacion(){
 		Titulacion titulacion = new Titulacion(7102,"GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN","GRADO");
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("matriculadosTitulacion", titulacion);
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.MATRICULADOSTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("El número de matriculados en la titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN en los últimos años son los siguientes:\n" + 
 				"-Curso 2019 - 2020: 958 matriculados.\n" + 
@@ -97,7 +114,10 @@ public class TestsSolicitudesInformacionBBDD {
 	public void testMensajeConversacionSobreMatriculadosAsignatura(){
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
 		Asignatura asignatura = new Asignatura("7101102-","FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA",6);
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("matriculadosAsignatura", titulacion, asignatura);
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		parametros.put(NombreParametro.ASIGNATURA, asignatura);
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.MATRICULADOSASIGNATURA, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("El número de matriculados en la asignatura FUNDAMENTOS MATEMÁTICOS DE LA INFORMÁTICA de la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son los siguientes:\n" + 
 				"-Curso 2019 - 2020: 872 matriculados.\n" + 
@@ -110,7 +130,9 @@ public class TestsSolicitudesInformacionBBDD {
 	@Test
 	public void testMensajeConversacionSobreValoracionEstudiantilTitulacion(){
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("valoracionEstudiantilTitulacion", titulacion);
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.VALORACIONESTUDIANTILTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las calificaciones que ha obtenido la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años según los cuestionarios de satisfacción de los estudiantes son las siguientes:\n" + 
 				"-Curso 2018 - 2019: 66,53 puntos sobre 100.\n" + 
@@ -121,7 +143,10 @@ public class TestsSolicitudesInformacionBBDD {
 	
 	@Test
 	public void testMensajeConversacionSobreTopValoracionesEstudiantiles(){
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("valoracionEstudiantilTopTitulacion", "grado", "menores");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.NIVELESTUDIOS, new NivelEstudios(NombreNivelEstudios.GRADO, new Stack<String>()));
+		parametros.put(NombreParametro.ORDENAMIENTO, new IndicadorOrdenamiento("menores", "MENOR", new Stack<String>()));
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.VALORACIONESTUDIANTILTOPTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que menores calificaciones obtuvieron según las encuestas de los estudiantes:\n" + 
 				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS INDUSTRIALES obtuvo una calificación de 58,45 sobre 100.\n" + 
@@ -139,7 +164,10 @@ public class TestsSolicitudesInformacionBBDD {
 	@Test
 	public void testMensajeConversacionSobreEstadisticaRendimientoTitulacion(){
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTitulacion", titulacion, "TASA_EXITOS");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		parametros.put(NombreParametro.PARAMETROESTADISTICOTITULACION, new ParametroEstadistico(TipoEstudio.TITULACION, "TASA_EXITOS", "TASA_EXITOS", new Stack<String>()));
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las estadísticas de TASA_EXITOS para la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son las siguientes:\n" + 
 				"-Curso 2018 - 2019: 78,19.\n" + 
@@ -150,7 +178,11 @@ public class TestsSolicitudesInformacionBBDD {
 
 	@Test
 	public void testMensajeConversacionSobreTopEstadisticaRendimientoTitulacion(){
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTopTitulacion", "grado", "TASA_EXITOS", "mayores");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.NIVELESTUDIOS, new NivelEstudios(NombreNivelEstudios.GRADO, new Stack<String>()));
+		parametros.put(NombreParametro.PARAMETROESTADISTICOTITULACION, new ParametroEstadistico(TipoEstudio.TITULACION, "TASA_EXITOS", "TASA_EXITOS", new Stack<String>()));
+		parametros.put(NombreParametro.ORDENAMIENTO, new IndicadorOrdenamiento("mayores", "MAYOR", new Stack<String>()));
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTOPTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a TASA_EXITOS :\n" + 
 				"-La titulación GRADO EN FILOSOFÍA obtuvo unos resultados de 92,84.\n" + 
@@ -169,7 +201,11 @@ public class TestsSolicitudesInformacionBBDD {
 	public void testMensajeConversacionSobreEstadisticaRendimientoAsignatura(){
 		Titulacion titulacion = new Titulacion(6201,"GRADO EN PSICOLOGÍA","GRADO");
 		Asignatura asignatura = new Asignatura("62011014","FUNDAMENTOS DE PSICOBIOLOGÍA",6);
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoAsignatura", titulacion, asignatura, "PORCENTAJE_TASA_SOBRESALIENTES");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		parametros.put(NombreParametro.ASIGNATURA, asignatura);
+		parametros.put(NombreParametro.PARAMETROESTADISTICOASIGNATURA, new ParametroEstadistico(TipoEstudio.ASIGNATURA, "PORCENTAJE_TASA_SOBRESALIENTES", "PORCENTAJE_TASA_SOBRESALIENTES", new Stack<String>()));
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOASIGNATURA, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Las estadísticas de PORCENTAJE_TASA_SOBRESALIENTES para la asignatura FUNDAMENTOS DE PSICOBIOLOGÍA de la titulación GRADO EN PSICOLOGÍA en los últimos años son las siguientes:\n" + 
 				"-Curso 2018-2019: 0,36.\n" + 
@@ -179,9 +215,14 @@ public class TestsSolicitudesInformacionBBDD {
 	}
 	
 	@Test
-	public void testMensajeConversacionSobreTopEstadisticaRendimientoAsignatura(){
+	public void testMensajeConversacionSobreEstadisticaRendimientoTopAsignatura(){
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("estadisticaRendimientoTopAsignatura", titulacion, "PORCENTAJE_TASA_EXITO", "menores", new Stack<String>());
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.TITULACION, titulacion);
+		parametros.put(NombreParametro.PARAMETROESTADISTICOASIGNATURA, new ParametroEstadistico(TipoEstudio.ASIGNATURA, "PORCENTAJE_TASA_EXITO", "PORCENTAJE_TASA_EXITO", new Stack<String>()));
+		parametros.put(NombreParametro.ORDENAMIENTO, new IndicadorOrdenamiento("menores", "MENOR", new Stack<String>()));
+		parametros.put(NombreParametro.CRITERIOSCONSULTASQL, new Stack<String>());
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTOPASIGNATURA, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018-2019), estas fueron las asignaturas de la titulación GRADO EN INGENIERÍA INFORMÁTICA que obtuvieron menores resultados en las estadísticas de PORCENTAJE_TASA_EXITO:\n" + 
 				"-La asignatura FUNDAMENTOS DE CONTROL AUTOMÁTICO obtuvo unos resultados de 0,00.\n" + 
@@ -198,10 +239,12 @@ public class TestsSolicitudesInformacionBBDD {
 	
 	@Test
 	public void testMensajeConversacionSobreInformacionGenerica(){
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("informacionGenerica","matriculaAdmisionPorInternet");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.IDINFORMACIONGENERICA, "matriculaAdmisionPorInternet");
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA,parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		assertTrue(respuesta.equals("Para matricularse de cualquier estudio impartido en la UNED, puede realizar el trámite a través de Internet siguiendo el siguiente enlace:\r\n" + 
-				"https://app.uned.es/portal/admision-matricula-por-internet"));
+				"https://app.uned.es/portal/admision-matricula-por-internet\n"));
 	}
 	
 }

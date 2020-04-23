@@ -1,24 +1,27 @@
 package es.infouned.procesamientoLenguajeNatural;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.Stack;
 
 import edu.stanford.nlp.ie.util.RelationTriple;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import es.infouned.estudios.Asignatura;
+import es.infouned.estructurasDeDatos.Par;
+import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.estudios.Estudio;
+import es.infouned.estudios.Estudio.TipoEstudio;
 import es.infouned.estudios.FactoriaEstudio;
+import es.infouned.estudios.IndicadorOrdenamiento;
+import es.infouned.estudios.NivelEstudios;
+import es.infouned.estudios.ParametroEstadistico;
+import es.infouned.principal.Configuracion;
+import es.infouned.utilidades.ProcesamientoDeTexto;
 
 /**
  * Clase que carga los modelos de procesamiento de lenguaje natural necesarios para hacer funcionar el StanfordCoreNLP.
@@ -62,45 +65,129 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 				tokens.add(token.toString());
 			}
 	    	frase.setTokens(tokens);
-	    	frase.setPosTags((ArrayList<String>)coreSentence.posTags());
-	    	frase.setNerTags((ArrayList<String>)coreSentence.nerTags());
+	    	frase.setPosTags((ArrayList<String>) coreSentence.posTags());
+	    	frase.setNerTags((ArrayList<String>) coreSentence.nerTags());
 	    	ArrayList<String> relations = new ArrayList<String>();
 			for(RelationTriple relation: coreSentence.relations()) {
 				relations.add(relation.toString());
 			}
 	    	frase.setRelaciones(relations);
+	    	Par<ArrayList<ParametroEstadistico>,ArrayList<ParametroEstadistico>> parametrosEstadisticosAludidos = obtenerParametrosEstadisticosAludidos(frase.getTextoFrase());
+	    	frase.setParametrosEstadisticosTitulacionAludidos(parametrosEstadisticosAludidos.getObjeto1());
+	    	frase.setParametrosEstadisticosAsignaturaAludidos(parametrosEstadisticosAludidos.getObjeto2());
+	    	Stack<IndicadorOrdenamiento> indicadoresOrdenamiento = obtenerIndicadoresOrdenamientoAludidos(frase.getTextoFrase());
+	    	frase.setIndicadoresOrdenamientoAludidos(indicadoresOrdenamiento);
+	    	Stack<NivelEstudios> nivelesEstudiosAludidos = obtenerNivelesEstudiosAludidos(frase.getTextoFrase());
+	    	frase.setNivelesEstudiosAludidos(nivelesEstudiosAludidos);
+	    	Stack<CriterioConsultaSQL> criteriosConsultaSQLAludidos = obtenerCriteriosConsultaSQLAludidos(frase.getTextoFrase());
+	    	frase.setCriteriosConsultaSQLAludidos(criteriosConsultaSQLAludidos);
+	    	ArrayList<Estudio> vectorEstudiosAludidos = obtenerVectorEstudiosAludidosDesdeNerTags((ArrayList<String>) coreSentence.nerTags());
+	    	frase.setVectorEstudiosAludidos(vectorEstudiosAludidos);
 	    	ArrayList<Estudio> estudiosAludidos = new ArrayList<Estudio>();
-	    	for (String nerTag: (ArrayList<String>)coreSentence.nerTags()) {
-	    		String[] partesNerTag = nerTag.split("_");
-	    		if(partesNerTag.length == 3 && partesNerTag[0].equals("INFOUNED")) {
-	    			switch(partesNerTag[1]) {
-	    			case "TITULACION":
-	    				
-
-	    				
-	    				
-	    				
-	    				
-	    				
-	    				
-	    				
-	    			case "ASIGNATURA":
-	    				String idAsignatura = partesNerTag[2];
-	    				Asignatura asignatura = FactoriaEstudio.crearAsignaturaPorConsultaSQL(idAsignatura);
-	    				return asignatura;
-	    				
-	    				
-	    				
-	    				
-	    			default:
-	    				
-	    			}
+	    	for(Estudio estudioAludido: vectorEstudiosAludidos) {
+	    		if(estudioAludido!=null && !estudiosAludidos.contains(estudioAludido)) {
+	    			estudiosAludidos.add(estudioAludido);
 	    		}
 	    	}
+	    	frase.setEstudiosAludidos(estudiosAludidos);
 	    	frases.add(frase);
 	    }
 	}
 	
+	private Par<ArrayList<ParametroEstadistico>,ArrayList<ParametroEstadistico>> obtenerParametrosEstadisticosAludidos(String textoFrase){
+		ArrayList<ParametroEstadistico> parametrosEstadisticosTitulacionAludidos = new ArrayList<ParametroEstadistico>();
+		ArrayList<ParametroEstadistico> parametrosEstadisticosAsignaturaAludidos = new ArrayList<ParametroEstadistico>();
+		for (ParametroEstadistico parametroEstadistico: Configuracion.getParametrosEstadisticos()) {
+				for(String nomenclatura: parametroEstadistico.getNomenclaturas()) {
+					String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
+					String nomenclaturaNormalizada = ProcesamientoDeTexto.normalizarTexto(nomenclatura);
+					if(textoFraseNormalizado.contains(nomenclaturaNormalizada)) {
+						if(parametroEstadistico.getTipoEstudio() == TipoEstudio.AMBIGUO || parametroEstadistico.getTipoEstudio() == TipoEstudio.TITULACION) parametrosEstadisticosTitulacionAludidos.add(parametroEstadistico);
+						if(parametroEstadistico.getTipoEstudio() == TipoEstudio.AMBIGUO || parametroEstadistico.getTipoEstudio() == TipoEstudio.ASIGNATURA) parametrosEstadisticosAsignaturaAludidos.add(parametroEstadistico);
+						break;
+					}
+				}
+		}
+		Par<ArrayList<ParametroEstadistico>,ArrayList<ParametroEstadistico>> parametrosEstadisticosAludidos = new Par<ArrayList<ParametroEstadistico>,ArrayList<ParametroEstadistico>>(parametrosEstadisticosTitulacionAludidos, parametrosEstadisticosAsignaturaAludidos);
+		return parametrosEstadisticosAludidos;
+	}
+	
+	private Stack<IndicadorOrdenamiento> obtenerIndicadoresOrdenamientoAludidos(String textoFrase){
+		Stack<IndicadorOrdenamiento> indicadoresOrdenamiento = new Stack<IndicadorOrdenamiento>();
+		for (IndicadorOrdenamiento indicadorOrdenamiento: Configuracion.getIndicadoresOrdenamiento()) {
+				for(String nomenclatura: indicadorOrdenamiento.getNomenclaturas()) {
+					String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
+					String nomenclaturaNormalizada = ProcesamientoDeTexto.normalizarTexto(nomenclatura);
+					if(textoFraseNormalizado.contains(nomenclaturaNormalizada)) {
+						indicadoresOrdenamiento.add(indicadorOrdenamiento);
+						break;
+					}
+				}
+		}
+		return indicadoresOrdenamiento;
+	}
+
+	private Stack<NivelEstudios> obtenerNivelesEstudiosAludidos(String textoFrase){
+		Stack<NivelEstudios> nivelesEstudios = new Stack<NivelEstudios>();
+		for (NivelEstudios nivelEstudios: Configuracion.getNivelesEstudios()) {
+				for(String nomenclatura: nivelEstudios.getNomenclaturas()) {
+					String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
+					String nomenclaturaNormalizada = ProcesamientoDeTexto.normalizarTexto(nomenclatura);
+					if(textoFraseNormalizado.contains(nomenclaturaNormalizada)) {
+						nivelesEstudios.push(nivelEstudios);
+						break;
+					}
+				}
+		}
+		return nivelesEstudios;
+	}
+	
+	private Stack<CriterioConsultaSQL> obtenerCriteriosConsultaSQLAludidos(String textoFrase){
+		Stack<CriterioConsultaSQL> criteriosConsultaSQLAludidos = new Stack<CriterioConsultaSQL>();
+		for (CriterioConsultaSQL criterioConsultaSQL: Configuracion.getCriteriosConsultaSQL()) {
+				for(String nomenclatura: criterioConsultaSQL.getNomenclaturas()) {
+					String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
+					String nomenclaturaNormalizada = ProcesamientoDeTexto.normalizarTexto(nomenclatura);
+					if(textoFraseNormalizado.contains(nomenclaturaNormalizada)) {
+						criteriosConsultaSQLAludidos.add(criterioConsultaSQL);
+						break;
+					}
+				}
+		}
+		return criteriosConsultaSQLAludidos;
+	}
+	
+	private ArrayList<Estudio> obtenerVectorEstudiosAludidosDesdeNerTags(ArrayList<String> nerTags){
+		ArrayList<Estudio> vectorEstudiosAludidos = new ArrayList<Estudio>();
+		int numeroPalabrasNombreEstudioAludido = 0;
+    	for (String nerTag: nerTags) {
+    		String[] partesNerTag = nerTag.split("_");
+    		Estudio estudio = null;
+    		if(partesNerTag.length == 3 && partesNerTag[0].equals("INFOUNED")) {
+    			if(numeroPalabrasNombreEstudioAludido == 0) {
+	    			switch(partesNerTag[1]) {
+	    			case "TITULACION":
+	    				int idTitulacion = Integer.parseInt(partesNerTag[2]);
+	    				estudio = FactoriaEstudio.crearTitulacionPorConsultaSQL(idTitulacion);
+	    			break;
+	    			case "ASIGNATURA":
+	    				String idAsignatura = partesNerTag[2];
+	    				estudio = FactoriaEstudio.crearAsignaturaPorConsultaSQL(idAsignatura);
+	    			break;
+	    			}
+	    			numeroPalabrasNombreEstudioAludido = ProcesamientoDeTexto.contarPalabras(estudio.getNombre());
+	    			numeroPalabrasNombreEstudioAludido--;
+    			}
+    			else {
+    				estudio = vectorEstudiosAludidos.get(vectorEstudiosAludidos.size()-1);
+    				numeroPalabrasNombreEstudioAludido--;
+    			}
+    		}
+    		vectorEstudiosAludidos.add(estudio);
+    	}
+    	return vectorEstudiosAludidos;
+	}
+
 	public ArrayList<Frase> obtenerFrases(){
 		return frases;
 	}
@@ -129,8 +216,16 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 		    cadenaDeTextoResultados += "NER tags: ";
 		    cadenaDeTextoResultados += nerTags;
 		    cadenaDeTextoResultados += saltoDeLinea;
+		    ArrayList<Estudio> vectorEstudiosAludidos = frase.getVectorEstudiosAludidos();
+		    int numeroEstudiosAludidos = frase.getNumeroEstudiosAludidos();
+		    cadenaDeTextoResultados += "Estudios aludidos: ";
+		    cadenaDeTextoResultados += vectorEstudiosAludidos;
+		    cadenaDeTextoResultados += saltoDeLinea;
+		    cadenaDeTextoResultados += "Número de estudios aludidos: ";
+		    cadenaDeTextoResultados += numeroEstudiosAludidos;
+		    cadenaDeTextoResultados += saltoDeLinea;
 		    ArrayList<String> relations = frase.getRelaciones();
-		    if (relations.size() >0) {
+		    if (relations.size() > 0) {
 			    cadenaDeTextoResultados +="Ejemplo relación: ";
 			    cadenaDeTextoResultados += relations.get(0);
 			    cadenaDeTextoResultados += saltoDeLinea;

@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
+import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.principal.Configuracion;
 
 public abstract class SolicitudInformacion {
@@ -16,7 +17,7 @@ public abstract class SolicitudInformacion {
 	protected HashMap<String, String> sustitucionesConsultaSQL;
 	
 	protected SolicitudInformacion(){
-		conexionBaseDeDatos = new ConexionMySQL();
+		conexionBaseDeDatos = Configuracion.getConexionBaseDeDatos();
 		instruccionSelect = new InstruccionSelect(conexionBaseDeDatos);
 		sustitucionesConsultaSQL = new HashMap<String, String>();
 	}
@@ -32,18 +33,18 @@ public abstract class SolicitudInformacion {
 		return resultSet;
 	}
 	
-	protected String transcribirTextoCriteriosASQL(Stack<String> criteriosConsultaSQL) {
+	protected String transcribirTextoCriteriosASQL(Stack<CriterioConsultaSQL> criteriosConsultaSQL) {
 		if(!criteriosConsultaSQL.isEmpty()) {
 			String cadenaTextoCriteriosConsultaSQL = "AND ";
-			for(String elementoPila : criteriosConsultaSQL) {
-	    		cadenaTextoCriteriosConsultaSQL = cadenaTextoCriteriosConsultaSQL + elementoPila + " AND ";
+			for(CriterioConsultaSQL criterioConsultaSQL : criteriosConsultaSQL) {
+	    		cadenaTextoCriteriosConsultaSQL = cadenaTextoCriteriosConsultaSQL + criterioConsultaSQL.getLiteral() + " AND ";
 	    	}
 			String cadenaTextoCriteriosConsultaSQLSinUltimosCincoCaracteres = cadenaTextoCriteriosConsultaSQL.substring(0, cadenaTextoCriteriosConsultaSQL.length() - 5);
 			return cadenaTextoCriteriosConsultaSQLSinUltimosCincoCaracteres;
 		}else{
 			return "";
 		}
-	}
+	}	
 	
 	protected String transcribirTextoOrdenamientoASQL(String ordenamiento) {
 		if (ordenamiento.equals("mayores")) {

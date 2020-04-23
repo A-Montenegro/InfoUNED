@@ -5,21 +5,23 @@ import static org.junit.Assert.assertTrue;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import es.infouned.estudios.ParametroEstadistico;
+
 
 public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInformacion{
 	
 	private String ordenamiento;
-	private String nombreParametroEstadistico;
+	private ParametroEstadistico parametroEstadistico;
 	private String nombreNivelEstudios;
 	
-	public SolicitudEstadisticaRendimientoTopTitulacion(String nombreNivelEstudios, String nombreParametroEstadistico, String ordenamiento){
+	public SolicitudEstadisticaRendimientoTopTitulacion(String nombreNivelEstudios, ParametroEstadistico parametroEstadistico, String ordenamiento){
 		super();
 		assertTrue(ordenamiento.equals("menores") || ordenamiento.equals("mayores"));
 		this.ordenamiento = ordenamiento;
-		this.nombreParametroEstadistico = nombreParametroEstadistico;
+		this.parametroEstadistico = parametroEstadistico;
 		this.nombreNivelEstudios = nombreNivelEstudios;
 		sustitucionesConsultaSQL.put("nombreNivelEstudios", nombreNivelEstudios);
-		sustitucionesConsultaSQL.put("nombreParametroEstadistico", nombreParametroEstadistico);
+		sustitucionesConsultaSQL.put("nombreParametroEstadistico", parametroEstadistico.getLiteral());
 		sustitucionesConsultaSQL.put("ordenamientoAscendenteODescendente", transcribirTextoOrdenamientoASQL(ordenamiento));
 		sustitucionesConsultaSQL.put("limiteFilas", "10");
 	}	
@@ -33,7 +35,7 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 		boolean esPrimeraIteracion = true;
 		try {
 			if (resultSet.next() == false) {
-				cadenaRespuesta = "No se han encontrado titulaciones con estadísticas de rendimiento de " + nombreParametroEstadistico + " en la base de datos.";
+				cadenaRespuesta = "No se han encontrado titulaciones con estadísticas de rendimiento de " + parametroEstadistico.getNombre() + " en la base de datos.";
 			} else {
 				do {
 					if (esPrimeraIteracion) {
@@ -47,7 +49,7 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 				} while(resultSet.next());
 				cadenaRespuesta = "Durante el último curso académico registrado (" + cursoAcademico
 						  + "), estas fueron los estudios de " + nombreNivelEstudios.toUpperCase() + " que obtuvieron " + ordenamiento
-						  + " resultados en cuanto a " + nombreParametroEstadistico + " :"
+						  + " resultados en cuanto a " + parametroEstadistico.getNombre() + " :"
 						  + saltoDeLinea + cadenaRespuesta;
 			}
 		} catch (SQLException e) {

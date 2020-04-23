@@ -27,16 +27,16 @@ public class SolicitudMatriculadosAsignatura extends SolicitudInformacion{
 		String cadenaRespuesta = new String("");
 		try {
 			if (resultSet.next() == false) {
-				cadenaRespuesta = "No hay registro de matriculas para la asignatura " + asignatura.getNombreAsignatura() +
-								  " de la titulación " + titulacion.getNombreTitulacion() + " en la base de datos.";
+				cadenaRespuesta = "No hay registro de matriculas para la asignatura " + asignatura.getNombre() +
+								  " de la titulación " + titulacion.getNombre() + " en la base de datos.";
 			} else {
 				do {
 					String cursoAcademico = resultSet.getString(1);
 					int  matriculados = resultSet.getInt(2);
 					cadenaRespuesta += "-Curso " + cursoAcademico + ": " + matriculados + " matriculados."+ saltoDeLinea;
 				} while(resultSet.next());
-				cadenaRespuesta = "El número de matriculados en la asignatura " + asignatura.getNombreAsignatura() + " de la titulación "
-						 + titulacion.getNombreTitulacion() + " en los últimos años son los siguientes:" + saltoDeLinea + cadenaRespuesta;
+				cadenaRespuesta = "El número de matriculados en la asignatura " + asignatura.getNombre() + " de la titulación "
+						 + titulacion.getNombre() + " en los últimos años son los siguientes:" + saltoDeLinea + cadenaRespuesta;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

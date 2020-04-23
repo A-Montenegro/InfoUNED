@@ -3,20 +3,21 @@ package es.infouned.solicitudesInformacionBBDD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
 
 
 public class SolicitudEstadisticaRendimientoTitulacion extends SolicitudInformacion{
 	
-	private String nombreParametroEstadistico;
+	private ParametroEstadistico parametroEstadistico;
 	private Titulacion titulacion;
 	
-	public SolicitudEstadisticaRendimientoTitulacion(Titulacion titulacion, String nombreParametroEstadistico){
+	public SolicitudEstadisticaRendimientoTitulacion(Titulacion titulacion, ParametroEstadistico parametroEstadistico){
 		super();
 		this.titulacion = titulacion;
-		this.nombreParametroEstadistico = nombreParametroEstadistico;
+		this.parametroEstadistico = parametroEstadistico;
 		sustitucionesConsultaSQL.put("idTitulacionObjetivo", String.valueOf(titulacion.getIdTitulacion()));
-		sustitucionesConsultaSQL.put("nombreParametroEstadistico", nombreParametroEstadistico);
+		sustitucionesConsultaSQL.put("nombreParametroEstadistico", parametroEstadistico.getLiteral());
 		sustitucionesConsultaSQL.put("limiteFilas", "10");
 	}
 	
@@ -27,7 +28,7 @@ public class SolicitudEstadisticaRendimientoTitulacion extends SolicitudInformac
 		String complementoDeLinea = ""; // TO-DO: El valor de complementoDeLinea ha de ser calculado a partir de 'nombreParametroEstadistico' para obtener la cadeena adecuada en cada caso. 
 		try {
 			if (resultSet.next() == false) {
-				cadenaRespuesta = "No se han encontrado estadísticas de " + nombreParametroEstadistico + " para la titulación " + titulacion.getNombreTitulacion()
+				cadenaRespuesta = "No se han encontrado estadísticas de " + parametroEstadistico.getNombre() + " para la titulación " + titulacion.getNombre()
 						  + " en la base de datos.";
 		    } else {
 		        do {
@@ -35,7 +36,7 @@ public class SolicitudEstadisticaRendimientoTitulacion extends SolicitudInformac
 					String  valorParametroEstadistico = String.format("%.02f", resultSet.getFloat(2)) ;
 					cadenaRespuesta += "-Curso " + cursoAcademico + ": " + valorParametroEstadistico + "." + complementoDeLinea + saltoDeLinea;
 		        }while (resultSet.next());
-				cadenaRespuesta = "Las estadísticas de " + nombreParametroEstadistico + " para la titulación " + titulacion.getNombreTitulacion()
+				cadenaRespuesta = "Las estadísticas de " + parametroEstadistico.getNombre() + " para la titulación " + titulacion.getNombre()
 								+ " en los últimos años son las siguientes:" + saltoDeLinea + cadenaRespuesta;
 		    }
 		} catch (SQLException e) {

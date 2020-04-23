@@ -1,6 +1,7 @@
 package es.infouned.procesamientoLenguajeNatural;
 
 import java.util.Arrays;
+import java.util.Stack;
 import java.util.stream.IntStream;
 
 /**
@@ -58,4 +59,46 @@ public class DistanciaDeLevenshtein {
         return numeroEnteroMinimo;
     }
     
+    public static Stack<String> construirVariantes(String palabraOriginal){
+    	Stack<String> variantes = new Stack<String>();
+    	String alfabeto = obtenerAlfabeto() ;
+    	
+    	//Eliminación de caracteres
+    	for (int indice = 0; indice < palabraOriginal.length(); indice++) {
+    		StringBuilder variante = new StringBuilder(palabraOriginal);
+    		variante.deleteCharAt(indice);
+    		variantes.push(variante.toString());
+    	}
+    	
+    	//Sustitución de caracteres
+    	for (int indice = 0; indice < palabraOriginal.length(); indice++) {
+    		for (int indiceAlfabeto = 0; indiceAlfabeto < alfabeto.length(); indiceAlfabeto++) {
+	    		StringBuilder variante = new StringBuilder(palabraOriginal);
+	    		char caracter = alfabeto.charAt(indiceAlfabeto);
+	    		variante.setCharAt(indice, caracter);
+	    		variantes.push(variante.toString());
+    		}
+    	}
+    	
+    	//Inserción de caracteres
+    	for (int indice = 0; indice <= palabraOriginal.length(); indice++) {
+    		for (int indiceAlfabeto = 0; indiceAlfabeto < alfabeto.length(); indiceAlfabeto++) {
+	    		StringBuilder variante = new StringBuilder(palabraOriginal);
+	    		char caracter = alfabeto.charAt(indiceAlfabeto);
+	    		variante.insert(indice, caracter);
+	    		variantes.push(variante.toString());
+    		}
+    	}
+    	return variantes;
+    	
+    }
+    
+    private static String obtenerAlfabeto() {
+    	StringBuilder alfabeto = new StringBuilder();
+    	for (char c = 'a'; c <= 'z'; c++) {
+    		alfabeto.append(c);
+        }
+    	return alfabeto.toString();
+    }
+
 }

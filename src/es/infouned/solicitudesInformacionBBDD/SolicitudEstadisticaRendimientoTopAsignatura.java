@@ -6,23 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Stack;
 
+import es.infouned.estudios.CriterioConsultaSQL;
+import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
+import es.infouned.utilidades.ProcesamientoDeTexto;
 
 
 public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInformacion{
 	
 	private Titulacion titulacion;
 	private String ordenamiento;
-	private String nombreParametroEstadistico;
+	private ParametroEstadistico parametroEstadistico;
+	private Stack<CriterioConsultaSQL> criteriosConsultaSQL;
 	
-	public SolicitudEstadisticaRendimientoTopAsignatura(Titulacion titulacion, String nombreParametroEstadistico, String ordenamiento, Stack<String> criteriosConsultaSQL){
+	public SolicitudEstadisticaRendimientoTopAsignatura(Titulacion titulacion, ParametroEstadistico parametroEstadistico, String ordenamiento, Stack<CriterioConsultaSQL> criteriosConsultaSQL){
 		super();
 		assertTrue(ordenamiento.equals("menores") || ordenamiento.equals("mayores"));
 		this.titulacion = titulacion;
 		this.ordenamiento = ordenamiento;
-		this.nombreParametroEstadistico = nombreParametroEstadistico;
+		this.parametroEstadistico = parametroEstadistico;
+		this.criteriosConsultaSQL = criteriosConsultaSQL;
 		sustitucionesConsultaSQL.put("idTitulacionObjetivo", String.valueOf(titulacion.getIdTitulacion()));
-		sustitucionesConsultaSQL.put("nombreParametroEstadistico", nombreParametroEstadistico);
+		sustitucionesConsultaSQL.put("nombreParametroEstadistico", parametroEstadistico.getLiteral());
 		String cadenaTextoCriteriosConsultaSQL = transcribirTextoCriteriosASQL(criteriosConsultaSQL) ;
 		sustitucionesConsultaSQL.put("criteriosConsultaSQL", cadenaTextoCriteriosConsultaSQL);
 		sustitucionesConsultaSQL.put("ordenamientoAscendenteODescendente", transcribirTextoOrdenamientoASQL(ordenamiento));
@@ -38,7 +43,7 @@ public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInfor
 		boolean esPrimeraIteracion = true;
 		try {
 			if(resultSet.next() == false) {
-				cadenaRespuesta = "No se han encontrado asignaturas con estadísticas de " + nombreParametroEstadistico + " para la titulación " + titulacion.getNombreTitulacion() + 
+				cadenaRespuesta = "No se han encontrado asignaturas con estadísticas de " + parametroEstadistico.getNombre() + " para la titulación " + titulacion.getNombre() + 
 				" según los requisitos especificados en la base de datos.";
 			} else {
 				do {
@@ -52,8 +57,8 @@ public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInfor
 							+ complementoDeLinea + "." + saltoDeLinea;
 				} while (resultSet.next());
 				cadenaRespuesta = "Durante el último curso académico registrado (" + cursoAcademico
-						  + "), estas fueron las asignaturas de la titulación " + titulacion.getNombreTitulacion() + " que obtuvieron " + ordenamiento
-						  + " resultados en las estadísticas de " + nombreParametroEstadistico + ":"
+						  + "), estas fueron las asignaturas de la titulación " + titulacion.getNombre() + ProcesamientoDeTexto.componerCadenaTextoCriteriosSQL(criteriosConsultaSQL) + " que obtuvieron " + ordenamiento
+						  + " resultados en las estadísticas de " + parametroEstadistico.getNombre() + ":"
 						  + saltoDeLinea + cadenaRespuesta;
 			}
 		} catch (SQLException e) {

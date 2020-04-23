@@ -4,3 +4,4 @@ target/classes/consultasSQL.properties
 edu/
 modeloNaiveBayesEntrenado.model
 estructuraDataSet.arff
+/target/
