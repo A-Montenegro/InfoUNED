@@ -14,7 +14,7 @@ public class Asignatura extends Estudio{
 		this.idAsignatura = idAsignatura;
 		this.creditos = creditos;
 	}
-	
+
 	public String getIdAsignatura() {
 		return idAsignatura;
 	}

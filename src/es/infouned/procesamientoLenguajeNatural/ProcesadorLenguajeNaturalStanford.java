@@ -62,7 +62,8 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 	    	frase.setTextoFrase(coreSentence.text());
 			ArrayList<String> tokens = new ArrayList<String>();
 			for(CoreLabel token: coreSentence.tokens()) {
-				tokens.add(token.toString());
+				String[] divisionGuionToken = token.toString().split("-");
+				tokens.add(divisionGuionToken[0]);
 			}
 	    	frase.setTokens(tokens);
 	    	frase.setPosTags((ArrayList<String>) coreSentence.posTags());
@@ -129,9 +130,9 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 
 	private Stack<NivelEstudios> obtenerNivelesEstudiosAludidos(String textoFrase){
 		Stack<NivelEstudios> nivelesEstudios = new Stack<NivelEstudios>();
+		String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
 		for (NivelEstudios nivelEstudios: Configuracion.getNivelesEstudios()) {
 				for(String nomenclatura: nivelEstudios.getNomenclaturas()) {
-					String textoFraseNormalizado = ProcesamientoDeTexto.normalizarTexto(textoFrase);
 					String nomenclaturaNormalizada = ProcesamientoDeTexto.normalizarTexto(nomenclatura);
 					if(textoFraseNormalizado.contains(nomenclaturaNormalizada)) {
 						nivelesEstudios.push(nivelEstudios);
@@ -157,34 +158,44 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 		return criteriosConsultaSQLAludidos;
 	}
 	
-	private ArrayList<Estudio> obtenerVectorEstudiosAludidosDesdeNerTags(ArrayList<String> nerTags){
-		ArrayList<Estudio> vectorEstudiosAludidos = new ArrayList<Estudio>();
-		int numeroPalabrasNombreEstudioAludido = 0;
-    	for (String nerTag: nerTags) {
-    		String[] partesNerTag = nerTag.split("_");
-    		Estudio estudio = null;
-    		if(partesNerTag.length == 3 && partesNerTag[0].equals("INFOUNED")) {
-    			if(numeroPalabrasNombreEstudioAludido == 0) {
-	    			switch(partesNerTag[1]) {
-	    			case "TITULACION":
-	    				int idTitulacion = Integer.parseInt(partesNerTag[2]);
-	    				estudio = FactoriaEstudio.crearTitulacionPorConsultaSQL(idTitulacion);
-	    			break;
-	    			case "ASIGNATURA":
-	    				String idAsignatura = partesNerTag[2];
-	    				estudio = FactoriaEstudio.crearAsignaturaPorConsultaSQL(idAsignatura);
-	    			break;
-	    			}
-	    			numeroPalabrasNombreEstudioAludido = ProcesamientoDeTexto.contarPalabras(estudio.getNombre());
-	    			numeroPalabrasNombreEstudioAludido--;
-    			}
-    			else {
-    				estudio = vectorEstudiosAludidos.get(vectorEstudiosAludidos.size()-1);
-    				numeroPalabrasNombreEstudioAludido--;
-    			}
+	private ArrayList<Estudio> obtenerVectorEstudiosAludidosDesdeNerTags(ArrayList<String> nerTags){	
+    	ArrayList<Estudio> vectorEstudiosAludidos = new ArrayList<Estudio>();
+    	Estudio estudio = null;
+    	String anterior= new String();
+    	for(int indiceNerTag = 0; indiceNerTag < nerTags.size(); indiceNerTag++) {
+    		if(anterior.equals(nerTags.get(indiceNerTag))) {
+    			vectorEstudiosAludidos.add(estudio);
     		}
-    		vectorEstudiosAludidos.add(estudio);
-    	}
+    		else {		
+	    		anterior = new String(nerTags.get(indiceNerTag));
+	    		String[] partesNerTag = nerTags.get(indiceNerTag).split("_");
+	    		if(partesNerTag.length > 2 && partesNerTag[0].equals("INFOUNED")) {
+		    			switch(partesNerTag[1]) {
+		    			case "TITULACION":
+		    				assert (partesNerTag.length == 3);
+		    				int idTitulacion = Integer.parseInt(partesNerTag[2]);
+		    				estudio = FactoriaEstudio.crearTitulacionPorConsultaSQL(idTitulacion);
+		    			break;
+		    			case "ASIGNATURA":
+							String idAsignatura= partesNerTag[2];
+		    				if(partesNerTag.length > 3) {
+		    					for (int indicePartes = 3; indicePartes < partesNerTag.length; indicePartes++) {
+		    						idAsignatura += "_" + partesNerTag[indicePartes];
+		    					}
+		    					estudio = FactoriaEstudio.crearAsignaturaBorrosaPorConsultaSQL(idAsignatura);
+		    				}
+		    				else {
+		    					estudio = FactoriaEstudio.crearAsignaturaPorConsultaSQL(idAsignatura);
+		    				}
+		    			break;
+		    			}
+		    			vectorEstudiosAludidos.add(estudio);
+	    		}
+	    		else {
+	    			vectorEstudiosAludidos.add(null);
+	    		}
+    		}
+    	}    	
     	return vectorEstudiosAludidos;
 	}
 

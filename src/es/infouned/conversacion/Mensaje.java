@@ -27,8 +27,8 @@ public class Mensaje {
 	private void clasificarFrases() {
 		Clasificador clasificador = Configuracion.getClasificador();
 		for(Frase frase: frases) {
-			String textoFrase = frase.getTextoFrase();
-			String clasificacionFrase = clasificador.clasificarInstancia(textoFrase);
+			String textoFraseSinEstudiosAludidos = frase.obtenerTextoFraseSinEstudiosAludidos();
+			String clasificacionFrase = clasificador.clasificarInstancia(textoFraseSinEstudiosAludidos);
 			frase.setClasificacion(clasificacionFrase);
 		}
 	}

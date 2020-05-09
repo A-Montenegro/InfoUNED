@@ -24,6 +24,7 @@ import es.infouned.aprendizajeAutomatico.ClasificadorNaiveBayes;
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.conversacion.Conversacion;
+import es.infouned.conversacion.Conversacion.OrigenConversacion;
 import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.estudios.Estudio.TipoEstudio;
 import es.infouned.estudios.IndicadorOrdenamiento;
@@ -53,7 +54,7 @@ public class Configuracion {
 	 * @param origen
 	 * @return
 	 */
-    public synchronized static Conversacion obtenerConversacion(String chat_id, String origen) {
+    public synchronized static Conversacion obtenerConversacion(String chat_id, OrigenConversacion origen) {
     	for(Conversacion conversacion : conversaciones) {
     		String idConversacion = conversacion.getIdConversacion();
     		if(idConversacion.equals(chat_id)) {

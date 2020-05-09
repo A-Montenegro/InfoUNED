@@ -2,6 +2,8 @@ package es.infouned.conversacion;
 
 import java.util.ArrayList;
 
+import es.infouned.conversacion.Conversacion.OrigenConversacion;
+
 /**
  * El objetivo de esta clase es almacenar las diferentes conversaciones disponibles en tiempo de ejecución
  * @author Alberto Martínez Montenegro
@@ -17,7 +19,7 @@ public class HistoricoConversaciones {
 	 * @param origen
 	 * @return
 	 */
-    public synchronized static Conversacion obtenerConversacion(String chat_id, String origen) {
+    public synchronized static Conversacion obtenerConversacion(String chat_id, OrigenConversacion origen) {
     	for(Conversacion conversacion : conversaciones) {
     		String idConversacion = conversacion.getIdConversacion();
     		if(idConversacion.equals(chat_id)) {

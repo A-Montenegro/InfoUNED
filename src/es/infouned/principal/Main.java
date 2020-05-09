@@ -22,8 +22,8 @@ public class Main {
 	private static final String rutaFicheroConfiguracion = "/config.properties";
 	
     public static void main(String[] args) {
-    	redirigirSalidaErroresAFicheroLog();
     	Configuracion.establecerPropiedadesConfiguracionAPartirDeFichero(rutaFicheroConfiguracion);
+    	redirigirSalidaErroresAFicheroLog();
     	Configuracion.iniciarProcesadorLenguajeNatural();
     	iniciarBotFacebook();
     	iniciarBotTelegram();

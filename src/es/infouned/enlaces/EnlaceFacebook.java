@@ -4,12 +4,16 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import java.io.IOException;
 import java.util.HashMap;
+
 import com.clivern.racter.BotPlatform;
 import com.clivern.racter.receivers.webhook.MessageReceivedWebhook;
+
 import com.clivern.racter.senders.templates.MessageTemplate;
 
 import es.infouned.conversacion.Conversacion;
+import es.infouned.conversacion.Conversacion.OrigenConversacion;
 import es.infouned.conversacion.HistoricoConversaciones;
+import es.infouned.utilidades.ProcesamientoDeTexto;
 
 /**
  * 
@@ -58,14 +62,31 @@ public class EnlaceFacebook{
             for (MessageReceivedWebhook message : messages.values()) {
                 String user_id = (message.hasUserId()) ? message.getUserId() : "";
                 String message_text = (message.hasMessageText()) ? message.getMessageText() : "";
+                if(message.hasQuickReplyPayload()) message_text = message.getQuickReplyPayload();
                 MessageTemplate message_tpl = platform.getBaseSender().getMessageTemplate();
-                Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(user_id, "Facebook");
+                Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(user_id, OrigenConversacion.FACEBOOK);
     	        message_tpl.setRecipientId(message.getUserId());
     	        conversacion.procesarTextoRecibido(message_text);
     	        String respuestaBot= conversacion.obtenerRespuestaActual();
-    	        message_tpl.setMessageText(respuestaBot);
-    	        message_tpl.setNotificationType("REGULAR");
-    	        platform.getBaseSender().send(message_tpl);
+    	        respuestaBot = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "\\u000A");
+    	        if(respuestaBot.contains("__BOTON_CALLBACK__")) {
+    	        	String partesTextoAEnviar[] = respuestaBot.split("__BOTON_CALLBACK__");
+    		        String cabeceraTexto = partesTextoAEnviar[0];
+    		        for (int indicePartes = 1; indicePartes < partesTextoAEnviar.length; indicePartes++) {
+    		        	message_tpl.setQuickReply("text", String.valueOf(indicePartes), partesTextoAEnviar[indicePartes], "");
+    		        	cabeceraTexto += indicePartes + " ) " + partesTextoAEnviar[indicePartes] + "\\u000A" ;
+    		        }
+    		        message_tpl.setMessageText(cabeceraTexto);
+    		        message_tpl.setNotificationType("REGULAR");
+        	        platform.getBaseSender().send(message_tpl);
+        	        
+    	        }
+    	        else {
+    	        	message_tpl.setMessageText(respuestaBot);
+    	        	message_tpl.setNotificationType("REGULAR");
+        	        platform.getBaseSender().send(message_tpl);
+    	        }
+    	        
                 return "ok";
             }
             return "bla";

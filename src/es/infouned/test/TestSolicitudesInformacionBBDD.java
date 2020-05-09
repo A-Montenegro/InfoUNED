@@ -72,14 +72,13 @@ public class TestSolicitudesInformacionBBDD {
 		conexionBaseDeDatos.cerrarConexion();
 	}
 	
-	/**
 	@Test
 	public void SalidaPorConsolaSolicitudInformacionAleatoria(){
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion("aleatoria");
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ALEATORIA, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
 		System.out.println("\n\n\n" + respuesta);
 	} 
-	**/
 	
 	@Test
 	public void testMensajeConversacionSobrePrecios(){
@@ -132,33 +131,35 @@ public class TestSolicitudesInformacionBBDD {
 		Titulacion titulacion = new Titulacion(7101,"GRADO EN INGENIERÍA INFORMÁTICA","GRADO");
 		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
 		parametros.put(NombreParametro.TITULACION, titulacion);
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.VALORACIONESTUDIANTILTITULACION, parametros);
+		parametros.put(NombreParametro.PARAMETROESTADISTICOTITULACION, new ParametroEstadistico(TipoEstudio.TITULACION, "VALORACION_ESTUDIANTIL", "VALORACION_ESTUDIANTIL", new Stack<String>()));
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Las calificaciones que ha obtenido la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años según los cuestionarios de satisfacción de los estudiantes son las siguientes:\n" + 
-				"-Curso 2018 - 2019: 66,53 puntos sobre 100.\n" + 
-				"-Curso 2017 - 2018: 67,11 puntos sobre 100.\n" + 
-				"-Curso 2016 - 2017: 64,82 puntos sobre 100.\n" + 
-				"-Curso 2015 - 2016: 73,98 puntos sobre 100.\n"));
+		assertTrue(respuesta.equals("Las estadísticas de VALORACION_ESTUDIANTIL para la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son las siguientes:\n" + 
+				"-Curso 2018 - 2019: 66,53.\n" + 
+				"-Curso 2017 - 2018: 67,11.\n" + 
+				"-Curso 2016 - 2017: 64,82.\n" + 
+				"-Curso 2015 - 2016: 73,98.\n"));
 	}
 	
 	@Test
 	public void testMensajeConversacionSobreTopValoracionesEstudiantiles(){
 		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.PARAMETROESTADISTICOTITULACION, new ParametroEstadistico(TipoEstudio.TITULACION, "VALORACION_ESTUDIANTIL", "VALORACION_ESTUDIANTIL", new Stack<String>()));
 		parametros.put(NombreParametro.NIVELESTUDIOS, new NivelEstudios(NombreNivelEstudios.GRADO, new Stack<String>()));
 		parametros.put(NombreParametro.ORDENAMIENTO, new IndicadorOrdenamiento("menores", "MENOR", new Stack<String>()));
-		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.VALORACIONESTUDIANTILTOPTITULACION, parametros);
+		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTOPTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que menores calificaciones obtuvieron según las encuestas de los estudiantes:\n" + 
-				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS INDUSTRIALES obtuvo una calificación de 58,45 sobre 100.\n" + 
-				"-La titulación GRADO EN INGENIERÍA MECÁNICA obtuvo una calificación de 59,53 sobre 100.\n" + 
-				"-La titulación GRADO EN ING. EN  ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA obtuvo una calificación de 59,94 sobre 100.\n" + 
-				"-La titulación GRADO EN INGENIERÍA ELÉCTRICA obtuvo una calificación de 60,74 sobre 100.\n" + 
-				"-La titulación GRADO EN FÍSICA obtuvo una calificación de 64,51 sobre 100.\n" + 
-				"-La titulación GRADO EN MATEMÁTICAS obtuvo una calificación de 64,92 sobre 100.\n" + 
-				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN obtuvo una calificación de 65,15 sobre 100.\n" + 
-				"-La titulación GRADO EN QUÍMICA obtuvo una calificación de 65,59 sobre 100.\n" + 
-				"-La titulación GRADO EN CIENCIA POLÍTICA Y DE LA ADMINISTRACIÓN obtuvo una calificación de 65,62 sobre 100.\n" + 
-				"-La titulación GRADO EN TRABAJO SOCIAL obtuvo una calificación de 65,89 sobre 100.\n"));
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estos fueron los estudios de GRADO que obtuvieron menores resultados en cuanto a VALORACION_ESTUDIANTIL :\n" + 
+				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS INDUSTRIALES obtuvo unos resultados de 58,45.\n" + 
+				"-La titulación GRADO EN INGENIERÍA MECÁNICA obtuvo unos resultados de 59,53.\n" + 
+				"-La titulación GRADO EN ING. EN  ELECTRÓNICA INDUSTRIAL Y AUTOMÁTICA obtuvo unos resultados de 59,94.\n" + 
+				"-La titulación GRADO EN INGENIERÍA ELÉCTRICA obtuvo unos resultados de 60,74.\n" + 
+				"-La titulación GRADO EN FÍSICA obtuvo unos resultados de 64,51.\n" + 
+				"-La titulación GRADO EN MATEMÁTICAS obtuvo unos resultados de 64,92.\n" + 
+				"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN obtuvo unos resultados de 65,15.\n" + 
+				"-La titulación GRADO EN QUÍMICA obtuvo unos resultados de 65,59.\n" + 
+				"-La titulación GRADO EN CIENCIA POLÍTICA Y DE LA ADMINISTRACIÓN obtuvo unos resultados de 65,62.\n" + 
+				"-La titulación GRADO EN TRABAJO SOCIAL obtuvo unos resultados de 65,89.\n"));
 	}
 	
 	@Test
@@ -184,7 +185,7 @@ public class TestSolicitudesInformacionBBDD {
 		parametros.put(NombreParametro.ORDENAMIENTO, new IndicadorOrdenamiento("mayores", "MAYOR", new Stack<String>()));
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTOPTITULACION, parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estas fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a TASA_EXITOS :\n" + 
+		assertTrue(respuesta.equals("Durante el último curso académico registrado (2018 - 2019), estos fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a TASA_EXITOS :\n" + 
 				"-La titulación GRADO EN FILOSOFÍA obtuvo unos resultados de 92,84.\n" + 
 				"-La titulación GRADO EN ANTROPOLOGÍA SOCIAL Y CULTURAL obtuvo unos resultados de 92,19.\n" + 
 				"-La titulación GRADO EN HISTORIA DEL ARTE obtuvo unos resultados de 92,08.\n" + 

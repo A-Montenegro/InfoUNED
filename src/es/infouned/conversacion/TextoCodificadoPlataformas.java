@@ -2,6 +2,8 @@ package es.infouned.conversacion;
 
 import java.util.ArrayList;
 
+import es.infouned.conversacion.Conversacion.OrigenConversacion;
+
 /**
  * 
  * @author Alberto Martínez Montenegro
@@ -9,32 +11,32 @@ import java.util.ArrayList;
  */
 public class TextoCodificadoPlataformas {
 	
-	public static String obtenerSaltoDeLinea(String origenConversacion) {
+	public static String obtenerSaltoDeLinea(OrigenConversacion origenConversacion) {
 		String saltoDeLinea = new String("");
 		switch(origenConversacion) {
-			case "Facebook":
+			case FACEBOOK:
 				saltoDeLinea  = "\\u000A";
 			break;
-			case "Telegram":
+			case TELEGRAM:
 				saltoDeLinea = "\n";
 			break;
-			case "Web": 
-				saltoDeLinea = "<br>";
+			case WEB: 
+				saltoDeLinea = " <br>";
 			break;
 		}
 		return saltoDeLinea;
 	}
 	
-	public static String obtenerMensajeOpcionesCallBack(String origenConversacion, ArrayList<String> opciones) {
+	public static String obtenerMensajeOpcionesCallBack(OrigenConversacion origenConversacion, ArrayList<String> opciones) {
 		String mensajeOpcionesCallBack = new String("");
 		switch(origenConversacion) {
-			case "Facebook":
+			case FACEBOOK:
 				mensajeOpcionesCallBack  = "\\u000A";
 			break;
-			case "Telegram":
+			case TELEGRAM:
 				mensajeOpcionesCallBack = "\n";
 			break;
-			case "Web": 
+			case WEB: 
 				mensajeOpcionesCallBack = "<br>";
 			break;
 		}

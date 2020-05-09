@@ -12,10 +12,13 @@ import es.infouned.utilidades.ProcesamientoDeTexto;
 
 public class TestAprendizajeAutomatico{
 
+	private static Clasificador clasificador;
+	
 	@BeforeAll
 	private static void inicializarPropiedades() {
 		String rutaFicheroConfiguracion = "/config.properties";
 		Configuracion.establecerPropiedadesConfiguracionAPartirDeFichero(rutaFicheroConfiguracion);
+		clasificador = Configuracion.getClasificador();
 	}
 	
 	@AfterAll
@@ -25,18 +28,22 @@ public class TestAprendizajeAutomatico{
 	
 	@Test
     public void testNaiveBayes(){		
-		Clasificador clasificadorNaiveBayes = Configuracion.getClasificador();
-		assertTrue(clasificadorNaiveBayes instanceof ClasificadorNaiveBayes);
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("Cuanta gente se matricula de fundamentos matematicos de la informatica")).equals("solicitudMatriculados"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("cual es la asignatura mas dificil de cuarto curso de ingeniería informática")).equals("solicitudEstadisticaRendimientoTop"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("cual es el email para hablar con vosotros")).equals("informacionContacto"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("como hay que hacer para hacer la matricula online")).equals("informacionMatricula"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("la gente suele dejar la carrera")).equals("solicitudEstadisticaRendimiento"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("los estudiantes de la asignatura estan satisfechos")).equals("solicitudValoracionEstudiantil"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("¿Cual es la duración media el grado en turismo?")).equals("solicitudEstadisticaRendimiento"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("¿Cuanto cuestan las asignaturas del grado en geografía e historia?")).equals("solicitudPreciosTitulacion"));
-		assertTrue(clasificadorNaiveBayes.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("¿Cual es la nota media de HISTORIA DE LA ALTA EDAD MODERNA perteneciente al GRADO EN GEOGRAFÍA E HISTORIA?")).equals("solicitudEstadisticaRendimiento"));	
+		assertTrue(clasificador instanceof ClasificadorNaiveBayes);
+		assertTrue(esClasificacionCorrecta("Cuanta gente se matricula de","solicitudMatriculados"));
+		assertTrue(esClasificacionCorrecta("cual es la asignatura mas dificil de cuarto curso de","solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("cual es el email para hablar con vosotros","informacionContacto"));
+		assertTrue(esClasificacionCorrecta("como hay que hacer para hacer la matricula online","informacionMatricula"));
+		assertTrue(esClasificacionCorrecta("la gente suele dejar la carrera","solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("los estudiantes de la asignatura estan satisfechos","solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("¿Cuanto cuestan las asignaturas del?","solicitudPreciosTitulacion"));
+		assertTrue(esClasificacionCorrecta("¿Cual es la nota media de perteneciente al?","solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("¿Cuantos hacen la matrícula de?","solicitudMatriculados"));
+		assertTrue(esClasificacionCorrecta("Necesito información general sobre","solicitudGuia"));
+		assertTrue(esClasificacionCorrecta("los alumnos están descontentos con la titulación de", "solicitudEstadisticaRendimiento"));
 	}
 	
-
+	private boolean esClasificacionCorrecta(String textoAClasificar, String clasificacionEsperada) {
+		if (clasificador.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto(textoAClasificar)).equals(clasificacionEsperada)) return true;
+		return false;
+	}
 }

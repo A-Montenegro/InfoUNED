@@ -6,7 +6,6 @@ import java.util.Stack;
 import java.util.Map.Entry;
 
 import es.infouned.baseDeDatos.ConexionBaseDeDatos;
-import es.infouned.baseDeDatos.ConexionMySQL;
 import es.infouned.baseDeDatos.InstruccionSelect;
 import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.principal.Configuracion;

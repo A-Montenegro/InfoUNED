@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+import es.infouned.conversacion.CallBack.TipoCallBack;
+import es.infouned.conversacion.Conversacion.OrigenConversacion;
 import es.infouned.estudios.Asignatura;
+import es.infouned.estudios.AsignaturaBorrosa;
 import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.estudios.IndicadorOrdenamiento;
 import es.infouned.estudios.NivelEstudios;
@@ -21,6 +24,7 @@ public class FactoriaDeSolicitudInformacion {
 		SolicitudInformacion solicitudInformacion = null;
 		Titulacion titulacion;
 		Asignatura asignatura;
+		AsignaturaBorrosa asignaturaBorrosa;
 		IndicadorOrdenamiento ordenamiento;
 		Stack<CriterioConsultaSQL> criteriosConsultaSQL;
 		ParametroEstadistico parametroEstadisticoTitulacion;
@@ -50,12 +54,6 @@ public class FactoriaDeSolicitudInformacion {
 			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
 			solicitudInformacion = new SolicitudMatriculadosTitulacion(titulacion);
 		break;
-		case VALORACIONESTUDIANTILTITULACION:
-			assert(parametros.size() == 1);
-			assert(parametros.containsKey(NombreParametro.TITULACION));
-			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
-			solicitudInformacion = new SolicitudValoracionEstudiantilTitulacion(titulacion);
-		break;
 		case MATRICULADOSASIGNATURA:
 			assert(parametros.size() == 2);
 			assert(parametros.containsKey(NombreParametro.TITULACION) && parametros.containsKey(NombreParametro.ASIGNATURA));
@@ -63,34 +61,12 @@ public class FactoriaDeSolicitudInformacion {
 			asignatura = (Asignatura) parametros.get(NombreParametro.ASIGNATURA);
 			solicitudInformacion = new SolicitudMatriculadosAsignatura(titulacion, asignatura);
 		break;
-		case VALORACIONESTUDIANTILASIGNATURA:
-			assert(parametros.size() == 2);
-			assert(parametros.containsKey(NombreParametro.TITULACION) && parametros.containsKey(NombreParametro.ASIGNATURA));
-			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
-			asignatura = (Asignatura) parametros.get(NombreParametro.ASIGNATURA);
-			solicitudInformacion = new SolicitudValoracionEstudiantilAsignatura(titulacion, asignatura);
-		break;
-		case VALORACIONESTUDIANTILTOPASIGNATURA:
-			assert(parametros.size() == 3);
-			assert(parametros.containsKey(NombreParametro.TITULACION) && parametros.containsKey(NombreParametro.ORDENAMIENTO) && parametros.containsKey(NombreParametro.CRITERIOSCONSULTASQL));
-			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
-			ordenamiento = (IndicadorOrdenamiento) parametros.get(NombreParametro.ORDENAMIENTO);
-			criteriosConsultaSQL = (Stack<CriterioConsultaSQL>) parametros.get(NombreParametro.CRITERIOSCONSULTASQL);
-			solicitudInformacion = new SolicitudValoracionEstudiantilTopAsignatura(titulacion, ordenamiento.getLiteral(), criteriosConsultaSQL);
-		break;
 		case ESTADISTICARENDIMIENTOTITULACION:
 			assert(parametros.size() == 2);
 			assert(parametros.containsKey(NombreParametro.TITULACION) && parametros.containsKey(NombreParametro.PARAMETROESTADISTICOTITULACION));
 			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
 			parametroEstadisticoTitulacion = (ParametroEstadistico) parametros.get(NombreParametro.PARAMETROESTADISTICOTITULACION);
 			solicitudInformacion = new SolicitudEstadisticaRendimientoTitulacion(titulacion, parametroEstadisticoTitulacion);
-		break;
-		case VALORACIONESTUDIANTILTOPTITULACION:
-			assert(parametros.size() == 2);
-			assert(parametros.containsKey(NombreParametro.NIVELESTUDIOS) && parametros.containsKey(NombreParametro.ORDENAMIENTO));
-			nivelEstudios = (NivelEstudios) parametros.get(NombreParametro.NIVELESTUDIOS);
-			ordenamiento = (IndicadorOrdenamiento) parametros.get(NombreParametro.ORDENAMIENTO);
-			solicitudInformacion = new SolicitudValoracionEstudiantilTopTitulacion(nivelEstudios.getNombreNivelEstudios().toString(), ordenamiento.getLiteral());
 		break;
 		case ESTADISTICARENDIMIENTOTOPTITULACION:
 			assert(parametros.size() == 3);
@@ -117,19 +93,34 @@ public class FactoriaDeSolicitudInformacion {
 			parametroEstadisticoAsignatura = (ParametroEstadistico) parametros.get(NombreParametro.PARAMETROESTADISTICOASIGNATURA);
 			solicitudInformacion = new SolicitudEstadisticaRendimientoAsignatura(titulacion, asignatura, parametroEstadisticoAsignatura);
 		break;
-		case ASIGNATURANOPERTENECIENTEATITULACION:
-			assert(parametros.size() == 2);
-			assert(parametros.containsKey(NombreParametro.TITULACION) && parametros.containsKey(NombreParametro.ASIGNATURA));
+		case GUIAASIGNATURA:
+			assert(parametros.size() == 1 || parametros.size() == 2);
+			assert(parametros.containsKey(NombreParametro.TITULACION));
 			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
 			asignatura = (Asignatura) parametros.get(NombreParametro.ASIGNATURA);
-			solicitudInformacion = new SolicitudInformacionIncorrecta("asignaturaNoPerteneceATitulacion", titulacion, asignatura);
+			solicitudInformacion = new SolicitudGuia(titulacion, asignatura);
+		break;
+		case ASIGNATURANOPERTENECIENTEATITULACION:
+			assert(parametros.size() == 2);
+			assert(parametros.containsKey(NombreParametro.TITULACION) && (parametros.containsKey(NombreParametro.ASIGNATURA) || parametros.containsKey(NombreParametro.ASIGNATURABORROSA)));
+			titulacion = (Titulacion) parametros.get(NombreParametro.TITULACION);
+			if(parametros.containsKey(NombreParametro.ASIGNATURA)) {
+				asignatura = (Asignatura) parametros.get(NombreParametro.ASIGNATURA);
+				solicitudInformacion = new SolicitudInformacionIncorrecta("asignaturaNoPerteneceATitulacion", titulacion, asignatura);
+			}
+			else {
+				asignaturaBorrosa = (AsignaturaBorrosa) parametros.get(NombreParametro.ASIGNATURABORROSA);
+				solicitudInformacion = new SolicitudInformacionIncorrecta("asignaturaBorrosaNoPerteneceATitulacion", titulacion, asignaturaBorrosa);
+			}
 		break;
 		case CALLBACK:
-			assert(parametros.size() == 2);
-			assert(parametros.containsKey(NombreParametro.ORIGENCONVERSACION) && parametros.containsKey(NombreParametro.OPCIONES));
-			String origenConversacion = (String) parametros.get(NombreParametro.ORIGENCONVERSACION);
+			assert(parametros.size() == 4);
+			assert(parametros.containsKey(NombreParametro.ORIGENCONVERSACION) && parametros.containsKey(NombreParametro.OPCIONES) && parametros.containsKey(NombreParametro.TIPOCALLBACK) && parametros.containsKey(NombreParametro.PARAMETROSCALLBACK));
+			TipoCallBack tipoCallBack = (TipoCallBack) parametros.get(NombreParametro.TIPOCALLBACK);
+			HashMap<NombreParametro,Object> parametrosCallBack = (HashMap<NombreParametro,Object>) parametros.get(NombreParametro.PARAMETROSCALLBACK);
+			OrigenConversacion origenConversacion = (OrigenConversacion) parametros.get(NombreParametro.ORIGENCONVERSACION);
 			ArrayList<String> opciones = (ArrayList<String>) parametros.get(NombreParametro.OPCIONES);
-			solicitudInformacion = new SolicitudInformacionCallBack(origenConversacion, opciones);
+			solicitudInformacion = new SolicitudInformacionCallBack(tipoCallBack, parametrosCallBack, origenConversacion, opciones);
 		break;
 		default:
 			throw new IllegalArgumentException("La tipo de solicitud de información no encaja con ninguna de las opciones codificadas.");
@@ -143,12 +134,9 @@ public class FactoriaDeSolicitudInformacion {
 		INFORMACIONGENERICA,
 		PRECIOSTITULACION,
 		MATRICULADOSTITULACION,
-		VALORACIONESTUDIANTILTITULACION,
 		MATRICULADOSASIGNATURA,
-		VALORACIONESTUDIANTILASIGNATURA,
-		VALORACIONESTUDIANTILTOPASIGNATURA,
+		GUIAASIGNATURA,
 		ESTADISTICARENDIMIENTOTITULACION,
-		VALORACIONESTUDIANTILTOPTITULACION,
 		ESTADISTICARENDIMIENTOTOPTITULACION,
 		ESTADISTICARENDIMIENTOTOPASIGNATURA,
 		ESTADISTICARENDIMIENTOASIGNATURA,
@@ -159,6 +147,7 @@ public class FactoriaDeSolicitudInformacion {
 	public enum NombreParametro {
 		TITULACION,
 		ASIGNATURA,
+		ASIGNATURABORROSA,
 		ORIGENCONVERSACION,
 		OPCIONES,
 		VALORACIONESTUDIANTILTITULACION,
@@ -169,5 +158,7 @@ public class FactoriaDeSolicitudInformacion {
 		ORDENAMIENTO,
 		CRITERIOSCONSULTASQL,
 		NIVELESTUDIOS,
+		TIPOCALLBACK,
+		PARAMETROSCALLBACK
 	}
 }

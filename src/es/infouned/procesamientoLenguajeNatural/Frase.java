@@ -7,6 +7,7 @@ import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.estudios.Estudio;
 import es.infouned.estudios.IndicadorOrdenamiento;
 import es.infouned.estudios.NivelEstudios;
+import es.infouned.estudios.NivelEstudios.NombreNivelEstudios;
 import es.infouned.estudios.ParametroEstadistico;
 
 
@@ -23,6 +24,12 @@ public class Frase {
 	private ArrayList<Estudio> estudiosAludidos;
 	private Stack<NivelEstudios> nivelesEstudiosAludidos;
 	private Stack<IndicadorOrdenamiento> indicadoresOrdenamientoAludidos;
+	private IndicadorOrdenamiento indicadorOrdenamientoPrincipal;
+	private NivelEstudios nivelEstudiosPrincipal;
+	public NivelEstudios getNivelEstudiosPrincipal() {
+		return nivelEstudiosPrincipal;
+	}
+
 	private Stack<CriterioConsultaSQL> criteriosConsultaSQLAludidos;
 
 	public Frase() {
@@ -39,14 +46,23 @@ public class Frase {
 		indicadoresOrdenamientoAludidos = new Stack<IndicadorOrdenamiento>();
 		nivelesEstudiosAludidos = new Stack<NivelEstudios>();
 		criteriosConsultaSQLAludidos = new Stack<CriterioConsultaSQL>();	
+		indicadorOrdenamientoPrincipal = new IndicadorOrdenamiento("NO_DETECTADO", "NO_DETECTADO", new Stack<String>());
+		nivelEstudiosPrincipal = new NivelEstudios(NombreNivelEstudios.GRADO, new Stack<String>());
 	}
 	
+	public IndicadorOrdenamiento getIndicadorOrdenamientoPrincipal() {
+		return indicadorOrdenamientoPrincipal;
+	}
+
 	public Stack<NivelEstudios> getNivelesEstudiosAludidos() {
 		return nivelesEstudiosAludidos;
 	}
 
 	public void setNivelesEstudiosAludidos(Stack<NivelEstudios> nivelesEstudiosAludidos) {
 		this.nivelesEstudiosAludidos = nivelesEstudiosAludidos;
+		if(!nivelesEstudiosAludidos.isEmpty()) {
+			nivelEstudiosPrincipal = nivelesEstudiosAludidos.get(0);
+		}
 	}
 
 	public String getTextoFrase() {
@@ -81,6 +97,23 @@ public class Frase {
 		return clasificacion;
 	}
 	
+	public String obtenerTextoFraseSinEstudiosAludidos() {
+		String textoFraseSinEstudiosAludidos = new String();
+		boolean esPrimerToken = true;
+		for(int indiceToken = 0; indiceToken < tokens.size(); indiceToken++) {
+			if(vectorEstudiosAludidos.get(indiceToken) == null) {
+				if(esPrimerToken) {
+					textoFraseSinEstudiosAludidos += tokens.get(indiceToken);
+					esPrimerToken = false;
+				}
+				else {
+					textoFraseSinEstudiosAludidos += " " + tokens.get(indiceToken);
+				}
+			}
+		}
+		return textoFraseSinEstudiosAludidos;
+	}
+	
 	public ArrayList<Estudio> getVectorEstudiosAludidos() {
 		return vectorEstudiosAludidos;
 	}
@@ -99,8 +132,11 @@ public class Frase {
 
 	public void setIndicadoresOrdenamientoAludidos(Stack<IndicadorOrdenamiento> indicadoresOrdenamientoAludidos) {
 		this.indicadoresOrdenamientoAludidos = indicadoresOrdenamientoAludidos;
+		if(!indicadoresOrdenamientoAludidos.isEmpty()) {
+			indicadorOrdenamientoPrincipal = indicadoresOrdenamientoAludidos.get(0);
+		}
 	}
-
+	
 	public Stack<CriterioConsultaSQL> getCriteriosConsultaSQLAludidos() {
 		return criteriosConsultaSQLAludidos;
 	}

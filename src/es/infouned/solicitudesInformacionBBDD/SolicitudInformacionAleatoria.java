@@ -33,8 +33,8 @@ public class SolicitudInformacionAleatoria{
 		ParametroEstadistico parametroEstadisticoTitulacion = null;
 		ParametroEstadistico parametroEstadisticoAsignatura = null;
 		Stack <CriterioConsultaSQL> criteriosConsultaSQL = new Stack<CriterioConsultaSQL>();
-		int numeroAleatorioEntre1y11 = obtenerNumeroAleatorio(1,11);
-		switch(numeroAleatorioEntre1y11) {
+		int numeroAleatorioEntre1y7 = obtenerNumeroAleatorio(1,7);
+		switch(numeroAleatorioEntre1y7) {
 			case 1:
 				titulacion = obtenerTitulacionAleatoria();
 				solicitudInformacion = new SolicitudPreciosTitulacion(titulacion);
@@ -45,51 +45,31 @@ public class SolicitudInformacionAleatoria{
 				break;
 			case 3:
 				titulacion = obtenerTitulacionAleatoria();
-				solicitudInformacion = new SolicitudValoracionEstudiantilTitulacion(titulacion);
-				break;
-			case 4:
-				nivelEstudios = obtenerNivelEstudiosAleatorio();
-				ordenamiento = obtenerOrdenamientoAleatorio();
-				solicitudInformacion = new SolicitudValoracionEstudiantilTopTitulacion(nivelEstudios, ordenamiento);
-				break;
-			case 5:
-				titulacion = obtenerTitulacionAleatoria();
 				parametroEstadisticoTitulacion = obtenerParametroEstadisticoRendimientoTitulacionAleatorio();
 				solicitudInformacion = new SolicitudEstadisticaRendimientoTitulacion(titulacion, parametroEstadisticoTitulacion);
 				break;
-			case 6:
+			case 4:
 				titulacion = obtenerTitulacionAleatoria();
 				asignatura = obtenerAsignaturaAleatoriaDeTitulacion(titulacion.getIdTitulacion());
 				solicitudInformacion = new SolicitudMatriculadosAsignatura(titulacion, asignatura);
 				break;
-			case 7:
-				titulacion = obtenerTitulacionAleatoria();
-				asignatura = obtenerAsignaturaAleatoriaDeTitulacion(titulacion.getIdTitulacion());
-				solicitudInformacion = new SolicitudValoracionEstudiantilAsignatura(titulacion, asignatura);
-				break;
-			case 8:
-				titulacion = obtenerTitulacionAleatoria();
-				ordenamiento = obtenerOrdenamientoAleatorio();
-				criteriosConsultaSQL.push(new CriterioConsultaSQL("Pertenece al 4º curso","CURSO='4º'",new Stack<String>()));
-				solicitudInformacion = new SolicitudValoracionEstudiantilTopAsignatura(titulacion, ordenamiento, criteriosConsultaSQL);
-				break;
-			case 9:
+			case 5:
 				titulacion = obtenerTitulacionAleatoria();
 				asignatura = obtenerAsignaturaAleatoriaDeTitulacion(titulacion.getIdTitulacion());
 				parametroEstadisticoAsignatura = obtenerParametroEstadisticoRendimientoAsignaturaAleatorio();
 				solicitudInformacion = new SolicitudEstadisticaRendimientoAsignatura(titulacion, asignatura, parametroEstadisticoAsignatura);
 				break;
-			case 10:
+			case 6:
 				nivelEstudios = obtenerNivelEstudiosAleatorio();
 				parametroEstadisticoTitulacion = obtenerParametroEstadisticoRendimientoTitulacionAleatorio();
 				ordenamiento = obtenerOrdenamientoAleatorio();
 				solicitudInformacion = new SolicitudEstadisticaRendimientoTopTitulacion(nivelEstudios, parametroEstadisticoTitulacion, ordenamiento);
 				break;
-			case 11:
+			case 7:
 				titulacion = obtenerTitulacionAleatoria();
 				parametroEstadisticoAsignatura = obtenerParametroEstadisticoRendimientoAsignaturaAleatorio();
 				ordenamiento = obtenerOrdenamientoAleatorio();
-				criteriosConsultaSQL.push(new CriterioConsultaSQL("Pertenece al 4º curso","CURSO='4º'",new Stack<String>()));
+				criteriosConsultaSQL.push(new CriterioConsultaSQL("CURSO='4º'", "Pertenece al 4º curso", new Stack<String>()));
 				solicitudInformacion = new SolicitudEstadisticaRendimientoTopAsignatura(titulacion, parametroEstadisticoAsignatura, ordenamiento, criteriosConsultaSQL);
 				break;
 		}

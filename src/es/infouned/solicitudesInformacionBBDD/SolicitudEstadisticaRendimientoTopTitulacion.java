@@ -48,7 +48,7 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 							+ "." + complementoDeLinea + saltoDeLinea;
 				} while(resultSet.next());
 				cadenaRespuesta = "Durante el último curso académico registrado (" + cursoAcademico
-						  + "), estas fueron los estudios de " + nombreNivelEstudios.toUpperCase() + " que obtuvieron " + ordenamiento
+						  + "), estos fueron los estudios de " + nombreNivelEstudios.toUpperCase() + " que obtuvieron " + ordenamiento
 						  + " resultados en cuanto a " + parametroEstadistico.getNombre() + " :"
 						  + saltoDeLinea + cadenaRespuesta;
 			}
