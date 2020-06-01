@@ -5,6 +5,11 @@ import es.infouned.estudios.Asignatura;
 import es.infouned.estudios.AsignaturaBorrosa;
 import es.infouned.estudios.Titulacion;
 
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario se considera que está mal planteada.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudInformacionIncorrecta extends SolicitudInformacion{
 	private String tipoIncorreccion;
 	private Titulacion titulacion;

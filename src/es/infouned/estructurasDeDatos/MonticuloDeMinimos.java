@@ -3,10 +3,10 @@ package es.infouned.estructurasDeDatos;
 import java.util.Comparator;
 
 /**
-* 
 * Clase que implementa un montículo de mínimos.
-* Se ha construído a partir del pseudocódigo del libro base, por lo tanto cualquier información sobre su funcionamiento puede consularse en él.
 * @author Alberto Martínez Montenegro
+* 
+* 
 */
 public class MonticuloDeMinimos<T>{
 	private Node<T>[] nodos;

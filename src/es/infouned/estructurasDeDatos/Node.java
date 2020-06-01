@@ -1,6 +1,10 @@
 package es.infouned.estructurasDeDatos;
 
-
+/**
+ * Clase que simboliza un nodo del montículo de mínimos.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Node<T> {
 
 	private T value;

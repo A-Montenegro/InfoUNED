@@ -5,7 +5,11 @@ import java.sql.SQLException;
 
 import es.infouned.estudios.Titulacion;
 
-
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario está relacionada con el número de matriculados de una titulación.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudMatriculadosTitulacion extends SolicitudInformacion{
 	
 	private Titulacion titulacion;

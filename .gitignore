@@ -5,3 +5,4 @@ target/classes/StanfordCoreNLP-spanish.properties
 edu/
 modeloNaiveBayesEntrenado.model
 estructuraDataSet.arff
+/target/

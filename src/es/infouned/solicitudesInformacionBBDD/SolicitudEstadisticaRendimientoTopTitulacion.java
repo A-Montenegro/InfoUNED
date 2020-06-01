@@ -7,7 +7,11 @@ import java.sql.SQLException;
 
 import es.infouned.estudios.ParametroEstadistico;
 
-
+/**
+ *  Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario está relacionada con el rendimiento de titulaciones por ranking.
+ * @author Alberto Martínez Montenegro
+ *
+ */
 public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInformacion{
 	
 	private String ordenamiento;

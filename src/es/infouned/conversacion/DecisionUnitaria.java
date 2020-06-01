@@ -21,6 +21,11 @@ import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.NombreParametro;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 
+/**
+ * Esta clase usa todos los datos que recibe en su constructor para generar la instancia de SolicitudInformacion correcta.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class DecisionUnitaria {
 	private String clasificacion;
 	private int numeroEstudiosAludidos;
@@ -69,7 +74,11 @@ public class DecisionUnitaria {
 				parametros.put(NombreParametro.IDINFORMACIONGENERICA, "matriculaAdmisionPorInternet");
 				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
 				break;
-				
+
+			case "solicitudCUID":
+				parametros.put(NombreParametro.IDINFORMACIONGENERICA, "solicitudCUID");
+				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
+				break;
 				
 			case "solicitudEstadisticaRendimiento":
 				switch(numeroEstudiosAludidos) {
@@ -109,7 +118,7 @@ public class DecisionUnitaria {
 							}
 							break;
 						case 1:
-							if(indicadorOrdenamientoPrincipal.getLiteral().equals("NO_DETECTADO")) {
+							if(indicadorOrdenamientoPrincipal.getNombre().equals("NO_DETECTADO")) {
 								parametros.put(NombreParametro.TITULACION, titulacionAludida);
 								parametros.put(NombreParametro.PARAMETROESTADISTICOTITULACION, parametrosEstadisiticosTitulacionAludidos.get(0));
 								solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.ESTADISTICARENDIMIENTOTITULACION, parametros);

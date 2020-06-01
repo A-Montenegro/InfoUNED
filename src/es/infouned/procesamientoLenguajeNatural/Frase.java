@@ -10,7 +10,11 @@ import es.infouned.estudios.NivelEstudios;
 import es.infouned.estudios.NivelEstudios.NombreNivelEstudios;
 import es.infouned.estudios.ParametroEstadistico;
 
-
+/**
+ * Clase que simboliza una frase individual. Además del texto de la frase, en esta clase se albergan todas las entidades detectadas.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Frase {
 	private String textoFrase;
 	private ArrayList<String> tokens;
@@ -46,7 +50,7 @@ public class Frase {
 		indicadoresOrdenamientoAludidos = new Stack<IndicadorOrdenamiento>();
 		nivelesEstudiosAludidos = new Stack<NivelEstudios>();
 		criteriosConsultaSQLAludidos = new Stack<CriterioConsultaSQL>();	
-		indicadorOrdenamientoPrincipal = new IndicadorOrdenamiento("NO_DETECTADO", "NO_DETECTADO", new Stack<String>());
+		indicadorOrdenamientoPrincipal = new IndicadorOrdenamiento("mayores", "NO_DETECTADO", new Stack<String>());
 		nivelEstudiosPrincipal = new NivelEstudios(NombreNivelEstudios.GRADO, new Stack<String>());
 	}
 	

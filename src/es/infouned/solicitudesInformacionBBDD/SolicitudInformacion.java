@@ -10,6 +10,11 @@ import es.infouned.baseDeDatos.InstruccionSelect;
 import es.infouned.estudios.CriterioConsultaSQL;
 import es.infouned.principal.Configuracion;
 
+/**
+ * Clase astracta que implementa los métodos comunes de todas las solicitude de información, y especifica el método abstracto generarCadenaRespuesta() que han de implementar.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public abstract class SolicitudInformacion {
 	protected ConexionBaseDeDatos conexionBaseDeDatos;
 	protected InstruccionSelect instruccionSelect;

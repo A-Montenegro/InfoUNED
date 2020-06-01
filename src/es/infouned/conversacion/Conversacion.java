@@ -21,15 +21,12 @@ public class Conversacion {
 	private String saltoDeLinea;
 	private Stack<Mensaje> mensajes;
 	private String respuestaActual;
-	private Interlocutor interlocutor;
 	private CallBack callBack;
 	
 	public Conversacion(String idConversacion, OrigenConversacion origen) {
 		this.chatID = idConversacion;
 		this.origenConversacion = origen;
 		this.saltoDeLinea = TextoCodificadoPlataformas.obtenerSaltoDeLinea(origen);
-		this.interlocutor = new Interlocutor();
-		interlocutor.setNombre("Berto");
 		mensajes = new Stack<Mensaje>();
 		respuestaActual = new String("");
 		this.callBack= new CallBack();

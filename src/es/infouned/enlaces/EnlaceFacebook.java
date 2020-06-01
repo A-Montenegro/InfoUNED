@@ -16,9 +16,10 @@ import es.infouned.conversacion.HistoricoConversaciones;
 import es.infouned.utilidades.ProcesamientoDeTexto;
 
 /**
- * 
+ * Esta clse se encarga de establecer comunicación con la plataforma Facebook, usando la clase Conversacion para obtener las respuestas que deben facilitar.
  * @author Alberto Martínez Montenegro
- *
+ * 
+ * 
  */
 public class EnlaceFacebook{
 	String rutaFicheroConfiguracion;

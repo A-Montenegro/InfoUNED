@@ -2,6 +2,12 @@ package es.infouned.estudios;
 
 import java.text.Normalizer;
 
+/**
+ * Clase abstracta que simboliza cualquier tipo de estudio.
+ * @author Alberto Martínez Montenegro
+ * 
+ * 
+ */
 public abstract class Estudio {
 	private String nombre;
 	

@@ -4,6 +4,11 @@ import java.util.Stack;
 
 import es.infouned.estudios.Estudio.TipoEstudio;
 
+/**
+ * Clase que simboliza un criterio SQL que se usará de filtro en las consultas del chatbot a la base de datos.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class CriterioConsultaSQL {
 	private TipoEstudio tipoEstudio;
 	private String literal;

@@ -20,6 +20,11 @@ import es.infouned.principal.Configuracion;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * Clase que devuelve una solicitud de información aleatoria.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudInformacionAleatoria{
 	private  ConexionBaseDeDatos conexionBaseDeDatos = Configuracion.getConexionBaseDeDatos();
 	

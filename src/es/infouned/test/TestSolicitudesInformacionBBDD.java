@@ -28,7 +28,11 @@ import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.Nom
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 
-
+/**
+ * Clase de pruebas unitarias destinadas a probar el correcto funcionamento de las consultas a la base de datos.
+ * @author Alberto Martínez Montenegro
+ *  
+ */
 public class TestSolicitudesInformacionBBDD {
 	
 	@BeforeAll

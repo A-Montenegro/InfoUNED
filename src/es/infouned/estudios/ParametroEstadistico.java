@@ -4,6 +4,11 @@ import java.util.Stack;
 
 import es.infouned.estudios.Estudio.TipoEstudio;
 
+/**
+ * Clase que simboliza un parámetro estadístico detectable. Se usará para consultas específicas a la base de datos.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class ParametroEstadistico {
 	private TipoEstudio tipoEstudio;
 	private String literal;

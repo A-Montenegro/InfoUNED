@@ -211,14 +211,14 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 	  	String cadenaDeTextoResultados = new String();
 	    for (int indiceFrase=0; indiceFrase < obtenerFrases().size(); indiceFrase++) {
 	    	Frase frase = obtenerFrases().get(indiceFrase);
+	    	String textoFrase = frase.getTextoFrase();
+		    cadenaDeTextoResultados += "El texto de la frase número " + (indiceFrase + 1 ) + " es: ";
+		    cadenaDeTextoResultados += textoFrase;
+		    cadenaDeTextoResultados += saltoDeLinea;
 		    for (int indiceToken=0; indiceToken < frase.getTokens().size(); indiceToken++) {
 		    	String token = frase.getTokens().get(indiceToken);
 		    	cadenaDeTextoResultados += "El Token número " + indiceToken + " es: " + token + saltoDeLinea;
 		    }
-		    String textoFrase = frase.getTextoFrase();
-		    cadenaDeTextoResultados += "El texto de la frase a analizar es: ";
-		    cadenaDeTextoResultados += textoFrase;
-		    cadenaDeTextoResultados += saltoDeLinea;
 		    ArrayList<String> posTags =  frase.getPosTags();
 		    cadenaDeTextoResultados += "POS Tags: ";
 		    cadenaDeTextoResultados += posTags;
@@ -226,8 +226,8 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 		    List<String> nerTags = frase.getNerTags();
 		    cadenaDeTextoResultados += "NER tags: ";
 		    cadenaDeTextoResultados += nerTags;
-		    cadenaDeTextoResultados += saltoDeLinea;
-		    ArrayList<Estudio> vectorEstudiosAludidos = frase.getVectorEstudiosAludidos();
+		    cadenaDeTextoResultados += saltoDeLinea + saltoDeLinea;
+		    /**ArrayList<Estudio> vectorEstudiosAludidos = frase.getVectorEstudiosAludidos();
 		    int numeroEstudiosAludidos = frase.getNumeroEstudiosAludidos();
 		    cadenaDeTextoResultados += "Estudios aludidos: ";
 		    cadenaDeTextoResultados += vectorEstudiosAludidos;
@@ -240,7 +240,7 @@ public class ProcesadorLenguajeNaturalStanford implements ProcesadorLenguajeNatu
 			    cadenaDeTextoResultados +="Ejemplo relación: ";
 			    cadenaDeTextoResultados += relations.get(0);
 			    cadenaDeTextoResultados += saltoDeLinea;
-		    }
+		    }**/
 	    }
 	    return cadenaDeTextoResultados;
 	}

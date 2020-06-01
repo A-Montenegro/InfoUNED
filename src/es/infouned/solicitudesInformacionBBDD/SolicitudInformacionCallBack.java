@@ -7,7 +7,11 @@ import es.infouned.conversacion.Conversacion.OrigenConversacion;
 import es.infouned.estudios.Asignatura;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.NombreParametro;
 
-
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario queda pendiente de CallBack.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudInformacionCallBack extends SolicitudInformacion{
 	private ArrayList<String> opciones;
 	private OrigenConversacion origenConversacion;

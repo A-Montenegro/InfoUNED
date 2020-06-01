@@ -35,6 +35,11 @@ import es.infouned.procesamientoLenguajeNatural.ProcesadorLenguajeNatural;
 import es.infouned.procesamientoLenguajeNatural.ProcesadorLenguajeNaturalStanford;
 import es.infouned.utilidades.ProcesamientoDeTexto;
 
+/**
+ * Clase que simboliza la configuración del sistema. Se encarga de crear, contener y facilitar todas las herramientas necesarias para que funcione el chatbot.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Configuracion {
 	private static ArrayList<Conversacion> conversaciones =  new ArrayList<Conversacion>();
 	private static ProcesadorLenguajeNatural procesadorLenguajeNatural;

@@ -1,5 +1,10 @@
 package es.infouned.estructurasDeDatos;
 
+/**
+ * Clase que simboliza una pareja de objetos de cualquier clase.
+ * @author Alberto Martínez Montenegro
+ *
+ */
 public class Par <TipoObjeto1, TipoObjeto2> {
     private TipoObjeto1 objeto1;
     private TipoObjeto2 objeto2;

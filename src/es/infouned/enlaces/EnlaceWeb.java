@@ -5,7 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Clase que se encarga de crear un enlace a través de sockets con los usuarios que interactúen con el chatbot a través de la página web.
+ * Clase que se encarga de crear un enlace a través de sockets con los usuarios
+ * que interactúen con el chatbot a través de la página web.
  * @author Alberto Martínez Montenegro
  *
  */
@@ -24,13 +25,15 @@ public class EnlaceWeb {
     public void iniciarSocketServidor() {
         while(true) {	
 	        try {
-	        	// Escuchando en el puerto correspondiente a la espera de que un cliente intente comunicarse con el socket.
+	        	// Escuchando en el puerto correspondiente a la espera de que un 
+	        	// cliente intente comunicarse con el socket.
 	            socket = servidorSocket.accept();   
 	        } catch (IOException excepcionIO) {
 	        	excepcionIO.printStackTrace();
 	            return;
 	        } 
-	        // Un cliente se ha comunicado a través del socket, se ejecutan las acciones necesarias en un nuevo hilo de ejecución.
+	        // Un cliente se ha comunicado a través del socket, se ejecutan las acciones
+	        // necesarias en un nuevo hilo de ejecución.
 	        new HiloEjecucionClienteEnlaceWeb(socket).start();
         }
     }

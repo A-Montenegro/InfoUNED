@@ -17,9 +17,9 @@ import es.infouned.conversacion.HistoricoConversaciones;
 import es.infouned.principal.Configuracion;
 
 /**
- * 
+ * Esta clse se encarga de establecer comunicación con la plataforma Telegram, usando la clase Conversacion para obtener las respuestas que deben facilitar.
  * @author Alberto Martínez Montenegro
- *
+ * 
  */
  public class EnlaceTelegram extends TelegramLongPollingBot { 
 	private String botUserName;
@@ -39,11 +39,17 @@ import es.infouned.principal.Configuracion;
         }
     }
    
+	/***
+	 *  Método que devuelve el nombre de usuario del bot, que ha sido leído del fichero de propiedades.
+	 */
     @Override
     public String getBotUsername() {
         return botUserName;
     }
 
+    /***
+	 *  Método que devuelve el token de autentificación del bot, que ha sido leído del fichero de propiedades.
+	 */
     @Override
     public String getBotToken() {
         return botToken;

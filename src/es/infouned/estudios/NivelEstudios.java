@@ -2,6 +2,11 @@ package es.infouned.estudios;
 
 import java.util.Stack;
 
+/**
+ * Clase que simboliza el nivel de estudios de una determinada titulación.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class NivelEstudios {
 	private Stack<String> nomenclaturas;
 	private NombreNivelEstudios nombreNivelEstudios;

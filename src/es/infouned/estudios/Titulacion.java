@@ -1,6 +1,10 @@
 package es.infouned.estudios;
 
-
+/**
+ * Clase que simboliza una titulación.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Titulacion extends Estudio{
 	private int idTitulacion;
 	private String nivelEstudios;

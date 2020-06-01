@@ -1,5 +1,10 @@
 package es.infouned.estudios;
 
+/**
+ * Clase que simboliza una asignatura común.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Asignatura extends Estudio{
 	private String idAsignatura;
 	private float creditos;

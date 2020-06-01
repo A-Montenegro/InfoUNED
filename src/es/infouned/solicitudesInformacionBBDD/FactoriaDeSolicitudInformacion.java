@@ -16,6 +16,11 @@ import es.infouned.estudios.NivelEstudios;
 import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
 
+/**
+ * Clase que se encarga de la creación de instancias de tipo SolicitudInformacion mediante métodos estáticos.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class FactoriaDeSolicitudInformacion {
 
 	

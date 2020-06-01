@@ -6,6 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Clase que implementa el algoritmo Quicksort para ordenamiento de colecciones.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class Quicksort<T> {
 	private Comparator<T> comparador;
 	private Random rand;

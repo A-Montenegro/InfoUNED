@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import es.infouned.estructurasDeDatos.MonticuloDeMinimos;
 import es.infouned.utilidades.Quicksort;
 
+/**
+ * Clase de pruebas unitarias destinadas a probar el correcto funcionamento del paquete de utilidades.
+ * @author Alberto Martínez Montenegro
+ *  
+ */
 public class TestUtilidades {
 	
 	@Test

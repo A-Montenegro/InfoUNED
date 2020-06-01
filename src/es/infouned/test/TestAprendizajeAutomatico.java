@@ -10,6 +10,11 @@ import es.infouned.aprendizajeAutomatico.ClasificadorNaiveBayes;
 import es.infouned.principal.Configuracion;
 import es.infouned.utilidades.ProcesamientoDeTexto;
 
+/**
+ * Clase de pruebas unitarias destinadas a probar el correcto funcionamento del paquete de aprendizaje automático.
+ * @author Alberto Martínez Montenegro
+ *
+ */
 public class TestAprendizajeAutomatico{
 
 	private static Clasificador clasificador;
@@ -30,6 +35,8 @@ public class TestAprendizajeAutomatico{
     public void testNaiveBayes(){		
 		assertTrue(clasificador instanceof ClasificadorNaiveBayes);
 		assertTrue(esClasificacionCorrecta("Cuanta gente se matricula de","solicitudMatriculados"));
+		System.out.println(clasificador.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("los alumnos estan descontentos con la titulación de")));
+		assertTrue(esClasificacionCorrecta("Cuanto cuesta estudiar en la uned","solicitudPreciosTitulacion"));
 		assertTrue(esClasificacionCorrecta("cual es la asignatura mas dificil de cuarto curso de","solicitudEstadisticaRendimiento"));
 		assertTrue(esClasificacionCorrecta("cual es el email para hablar con vosotros","informacionContacto"));
 		assertTrue(esClasificacionCorrecta("como hay que hacer para hacer la matricula online","informacionMatricula"));
@@ -40,6 +47,8 @@ public class TestAprendizajeAutomatico{
 		assertTrue(esClasificacionCorrecta("¿Cuantos hacen la matrícula de?","solicitudMatriculados"));
 		assertTrue(esClasificacionCorrecta("Necesito información general sobre","solicitudGuia"));
 		assertTrue(esClasificacionCorrecta("los alumnos están descontentos con la titulación de", "solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("Cual es la tasa de estudiantes de primer año en", "solicitudEstadisticaRendimiento"));
+		assertTrue(esClasificacionCorrecta("Qué porcentaje de hombres hay en la carrera de", "solicitudEstadisticaRendimiento"));
 	}
 	
 	private boolean esClasificacionCorrecta(String textoAClasificar, String clasificacionEsperada) {

@@ -8,6 +8,11 @@ import es.infouned.baseDeDatos.ConexionBaseDeDatos;
 import es.infouned.baseDeDatos.InstruccionSelect;
 import es.infouned.principal.Configuracion;
 
+/**
+ * Clase que se encarga de la construcción de objetos de clase Estudio mediante métodos estáticos.
+ * @author Alberto Martínez Montenegro
+ *
+ */
 public class FactoriaEstudio {
 	private  static ConexionBaseDeDatos conexionBaseDeDatos = Configuracion.getConexionBaseDeDatos();
 	

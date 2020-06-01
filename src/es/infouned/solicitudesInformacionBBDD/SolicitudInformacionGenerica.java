@@ -3,6 +3,11 @@ package es.infouned.solicitudesInformacionBBDD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario está relacionada con información genérica.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudInformacionGenerica extends SolicitudInformacion{
 	
 	private String idInformacionGenerica;

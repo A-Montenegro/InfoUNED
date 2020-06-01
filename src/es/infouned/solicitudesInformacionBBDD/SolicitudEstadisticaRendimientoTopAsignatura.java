@@ -11,7 +11,11 @@ import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.estudios.Titulacion;
 import es.infouned.utilidades.ProcesamientoDeTexto;
 
-
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario está relacionada con el rendimiento de asignaturas por ranking.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInformacion{
 	
 	private Titulacion titulacion;

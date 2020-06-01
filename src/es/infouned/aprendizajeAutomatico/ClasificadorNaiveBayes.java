@@ -7,6 +7,12 @@ import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
+/**
+ * Clase que simboliza un clasificador Naive Bayes, su implementación del método clasificarInstancia() le permite catalogar cadenas de texto a partir de un modelo entrenado.
+ * @author Alberto Martínez Montenegro
+ * 
+ *
+ */
 public class ClasificadorNaiveBayes implements Clasificador{
 	private FilteredClassifier clasificadorNaiveBayes;
 	private DataSource estructuraDataSet;

@@ -1,13 +1,13 @@
 package es.infouned.conversacion;
 
-import java.util.ArrayList;
 
 import es.infouned.conversacion.Conversacion.OrigenConversacion;
 
 /**
- * 
+ * Esta clase ofrece métodos estáticos que generan cadenas de texto especiales que son diferentes en cada plataforma, como por ejemplo, saltos de línea.
  * @author Alberto Martínez Montenegro
- *
+ * 
+ * 
  */
 public class TextoCodificadoPlataformas {
 	
@@ -25,21 +25,5 @@ public class TextoCodificadoPlataformas {
 			break;
 		}
 		return saltoDeLinea;
-	}
-	
-	public static String obtenerMensajeOpcionesCallBack(OrigenConversacion origenConversacion, ArrayList<String> opciones) {
-		String mensajeOpcionesCallBack = new String("");
-		switch(origenConversacion) {
-			case FACEBOOK:
-				mensajeOpcionesCallBack  = "\\u000A";
-			break;
-			case TELEGRAM:
-				mensajeOpcionesCallBack = "\n";
-			break;
-			case WEB: 
-				mensajeOpcionesCallBack = "<br>";
-			break;
-		}
-		return mensajeOpcionesCallBack;
 	}
 }

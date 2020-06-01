@@ -13,6 +13,11 @@ import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.Nom
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
 
+/**
+ * La clase CallBack permite dejar una conversación a la espera de una respuesta concreta del usuario.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class CallBack {
 	private boolean callBackPendiente;
 	private TipoCallBack tipoCallBack;

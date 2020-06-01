@@ -10,6 +10,11 @@ import es.infouned.estudios.NivelEstudios;
 import es.infouned.estudios.ParametroEstadistico;
 import es.infouned.principal.Configuracion;
 
+/**
+ * Clase de pruebas unitarias destinadas a probar el correcto funcionamento de la clase Configuracion.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class TestConfiguracion {
 
 		@BeforeAll

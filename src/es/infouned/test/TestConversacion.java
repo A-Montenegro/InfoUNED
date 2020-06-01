@@ -11,6 +11,11 @@ import es.infouned.conversacion.Conversacion;
 import es.infouned.conversacion.Conversacion.OrigenConversacion;
 import es.infouned.principal.Configuracion;
 
+/**
+ *  Clase de pruebas unitarias destinadas a probar el correcto funcionamento de las conversaciones.
+ * @author Alberto Martínez Montenegro
+ *  
+ */
 public class TestConversacion {
 
 	@BeforeAll
@@ -70,6 +75,7 @@ public class TestConversacion {
     public void testConversacionEstadisticaRendimiento(){		
     	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
     	conversacion.procesarTextoRecibido("¿Cual es la nota media de grado en ingeniería informática?");
+    	System.out.println(conversacion.obtenerRespuestaActual());
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Las estadísticas de NOTA MEDIA para la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son las siguientes:\n" + 
     			"-Curso 2018 - 2019: 7,05.\n" + 
     			"-Curso 2017 - 2018: 7,03.\n" + 
@@ -106,6 +112,7 @@ public class TestConversacion {
     			"-Curso 2016-2017: 62,07.\n" + 
     			"-Curso 2015-2016: 57,88.\n"));
     	conversacion.procesarTextoRecibido("¿Los alumnos están descontentos con la titulación de grado en psicología");
+    	System.out.println(conversacion.obtenerRespuestaActual());
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Las estadísticas de VALORACIÓN ESTUDIANTIL para la titulación GRADO EN PSICOLOGÍA en los últimos años son las siguientes:\n" + 
     			"-Curso 2018 - 2019: 69,35.\n" + 
     			"-Curso 2017 - 2018: 67,76.\n" + 
@@ -125,7 +132,21 @@ public class TestConversacion {
     			"-Curso 2017-2018: 73,33.\n" + 
     			"-Curso 2016-2017: 40,91.\n" + 
     			"-Curso 2015-2016: 30,43.\n"));
-    	
+    	conversacion.procesarTextoRecibido("¿Cual es la nota media de base de datos?");
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Durante el último curso académico registrado (2018 - 2019), estos fueron los estudios de GRADO que obtuvieron mayores resultados en cuanto a NOTA MEDIA :\n" + 
+    			"-La titulación GRADO EN FILOSOFÍA obtuvo unos resultados de 7,62.\n" + 
+    			"-La titulación GRADO EN ANTROPOLOGÍA SOCIAL Y CULTURAL obtuvo unos resultados de 7,54.\n" + 
+    			"-La titulación GRADO EN ESTUDIOS INGLESES: LENGUA, LITERATURA Y CULTURA obtuvo unos resultados de 7,34.\n" + 
+    			"-La titulación GRADO EN LENGUA Y LITERATURA ESPAÑOLAS obtuvo unos resultados de 7,32.\n" + 
+    			"-La titulación GRADO EN CIENCIAS AMBIENTALES obtuvo unos resultados de 7,29.\n" + 
+    			"-La titulación GRADO EN CC. JURÍDICAS DE LAS ADMINISTRACIONES PÚBLICAS obtuvo unos resultados de 7,26.\n" + 
+    			"-La titulación GRADO EN HISTORIA DEL ARTE obtuvo unos resultados de 7,26.\n" + 
+    			"-La titulación GRADO EN TRABAJO SOCIAL obtuvo unos resultados de 7,20.\n" + 
+    			"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN obtuvo unos resultados de 7,14.\n" + 
+    			"-La titulación GRADO EN GEOGRAFÍA E HISTORIA obtuvo unos resultados de 7,13.\n"));
+    	conversacion.procesarTextoRecibido("¿Cual es la nota media de bases de datos?");
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura BASES DE DATOS puede pertenecer a distintas titulaciones, seleccione a continuación la correcta:\n" + 
+    			"__BOTON_CALLBACK__GRADO EN INGENIERÍA INFORMÁTICA__BOTON_CALLBACK__GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN__BOTON_CALLBACK__Mi consulta no estaba relacionada con eso"));
 	}
 	
 	@Test
@@ -167,6 +188,8 @@ public class TestConversacion {
     			"-La titulación GRADO EN PSICOLOGÍA obtuvo unos resultados de 24,43.\n" + 
     			"-La titulación GRADO EN INGENIERÍA INFORMÁTICA obtuvo unos resultados de 24,22.\n" + 
     			"-La titulación GRADO EN MATEMÁTICAS obtuvo unos resultados de 23,74.\n"));
+    	conversacion.procesarTextoRecibido("¿Cual es el máster mejor valorada por los alumnos?");
+    	System.out.println(conversacion.obtenerRespuestaActual());
 	}
 	
 	@Test

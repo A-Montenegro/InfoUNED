@@ -5,6 +5,11 @@ import java.sql.SQLException;
 
 import es.infouned.estudios.Titulacion;
 
+/**
+ * Clase que se encarga de generar las cadenas de texto finales que componen las respuestas del chatbot cuando la consulta del usuario está relacionada con el precio de una titulación.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class SolicitudPreciosTitulacion extends SolicitudInformacion{
 	private Titulacion titulacion;
 	

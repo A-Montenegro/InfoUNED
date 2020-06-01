@@ -7,6 +7,11 @@ import java.util.Stack;
 import es.infouned.estructurasDeDatos.Par;
 import es.infouned.estudios.CriterioConsultaSQL;
 
+/**
+ * Clase que se utiliza para procesar texto eliminando o añadiendo ciertos caracteres. Utiliza métodos estáticos para ofrecer diversas operaciones de transformación de texto.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class ProcesamientoDeTexto {
 	
 	public static String normalizarTexto(String texto) {

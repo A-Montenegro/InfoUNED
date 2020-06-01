@@ -14,6 +14,11 @@ import es.infouned.procesamientoLenguajeNatural.DistanciaDeLevenshtein;
 import es.infouned.procesamientoLenguajeNatural.ProcesadorLenguajeNatural;
 import es.infouned.utilidades.ProcesamientoDeTexto;
 
+/**
+ * Clase de pruebas unitarias destinadas a probar el correcto funcionamento del paquete de procesamiento del lenguaje natural.
+ * @author Alberto Martínez Montenegro
+ * 
+ */
 public class TestProcesamientoLenguajeNatural {
 	private static ProcesadorLenguajeNatural procesadorLenguajeNatural;
 	
@@ -102,6 +107,15 @@ public class TestProcesamientoLenguajeNatural {
 		assertTrue(nombreSextoEstudioAludido.equals("PSICOLOGÍA DE LA EMOCIÓN"));
 	}
 	
+	@Test
+	public void testCoreNLP(){
+		String textoObjetivoDeAnalisis = ProcesamientoDeTexto.normalizarTexto(
+				"Me llamo Alberto Martínez. " +
+				"Vivo en Vigo, una ciudad de Galicia. " +
+				"Soy alumno de último año de Ingeniería informática en la UNED.");
+		procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(textoObjetivoDeAnalisis);
+		System.out.println(procesadorLenguajeNatural.obtenerAnaliticaVisualDeTexto("\n"));
+	}
 	
 	
 }
