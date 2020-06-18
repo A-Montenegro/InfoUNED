@@ -35,7 +35,7 @@ public class TestAprendizajeAutomatico{
     public void testNaiveBayes(){		
 		assertTrue(clasificador instanceof ClasificadorNaiveBayes);
 		assertTrue(esClasificacionCorrecta("Cuanta gente se matricula de","solicitudMatriculados"));
-		System.out.println(clasificador.clasificarInstancia(ProcesamientoDeTexto.normalizarTexto("los alumnos estan descontentos con la titulación de")));
+		assertTrue(esClasificacionCorrecta("los alumnos estan descontentos con la titulación de","solicitudEstadisticaRendimiento"));
 		assertTrue(esClasificacionCorrecta("Cuanto cuesta estudiar en la uned","solicitudPreciosTitulacion"));
 		assertTrue(esClasificacionCorrecta("cual es la asignatura mas dificil de cuarto curso de","solicitudEstadisticaRendimiento"));
 		assertTrue(esClasificacionCorrecta("cual es el email para hablar con vosotros","informacionContacto"));

@@ -24,6 +24,7 @@ public class Frase {
 	private ArrayList<ParametroEstadistico> parametrosEstadisticosTitulacionAludidos;
 	private ArrayList<ParametroEstadistico> parametrosEstadisticosAsignaturaAludidos;
 	private String clasificacion;
+	private double distribucionClasificacion;
 	private ArrayList<Estudio> vectorEstudiosAludidos;
 	private ArrayList<Estudio> estudiosAludidos;
 	private Stack<NivelEstudios> nivelesEstudiosAludidos;
@@ -68,7 +69,11 @@ public class Frase {
 			nivelEstudiosPrincipal = nivelesEstudiosAludidos.get(0);
 		}
 	}
-
+	
+	public double getDistribucionClasificacion() {
+		return distribucionClasificacion;
+	}
+	
 	public String getTextoFrase() {
 		return textoFrase;
 	}
@@ -145,6 +150,10 @@ public class Frase {
 		return criteriosConsultaSQLAludidos;
 	}
 
+	public void setDistribucionClasificacion(double distribucionClasificacion) {
+		this.distribucionClasificacion = distribucionClasificacion;
+	}
+	
 	public void setCriteriosConsultaSQLAludidos(Stack<CriterioConsultaSQL> criteriosConsultaSQLAludidos) {
 		this.criteriosConsultaSQLAludidos = criteriosConsultaSQLAludidos;
 	}

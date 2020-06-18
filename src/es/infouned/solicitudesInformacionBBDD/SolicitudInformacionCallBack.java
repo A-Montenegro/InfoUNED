@@ -44,6 +44,20 @@ public class SolicitudInformacionCallBack extends SolicitudInformacion{
 				cadenaRespuesta += generarStringOpcionClickable(opcion);
 			}
 			break;
+		case SOLICITUDINFORMACIONCONTACTO:
+			cadenaRespuesta += "Selecciona qué tipo de información de contacto deseas conocer:" + saltoDeLinea;
+			for(String opcion: opciones) {
+				cadenaRespuesta += generarStringOpcionClickable(opcion);
+			}
+			break;
+		case SOLICITUDINFORMACIONCUID:
+			cadenaRespuesta += "Selecciona qué tipo de información sobre el Centro Universitario de Idiomas (CUID) deseas conocer:" + saltoDeLinea;
+			for(String opcion: opciones) {
+				cadenaRespuesta += generarStringOpcionClickable(opcion);
+			}
+			break;
+		default:
+			throw new IllegalArgumentException("El tipo de CallBack no encaja con ninguna de las opciones codificadas en el método generarCadenaRespuesta.");
 		}
 		return cadenaRespuesta;
 	}

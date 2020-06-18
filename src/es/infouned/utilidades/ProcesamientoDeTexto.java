@@ -61,7 +61,7 @@ public class ProcesamientoDeTexto {
     		String partesTextoRespuesta[] = cadenaDeTexto.split("\r\n");
     		cadenaDeTexto = partesTextoRespuesta[0];
 	        for (int indicePartes = 1; indicePartes < partesTextoRespuesta.length; indicePartes++) {
-	        	cadenaDeTexto += partesTextoRespuesta[indicePartes] + caracteresEspeciales;
+	        	cadenaDeTexto += caracteresEspeciales + partesTextoRespuesta[indicePartes];
 	        }
 	    }
     	return cadenaDeTexto;

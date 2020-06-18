@@ -248,7 +248,7 @@ public class TestSolicitudesInformacionBBDD {
 		parametros.put(NombreParametro.IDINFORMACIONGENERICA, "matriculaAdmisionPorInternet");
 		SolicitudInformacion solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA,parametros);
 		String respuesta = solicitudInformacion.generarCadenaRespuesta("\n");
-		assertTrue(respuesta.equals("Para matricularse de cualquier estudio impartido en la UNED, puede realizar el trámite a través de Internet siguiendo el siguiente enlace:\r\n" + 
+		assertTrue(respuesta.equals("Para matricularte de cualquier estudio impartido en la UNED, puedes realizar el trámite a través de Internet siguiendo el siguiente enlace:\r\n" + 
 				"https://app.uned.es/portal/admision-matricula-por-internet\n"));
 	}
 	

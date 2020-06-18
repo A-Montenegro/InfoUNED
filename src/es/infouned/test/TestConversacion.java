@@ -33,7 +33,6 @@ public class TestConversacion {
 	@Test
     public void testConversacionGuias(){		
     	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
-    	conversacion.procesarTextoRecibido("");
     	conversacion.procesarTextoRecibido("Necesito información general sobre el grado en psicología");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre la titulación GRADO EN PSICOLOGÍA, en la siguiente guía de estudio encontrará todos los detalles:\n" + 
     			"http://portal.uned.es/GestionGuiastitulacionesGrado/GenerarPDFGuia?c=2020&idT=6201"));
@@ -62,7 +61,7 @@ public class TestConversacion {
     			"-50,49€ por cada crédito ECTS la tercera vez que el alumno se matricula de la asignatura.\n" + 
     			"-69,62€ por cada crédito ECTS la cuarta y las sucesivas veces que el alumno se matricule de la asignatura.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanto cuesta estudiar en la uned?");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre los precios de una titulación, debe especificar claramente el nombre de la misma.\n"));
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre los precios de una titulación, debes especificar claramente el nombre de la misma.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanto cuestan las asignaturas del grado en geografía e historia?");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("El precio de las asignaturas de la titulación GRADO EN GEOGRAFÍA E HISTORIA es de:\n" + 
     			"-13,00€ por cada crédito ECTS la primera vez que el alumno se matricula de la asignatura.\n" + 
@@ -75,7 +74,6 @@ public class TestConversacion {
     public void testConversacionEstadisticaRendimiento(){		
     	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
     	conversacion.procesarTextoRecibido("¿Cual es la nota media de grado en ingeniería informática?");
-    	System.out.println(conversacion.obtenerRespuestaActual());
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Las estadísticas de NOTA MEDIA para la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son las siguientes:\n" + 
     			"-Curso 2018 - 2019: 7,05.\n" + 
     			"-Curso 2017 - 2018: 7,03.\n" + 
@@ -112,7 +110,6 @@ public class TestConversacion {
     			"-Curso 2016-2017: 62,07.\n" + 
     			"-Curso 2015-2016: 57,88.\n"));
     	conversacion.procesarTextoRecibido("¿Los alumnos están descontentos con la titulación de grado en psicología");
-    	System.out.println(conversacion.obtenerRespuestaActual());
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Las estadísticas de VALORACIÓN ESTUDIANTIL para la titulación GRADO EN PSICOLOGÍA en los últimos años son las siguientes:\n" + 
     			"-Curso 2018 - 2019: 69,35.\n" + 
     			"-Curso 2017 - 2018: 67,76.\n" + 
@@ -189,7 +186,17 @@ public class TestConversacion {
     			"-La titulación GRADO EN INGENIERÍA INFORMÁTICA obtuvo unos resultados de 24,22.\n" + 
     			"-La titulación GRADO EN MATEMÁTICAS obtuvo unos resultados de 23,74.\n"));
     	conversacion.procesarTextoRecibido("¿Cual es el máster mejor valorada por los alumnos?");
-    	System.out.println(conversacion.obtenerRespuestaActual());
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Durante el último curso académico registrado (2018 - 2019), estos fueron los estudios de MASTER que obtuvieron mayores resultados en cuanto a VALORACIÓN ESTUDIANTIL :\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN INVESTIGACIÓN EN PSICOLOGÍA obtuvo unos resultados de 94,37.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN COMUNICACIÓN, REDES Y GESTIÓN DE CONTENIDOS obtuvo unos resultados de 92,10.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN HACIENDA PÚBLICA Y ADMINISTRACIÓN FINANCIERA Y TRIBUTARIA obtuvo unos resultados de 85,72.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN ANÁLISIS GRAMATICAL Y ESTILÍSTICO DEL ESPAÑOL obtuvo unos resultados de 84,75.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN INVESTIGACIÓN EN PSICOLOGÍA (PLAN 2016) obtuvo unos resultados de 82,69.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN INVESTIGACIÓN EN INGENIERÍA DE SOFTWARE Y SISTEMAS INFORMÁTICOS obtuvo unos resultados de 81,87.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN ESTUDIOS LITERARIOS Y CULTURALES INGLESES  Y SU PROYECCIÓN SOCIAL obtuvo unos resultados de 80,80.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN ESTRATEGIAS Y TECNOLOGÍAS PARA LA FUNCIÓN DOCENTE EN LA SOCIEDAD MULTICULTURAL obtuvo unos resultados de 80,10.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EURO-LATINOAMERICANO EN EDUCACIÓN INTERCULTURAL obtuvo unos resultados de 79,81.\n" + 
+    			"-La titulación MÁSTER UNIVERSITARIO EN LINGÜÍSTICA INGLESA APLICADA obtuvo unos resultados de 79,60.\n"));
 	}
 	
 	@Test
@@ -213,7 +220,7 @@ public class TestConversacion {
     			"-Curso 2016 - 2017: 10629 matriculados.\n" + 
     			"-Curso 2015 - 2016: 12588 matriculados.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanta gente se matricula de química, matemáticas y esas cosas?");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre el número de matriculados de una determinada titulación o asignatura, debe nombrar sólo la titulación y la asignatura sobre las que quiere esa información.\n"));
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre el número de matriculados de una determinada titulación o asignatura, debes nombrar sólo la titulación y la asignatura sobre las que quieres esa información.\n"));
     	conversacion.procesarTextoRecibido("¿Cuantas personas se matriculan de fundamentos de psicobiología");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("El número de matriculados en la asignatura FUNDAMENTOS DE PSICOBIOLOGÍA de la titulación GRADO EN PSICOLOGÍA en los últimos años son los siguientes:\n" + 
     			"-Curso 2019 - 2020: 7934 matriculados.\n" + 
@@ -229,7 +236,7 @@ public class TestConversacion {
     			"-Curso 2016 - 2017: 7281 matriculados.\n" + 
     			"-Curso 2015 - 2016: 8302 matriculados.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanta gente se matricula en grado en ingeniería informática, grado en psicología, fundamentos de psicobiología en el grado en ingeniería informática?");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre el número de matriculados de una determinada titulación o asignatura, debe nombrar sólo la titulación y la asignatura sobre las que quiere esa información.\n"));
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre el número de matriculados de una determinada titulación o asignatura, debes nombrar sólo la titulación y la asignatura sobre las que quieres esa información.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanta gente se matricula de fundamentos de psicobiología en el grado en ingeniería informática?");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura FUNDAMENTOS DE PSICOBIOLOGÍA no forma parte de la titulación GRADO EN INGENIERÍA INFORMÁTICA.\n" + 
     			"Por favor, intente expresar su consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales desea información.\n"));
@@ -238,6 +245,11 @@ public class TestConversacion {
 	@Test
     public void testConversacionCallBack(){		
     	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
+    	conversacion.procesarTextoRecibido("informacion de contacto");
+    	conversacion.procesarTextoRecibido("Informaeral");
+    	conversacion.procesarTextoRecibido("Información general");
+    	conversacion.procesarTextoRecibido("Necesito informacion de contacto");
+    	conversacion.procesarTextoRecibido("Mi consulta no estaba relacionada con eso");
     	conversacion.procesarTextoRecibido("Cuanta gente se matricula de programacion y estructuras de datos avanzadas grado en ingeniería informática");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("El número de matriculados en la asignatura PROGRAMACIÓN Y ESTRUCTURAS DE DATOS AVANZADAS de la titulación GRADO EN INGENIERÍA INFORMÁTICA en los últimos años son los siguientes:\n" + 
     			"-Curso 2019 - 2020: 289 matriculados.\n" + 
@@ -252,7 +264,7 @@ public class TestConversacion {
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura ESTRATEGIAS DE PROGRAMACIÓN Y ESTRUCTURAS DE DATOS puede pertenecer a distintas titulaciones, seleccione a continuación la correcta:\n" + 
     			"__BOTON_CALLBACK__GRADO EN INGENIERÍA INFORMÁTICA__BOTON_CALLBACK__GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN__BOTON_CALLBACK__Mi consulta no estaba relacionada con eso")); 
     	conversacion.procesarTextoRecibido("Mi consulta no estaba relacionada con eso");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Siento no haberle entendido correctamente, ¿Podría repetir su consulta?\n")); 
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Siento no haberte entendido correctamente, ¿Podrías repetir tu consulta?\n")); 
     	conversacion.procesarTextoRecibido("Cuanta gente se matricula de estrategias de programacion y estructuras de datos");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura ESTRATEGIAS DE PROGRAMACIÓN Y ESTRUCTURAS DE DATOS puede pertenecer a distintas titulaciones, seleccione a continuación la correcta:\n" + 
     			"__BOTON_CALLBACK__GRADO EN INGENIERÍA INFORMÁTICA__BOTON_CALLBACK__GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN__BOTON_CALLBACK__Mi consulta no estaba relacionada con eso")); 

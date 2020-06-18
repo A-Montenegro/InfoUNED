@@ -25,7 +25,7 @@ public class CallBack {
 	private TipoSolicitud tipoSolicitudInformacionPendiente;
 	private HashMap<NombreParametro, Object> parametros;
 	private ArrayList<Estudio> posiblesEstudiosAludidos;
-	
+	private ArrayList<String> posiblesOpciones;
 	
 	public CallBack() {
 		this.callBackPendiente=false;
@@ -58,54 +58,101 @@ public class CallBack {
 	public void setPosiblesEstudiosAludidos(ArrayList<Estudio> posiblesEstudiosAludidos) {
 		this.posiblesEstudiosAludidos = posiblesEstudiosAludidos;
 	}
+	
+	public void setPosiblesOpciones(ArrayList<String> posiblesOpciones) {
+		this.posiblesOpciones = posiblesOpciones;
+	}
 
 	public SolicitudInformacion getSolicitudInformacionConRespuesta(Mensaje ultimoMensaje) {
 		SolicitudInformacion solicitudInformacion;
 		String textoMensaje = ultimoMensaje.getTexto();
-		Estudio estudioSeleccionado = null;
-		for(Estudio estudio: posiblesEstudiosAludidos) {
-			if(estudio.getNombre().equals(textoMensaje)) estudioSeleccionado = estudio;
-		}
-		int opcionNumerica = parseStrToInt(textoMensaje);
-		if(opcionNumerica!= 0 && opcionNumerica <= posiblesEstudiosAludidos.size()) estudioSeleccionado = posiblesEstudiosAludidos.get(opcionNumerica - 1);
-		NombreParametro nombreTipoEstudio;
-		if(estudioSeleccionado != null) { //Respuesta válida
-			if(estudioSeleccionado instanceof Titulacion) {
-				nombreTipoEstudio = NombreParametro.TITULACION;
+		switch(tipoCallBack) {
+		case TITULACIONDESCONOCIDAPARAASIGNATURA:
+		case TITULACIONDESCONOCIDAPARAASIGNATURABORROSA:
+			Estudio estudioSeleccionado = null;
+			for(Estudio estudio: posiblesEstudiosAludidos) {
+				if(estudio.getNombre().equals(textoMensaje)) estudioSeleccionado = estudio;
 			}
-			else {
-				if(estudioSeleccionado instanceof Asignatura) {
-					nombreTipoEstudio = NombreParametro.ASIGNATURA;
+			int opcionNumerica = parseStrToInt(textoMensaje);
+			if(opcionNumerica!= 0 && opcionNumerica <= posiblesEstudiosAludidos.size()) estudioSeleccionado = posiblesEstudiosAludidos.get(opcionNumerica - 1);
+			NombreParametro nombreTipoEstudio;
+			if(estudioSeleccionado != null) { //Respuesta válida
+				if(estudioSeleccionado instanceof Titulacion) {
+					nombreTipoEstudio = NombreParametro.TITULACION;
 				}
 				else {
-					nombreTipoEstudio = NombreParametro.ASIGNATURABORROSA;
+					if(estudioSeleccionado instanceof Asignatura) {
+						nombreTipoEstudio = NombreParametro.ASIGNATURA;
+					}
+					else {
+						nombreTipoEstudio = NombreParametro.ASIGNATURABORROSA;
+					}		
 				}		
-			}		
-			parametros.put(nombreTipoEstudio, estudioSeleccionado);
-			transformarAsignaturasBorrosasEnAsignaturas();
-			solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(tipoSolicitudInformacionPendiente, parametros);
-			callBackPendiente = false;
-		}
-		else { //Respuesta incorrecta
-			if(textoMensaje.equals("Mi consulta no estaba relacionada con eso") || parseStrToInt(textoMensaje) == posiblesEstudiosAludidos.size() + 1) {
-				parametros.clear();
-				parametros.put(NombreParametro.IDINFORMACIONGENERICA, "callBackInterrumpido");
-				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
+				parametros.put(nombreTipoEstudio, estudioSeleccionado);
+				transformarAsignaturasBorrosasEnAsignaturas();
+				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(tipoSolicitudInformacionPendiente, parametros);
 				callBackPendiente = false;
 			}
-			else {
-				HashMap<NombreParametro,Object> parametrosCallback = new HashMap<NombreParametro,Object>();
-				ArrayList<String> opciones = new ArrayList<String>();
-				for(Estudio estudio: posiblesEstudiosAludidos) {
-					opciones.add(estudio.getNombre());
+			else { //Respuesta incorrecta
+				if(textoMensaje.equals("Mi consulta no estaba relacionada con eso") || parseStrToInt(textoMensaje) == posiblesEstudiosAludidos.size() + 1) {
+					parametros.clear();
+					parametros.put(NombreParametro.IDINFORMACIONGENERICA, "callBackInterrumpido");
+					solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
+					callBackPendiente = false;
 				}
-				opciones.add("Mi consulta no estaba relacionada con eso");
-				parametrosCallback.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
-				parametrosCallback.put(NombreParametro.PARAMETROSCALLBACK, parametros);
-				parametrosCallback.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
-				parametrosCallback.put(NombreParametro.OPCIONES, opciones);
-				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametrosCallback);
+				else {
+					HashMap<NombreParametro,Object> parametrosCallback = new HashMap<NombreParametro,Object>();
+					ArrayList<String> opciones = new ArrayList<String>();
+					for(Estudio estudio: posiblesEstudiosAludidos) {
+						opciones.add(estudio.getNombre());
+					}
+					opciones.add("Mi consulta no estaba relacionada con eso");
+					parametrosCallback.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
+					parametrosCallback.put(NombreParametro.PARAMETROSCALLBACK, parametros);
+					parametrosCallback.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
+					parametrosCallback.put(NombreParametro.OPCIONES, opciones);
+					solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametrosCallback);
+				}
 			}
+			break;
+		case SOLICITUDINFORMACIONCONTACTO:
+		case SOLICITUDINFORMACIONCUID:
+			String opcionSeleccionada = null;
+			for(String opcion: posiblesOpciones) {
+				if(opcion.equals(textoMensaje)) opcionSeleccionada = opcion;
+			}
+			opcionNumerica = parseStrToInt(textoMensaje);
+			if(opcionNumerica!= 0 && opcionNumerica <= posiblesOpciones.size()) opcionSeleccionada = posiblesOpciones.get(opcionNumerica - 1);
+			if(opcionSeleccionada != null) { //Respuesta válida	
+				if(textoMensaje.equals("Mi consulta no estaba relacionada con eso") || parseStrToInt(textoMensaje) == posiblesOpciones.size() + 1) {
+					parametros.clear();
+					parametros.put(NombreParametro.IDINFORMACIONGENERICA, "callBackInterrumpido");
+					solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
+					callBackPendiente = false;
+				}
+				else {
+					String idInformacionGenerica = convertirOpcionEnIdInformacionGenerica(opcionSeleccionada);
+					parametros.put(NombreParametro.IDINFORMACIONGENERICA, idInformacionGenerica);
+					solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(tipoSolicitudInformacionPendiente, parametros);
+					callBackPendiente = false;
+				}
+			}
+			else { //Respuesta incorrecta
+					HashMap<NombreParametro,Object> parametrosCallback = new HashMap<NombreParametro,Object>();
+					ArrayList<String> opciones = new ArrayList<String>();
+					for(String opcion: posiblesOpciones) {
+						opciones.add(opcion);
+					}
+					parametrosCallback.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
+					parametrosCallback.put(NombreParametro.PARAMETROSCALLBACK, parametros);
+					parametrosCallback.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
+					parametrosCallback.put(NombreParametro.OPCIONES, opciones);
+					solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametrosCallback);
+			}
+			break;
+		default:
+			
+			throw new IllegalArgumentException("La tipo de CallBack no encaja con ninguna de las opciones codificadas en el método getSolicitudInformacionConRespuesta.");
 		}
 		return solicitudInformacion;
 	}
@@ -121,6 +168,43 @@ public class CallBack {
 
 	}
 	
+	private String convertirOpcionEnIdInformacionGenerica(String opcionSeleccionada) {
+		switch(opcionSeleccionada) {
+		case "Contactar con la UNED":
+			return "informacionContactoUNED";
+		case "Localización":
+			return "informacionContactoLocalizacion";
+		case "Quejas y sugerencias":
+			return "informacionContactoQuejas";	
+		case "Cursos de idiomas ofrecidos":
+			return "informacionCUIDtodos";
+		case "Cursos modalidad semipresencial":
+			return "informacionCUIDSemipresencial";
+		case "Cursos modalidad en línea":
+			return "informacionCUIDEnLinea";
+		case "Matrícula, precios y plazos":
+			return "informacionCUIDMatricula";
+		case "Red de Centros asociados":
+			return "informacionCUIDCA";		
+		case "Reconocimientos":
+			return "informacionCUIDReconocimientos";
+		case "Certificados":
+			return "informacionCUIDCertificados";
+		case "Metodología":
+			return "informacionCUIDMetodologia";
+		case "Evaluación":
+			return "informacionCUIDEvaluación";
+		case "FAQ":
+			return "informacionCUIDFAQ";
+		case "E-Oral":
+			return "informacionCUIDEOral";
+		case "Contacto":
+			return "informacionCUIDContacto";
+		default:
+			throw new IllegalArgumentException("La opción " + opcionSeleccionada + "no encaja con ninguna de las codificadas.");
+		}
+	}
+	
 	private static int parseStrToInt(String str) {
         if (str.matches("\\d+")) {
             return Integer.parseInt(str);
@@ -131,6 +215,8 @@ public class CallBack {
 	
 	
 	public enum TipoCallBack{
+		SOLICITUDINFORMACIONCONTACTO,
+		SOLICITUDINFORMACIONCUID,
 		TITULACIONDESCONOCIDAPARAASIGNATURA,
 		TITULACIONDESCONOCIDAPARAASIGNATURABORROSA
 	}

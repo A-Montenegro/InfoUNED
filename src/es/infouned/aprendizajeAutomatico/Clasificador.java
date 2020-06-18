@@ -7,5 +7,6 @@ package es.infouned.aprendizajeAutomatico;
  */
 public interface Clasificador {
 	String clasificarInstancia(String instancia);
+	double obtenerDistribucionClasificacionInstancia(String instancia);
 	// TO-DO Valorar si procede o no la existencia de esta interfaz.
 }

@@ -64,22 +64,20 @@ public class DecisionUnitaria {
 		switch (clasificacion) {
 			case "saludo":
 			case "despedida":
-			case "informacionContacto":
+			case "noClasificable":
 				parametros.put(NombreParametro.IDINFORMACIONGENERICA, clasificacion);
 				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
 				break;
-				
-				
+			case "informacionContacto":	
+				solicitudInformacion = generarSolicitudInformacionCallBack(TipoCallBack.SOLICITUDINFORMACIONCONTACTO);
+				break;
+			case "solicitudCUID":
+				solicitudInformacion = generarSolicitudInformacionCallBack(TipoCallBack.SOLICITUDINFORMACIONCUID);
+				break;
 			case "informacionMatricula":
 				parametros.put(NombreParametro.IDINFORMACIONGENERICA, "matriculaAdmisionPorInternet");
 				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
-				break;
-
-			case "solicitudCUID":
-				parametros.put(NombreParametro.IDINFORMACIONGENERICA, "solicitudCUID");
-				solicitudInformacion = FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
-				break;
-				
+				break;				
 			case "solicitudEstadisticaRendimiento":
 				switch(numeroEstudiosAludidos) {
 				case 0:
@@ -427,6 +425,51 @@ public class DecisionUnitaria {
 		parametros.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
 		parametros.put(NombreParametro.PARAMETROSCALLBACK, parametrosCallBack);
 		return FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametros);
+	}
+	
+	private SolicitudInformacion generarSolicitudInformacionCallBack(TipoCallBack tipoCallBack) {
+			callBack.setCallBackPendiente(true);
+			callBack.setOrigenConversacion(origenConversacion);
+			callBack.setTipoSolicitudInformacionPendiente(TipoSolicitud.INFORMACIONGENERICA);
+			callBack.setTipoCallBack(tipoCallBack);
+			callBack.setParametros(new HashMap<NombreParametro,Object>());
+			ArrayList<String> posiblesOpciones = generarPosiblesOpciones(tipoCallBack);
+			callBack.setPosiblesOpciones(posiblesOpciones);
+			HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+			parametros.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
+			parametros.put(NombreParametro.OPCIONES, posiblesOpciones);
+			parametros.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
+			parametros.put(NombreParametro.PARAMETROSCALLBACK, new HashMap<NombreParametro,Object>());
+			return FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametros);
+	}
+	
+	private ArrayList<String> generarPosiblesOpciones(TipoCallBack tipoCallBack){
+		ArrayList<String> posiblesOpciones = new ArrayList<String>();
+		switch(tipoCallBack) {
+		case SOLICITUDINFORMACIONCONTACTO:
+			posiblesOpciones.add("Contactar con la UNED");
+			posiblesOpciones.add("Localización");
+			posiblesOpciones.add("Quejas y sugerencias");
+			posiblesOpciones.add("Mi consulta no estaba relacionada con eso");
+			break;
+		case SOLICITUDINFORMACIONCUID:
+			posiblesOpciones.add("Cursos de idiomas ofrecidos");
+			posiblesOpciones.add("Cursos modalidad semipresencial");
+			posiblesOpciones.add("Cursos modalidad en línea");
+			posiblesOpciones.add("Matrícula, precios y plazos");
+			posiblesOpciones.add("Red de Centros asociados");
+			posiblesOpciones.add("Reconocimientos");
+			posiblesOpciones.add("Certificados");
+			posiblesOpciones.add("Metodología");
+			posiblesOpciones.add("Evaluación");
+			posiblesOpciones.add("FAQ");
+			posiblesOpciones.add("Contacto");
+			posiblesOpciones.add("Mi consulta no estaba relacionada con eso");
+			break;
+		default:
+			throw new IllegalArgumentException("El tipo de CallBack no encaja con ninguna de las opciones codificadas en el método generarPosiblesOpciones.");
+		}
+		return posiblesOpciones;
 	}
 	
 	private ArrayList<String> crearListaOpciones(ArrayList<Estudio> posiblesEstudiosAludidos){

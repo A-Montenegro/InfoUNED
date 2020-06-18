@@ -43,8 +43,8 @@ public class HiloEjecucionClienteEnlaceWeb extends Thread {
 	        System.out.println("TextoRecibido: " + textoRecibido);
 	        conversacion.procesarTextoRecibido(textoRecibido);
 	        String respuestaBot = conversacion.obtenerRespuestaActual();
-	        respuestaBot  = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "<br>");
 	        respuestaBot  = ProcesamientoDeTexto.anadirHiperVinculosEnlacesHtml(respuestaBot);
+	        respuestaBot  = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "<br>");
 	        DataOutputStream salida = new DataOutputStream((socket.getOutputStream()));
 	        salida.writeUTF(respuestaBot);
 	        socket.close();

@@ -18,6 +18,7 @@ public class ClasificadorNaiveBayes implements Clasificador{
 	private DataSource estructuraDataSet;
 	private Instances dataset;
 	private ArrayList<String> nombresClases;
+	private final double umbralClasificacion = 0.29;
 	
 	public ClasificadorNaiveBayes(String rutaModeloEntrenado, String rutaFicheroEstructuraDataSet) {
 		try {
@@ -52,16 +53,39 @@ public class ClasificadorNaiveBayes implements Clasificador{
 	    double[] valorInstancia = new double[dataset.numAttributes()];
 	    valorInstancia[0] = dataset.attribute(0).addStringValue(instancia);
         dataset.add(new DenseInstance(1.0, valorInstancia));
+        double distribucionClasificacion=-1;
 	    double resultadoClasificacion=-1;
 		try {
 			resultadoClasificacion = clasificadorNaiveBayes.classifyInstance(dataset.firstInstance());
+			distribucionClasificacion = clasificadorNaiveBayes.distributionForInstance(dataset.firstInstance())[(int)resultadoClasificacion];
 		} catch (Exception excepcion) {
 			// TODO Auto-generated catch block
 			excepcion.printStackTrace();
 		}
 		dataset.remove(0);
-		String nombreClase = nombresClases.get((int) resultadoClasificacion);
-    	return nombreClase;
+		if(distribucionClasificacion < umbralClasificacion) {
+			return "noClasificable";
+		}
+		else {
+			String nombreClase = nombresClases.get((int) resultadoClasificacion);
+	    	return nombreClase;
+		}
 	}
-
+	
+	public double obtenerDistribucionClasificacionInstancia(String instancia) {
+	    double[] valorInstancia = new double[dataset.numAttributes()];
+	    valorInstancia[0] = dataset.attribute(0).addStringValue(instancia);
+        dataset.add(new DenseInstance(1.0, valorInstancia));
+	    double distribucionClasificacion=-1;
+	    double resultadoClasificacion=-1;
+		try {
+			resultadoClasificacion = clasificadorNaiveBayes.classifyInstance(dataset.firstInstance());
+			distribucionClasificacion = clasificadorNaiveBayes.distributionForInstance(dataset.firstInstance())[(int)resultadoClasificacion];
+		} catch (Exception excepcion) {
+			// TODO Auto-generated catch block
+			excepcion.printStackTrace();
+		}
+		dataset.remove(0);
+    	return distribucionClasificacion;
+	}
 }

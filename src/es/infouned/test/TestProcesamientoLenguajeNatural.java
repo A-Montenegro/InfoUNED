@@ -94,10 +94,15 @@ public class TestProcesamientoLenguajeNatural {
 		procesadorLenguajeNatural.procesarTextoObjetivoDeAnalisis(textoObjetivoDeAnalisis);
 		estudiosAludidos = procesadorLenguajeNatural.obtenerFrase(0).getEstudiosAludidos();
 		nombrePrimerEstudioAludido = estudiosAludidos.get(0).getNombre();
+		System.out.println(nombrePrimerEstudioAludido);
 		nombreSegundoEstudioAludido = estudiosAludidos.get(1).getNombre();
+		System.out.println(nombreSegundoEstudioAludido);
 		nombreTercerEstudioAludido = estudiosAludidos.get(2).getNombre();
+		System.out.println(nombreTercerEstudioAludido);
 		nombreCuartoEstudioAludido = estudiosAludidos.get(3).getNombre();
+		System.out.println(nombreCuartoEstudioAludido);
 		nombreQuintoEstudioAludido = estudiosAludidos.get(4).getNombre();
+		System.out.println(nombreQuintoEstudioAludido);
 		nombreSextoEstudioAludido = estudiosAludidos.get(5).getNombre();
 		assertTrue(nombrePrimerEstudioAludido.equals("GRADO EN PSICOLOGÍA"));
 		assertTrue(nombreSegundoEstudioAludido.equals("INTRODUCCIÓN AL ANÁLISIS DE DATOS"));

@@ -35,7 +35,9 @@ public class Mensaje {
 		for(Frase frase: frases) {
 			String textoFraseSinEstudiosAludidos = frase.obtenerTextoFraseSinEstudiosAludidos();
 			String clasificacionFrase = clasificador.clasificarInstancia(textoFraseSinEstudiosAludidos);
+			double distribucionCalisficacionFrase = clasificador.obtenerDistribucionClasificacionInstancia(textoFraseSinEstudiosAludidos);
 			frase.setClasificacion(clasificacionFrase);
+			frase.setDistribucionClasificacion(distribucionCalisficacionFrase);
 		}
 	}
 	
