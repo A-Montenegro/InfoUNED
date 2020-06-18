@@ -67,27 +67,33 @@ public class EnlaceFacebook{
                 MessageTemplate message_tpl = platform.getBaseSender().getMessageTemplate();
                 Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(user_id, OrigenConversacion.FACEBOOK);
     	        message_tpl.setRecipientId(message.getUserId());
-    	        conversacion.procesarTextoRecibido(message_text);
-    	        String respuestaBot= conversacion.obtenerRespuestaActual();
-    	        respuestaBot = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "\\u000A");
-    	        if(respuestaBot.contains("__BOTON_CALLBACK__")) {
-    	        	String partesTextoAEnviar[] = respuestaBot.split("__BOTON_CALLBACK__");
-    		        String cabeceraTexto = partesTextoAEnviar[0];
-    		        for (int indicePartes = 1; indicePartes < partesTextoAEnviar.length; indicePartes++) {
-    		        	message_tpl.setQuickReply("text", String.valueOf(indicePartes), partesTextoAEnviar[indicePartes], "");
-    		        	cabeceraTexto += indicePartes + " ) " + partesTextoAEnviar[indicePartes] + "\\u000A" ;
-    		        }
-    		        message_tpl.setMessageText(cabeceraTexto);
-    		        message_tpl.setNotificationType("REGULAR");
-        	        platform.getBaseSender().send(message_tpl);
-        	        
+    	        if(message_text.length() < 400) {
+	    	        conversacion.procesarTextoRecibido(message_text);
+	    	        String respuestaBot= conversacion.obtenerRespuestaActual();
+	    	        respuestaBot = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "\\u000A");
+	    	        if(respuestaBot.contains("__BOTON_CALLBACK__")) {
+	    	        	String partesTextoAEnviar[] = respuestaBot.split("__BOTON_CALLBACK__");
+	    		        String cabeceraTexto = partesTextoAEnviar[0];
+	    		        for (int indicePartes = 1; indicePartes < partesTextoAEnviar.length; indicePartes++) {
+	    		        	message_tpl.setQuickReply("text", String.valueOf(indicePartes), partesTextoAEnviar[indicePartes], "");
+	    		        	cabeceraTexto += indicePartes + " ) " + partesTextoAEnviar[indicePartes] + "\\u000A" ;
+	    		        }
+	    		        message_tpl.setMessageText(cabeceraTexto);
+	    		        message_tpl.setNotificationType("REGULAR");
+	        	        platform.getBaseSender().send(message_tpl);
+	        	        
+	    	        }
+	    	        else {
+	    	        	message_tpl.setMessageText(respuestaBot);
+	    	        	message_tpl.setNotificationType("REGULAR");
+	        	        platform.getBaseSender().send(message_tpl);
+	    	        }
     	        }
     	        else {
-    	        	message_tpl.setMessageText(respuestaBot);
+    	        	message_tpl.setMessageText("El mensaje que me has escrito es demasiado largo para que yo pueda entenderlo. Recuerda que funciono mejor si me haces preguntas concretas y evitas los párrafos largos.");
     	        	message_tpl.setNotificationType("REGULAR");
         	        platform.getBaseSender().send(message_tpl);
     	        }
-    	        
                 return "ok";
             }
             return "bla";

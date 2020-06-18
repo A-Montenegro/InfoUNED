@@ -71,12 +71,15 @@ import es.infouned.principal.Configuracion;
     		chat_id = update.getMessage().getChatId().toString();
     		textoMensaje = update.getMessage().getText();
     	}
-    	System.out.println("Chat id: " + chat_id);
-    	System.out.println("Mensaje recibido: " + textoMensaje);
 		Conversacion conversacion= HistoricoConversaciones.obtenerConversacion(chat_id, OrigenConversacion.TELEGRAM);
-		conversacion.procesarTextoRecibido(textoMensaje);
-        String respuestaBot= conversacion.obtenerRespuestaActual();
-        enviarMensaje(respuestaBot, chat_id);
+		if(textoMensaje.length() < 400) {
+			conversacion.procesarTextoRecibido(textoMensaje);
+	        String respuestaBot= conversacion.obtenerRespuestaActual();
+	        enviarMensaje(respuestaBot, chat_id);
+		}
+	    else {
+	        enviarMensaje("El mensaje que me has escrito es demasiado largo para que yo pueda entenderlo. Recuerda que funciono mejor si me haces preguntas concretas y evitas los párrafos largos.", chat_id);
+	    }
     }
  
     private void enviarMensaje(String textoAEnviar, String chat_id) {

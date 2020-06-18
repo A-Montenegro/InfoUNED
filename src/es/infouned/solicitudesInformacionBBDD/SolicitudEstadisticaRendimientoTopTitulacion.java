@@ -17,7 +17,8 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 	private String ordenamiento;
 	private ParametroEstadistico parametroEstadistico;
 	private String nombreNivelEstudios;
-	
+	private final int prioridad = 9;
+
 	public SolicitudEstadisticaRendimientoTopTitulacion(String nombreNivelEstudios, ParametroEstadistico parametroEstadistico, String ordenamiento){
 		super();
 		assertTrue(ordenamiento.equals("menores") || ordenamiento.equals("mayores"));
@@ -61,5 +62,9 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 		}
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
+	}
+	
+	public int getPrioridad() {
+		return prioridad;
 	}
 }

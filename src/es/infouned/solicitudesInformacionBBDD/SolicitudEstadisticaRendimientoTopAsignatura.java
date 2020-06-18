@@ -22,7 +22,8 @@ public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInfor
 	private String ordenamiento;
 	private ParametroEstadistico parametroEstadistico;
 	private Stack<CriterioConsultaSQL> criteriosConsultaSQL;
-	
+	private final int prioridad = 10;
+
 	public SolicitudEstadisticaRendimientoTopAsignatura(Titulacion titulacion, ParametroEstadistico parametroEstadistico, String ordenamiento, Stack<CriterioConsultaSQL> criteriosConsultaSQL){
 		super();
 		assertTrue(ordenamiento.equals("menores") || ordenamiento.equals("mayores"));
@@ -70,5 +71,9 @@ public class SolicitudEstadisticaRendimientoTopAsignatura extends SolicitudInfor
 		}
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
+	}
+	
+	public int getPrioridad() {
+		return prioridad;
 	}
 }

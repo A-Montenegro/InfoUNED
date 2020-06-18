@@ -412,7 +412,6 @@ public class DecisionUnitaria {
 
 	@SuppressWarnings("unchecked")
 	private SolicitudInformacion generarSolicitudInformacionCallBack(TipoSolicitud tipoSolicitudInformacionPendiente, TipoCallBack tipoCallBack, HashMap<NombreParametro,Object> parametrosCallBack, ArrayList<?> posiblesEstudiosAludidos) {
-		callBack.setCallBackPendiente(true);
 		callBack.setOrigenConversacion(origenConversacion);
 		callBack.setTipoSolicitudInformacionPendiente(tipoSolicitudInformacionPendiente);
 		callBack.setTipoCallBack(tipoCallBack);
@@ -428,7 +427,6 @@ public class DecisionUnitaria {
 	}
 	
 	private SolicitudInformacion generarSolicitudInformacionCallBack(TipoCallBack tipoCallBack) {
-			callBack.setCallBackPendiente(true);
 			callBack.setOrigenConversacion(origenConversacion);
 			callBack.setTipoSolicitudInformacionPendiente(TipoSolicitud.INFORMACIONGENERICA);
 			callBack.setTipoCallBack(tipoCallBack);

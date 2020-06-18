@@ -17,8 +17,8 @@ public class SolicitudInformacionCallBack extends SolicitudInformacion{
 	private OrigenConversacion origenConversacion;
 	private TipoCallBack tipoCallBack;
 	private HashMap<NombreParametro,Object> parametrosCallBack;
+	private final int prioridad = 5;
 
-	
 	public SolicitudInformacionCallBack(TipoCallBack tipoCallBack, HashMap<NombreParametro,Object> parametrosCallBack, OrigenConversacion origenConversacion, ArrayList<String> opciones){
 		super();
 		this.opciones = opciones;
@@ -77,4 +77,9 @@ public class SolicitudInformacionCallBack extends SolicitudInformacion{
 		}
 		return stringOpcionClickable;
 	}
+	
+	public int getPrioridad() {
+		return prioridad;
+	}
+
 }

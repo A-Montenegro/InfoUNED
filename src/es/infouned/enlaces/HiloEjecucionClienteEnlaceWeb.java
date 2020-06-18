@@ -40,11 +40,16 @@ public class HiloEjecucionClienteEnlaceWeb extends Thread {
 	        int segundos = 1;
 	        Thread.sleep(segundos * 1000);
 	        textoRecibido = textoRecibido.substring(0, textoRecibido.length()-1);
-	        System.out.println("TextoRecibido: " + textoRecibido);
-	        conversacion.procesarTextoRecibido(textoRecibido);
-	        String respuestaBot = conversacion.obtenerRespuestaActual();
-	        respuestaBot  = ProcesamientoDeTexto.anadirHiperVinculosEnlacesHtml(respuestaBot);
-	        respuestaBot  = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "<br>");
+	        String respuestaBot= new String();
+	        if(textoRecibido.length() < 400) {
+		        conversacion.procesarTextoRecibido(textoRecibido);
+		        respuestaBot = conversacion.obtenerRespuestaActual();
+		        respuestaBot  = ProcesamientoDeTexto.anadirHiperVinculosEnlacesHtml(respuestaBot);
+		        respuestaBot  = ProcesamientoDeTexto.sustituirSaltosDeLineaPorCaracteresEspeciales(respuestaBot, "<br>");
+	        }
+	        else {
+	        	respuestaBot = "El mensaje que me has escrito es demasiado largo para que yo pueda entenderlo. Recuerda que funciono mejor si me haces preguntas concretas y evitas los párrafos largos.";
+	        }
 	        DataOutputStream salida = new DataOutputStream((socket.getOutputStream()));
 	        salida.writeUTF(respuestaBot);
 	        socket.close();

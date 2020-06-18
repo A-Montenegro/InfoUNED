@@ -31,23 +31,29 @@ public class TestConversacion {
 	}
 
 	@Test
+    public void testConversacionPrioridades(){		
+    	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
+    	conversacion.procesarTextoRecibido("Hola. Que tal. Cual es la nota media de turismo. Gracias. Quiero la guia de estadística. Gracias.Gracias.");
+	}
+	
+	@Test
     public void testConversacionGuias(){		
     	Conversacion conversacion = new Conversacion("123456789", OrigenConversacion.TELEGRAM);
     	conversacion.procesarTextoRecibido("Necesito información general sobre el grado en psicología");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre la titulación GRADO EN PSICOLOGÍA, en la siguiente guía de estudio encontrará todos los detalles:\n" + 
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre la titulación GRADO EN PSICOLOGÍA, en la siguiente guía de estudio encontrarás todos los detalles:\n" + 
     			"http://portal.uned.es/GestionGuiastitulacionesGrado/GenerarPDFGuia?c=2020&idT=6201"));
     	conversacion.procesarTextoRecibido("Necesito información general sobre el MÁSTER UNIVERSITARIO EN INGENIERÍA INFORMÁTICA");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre la titulación MÁSTER UNIVERSITARIO EN INGENIERÍA INFORMÁTICA, en la siguiente guía de estudio encontrará todos los detalles:\n" + 
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre la titulación MÁSTER UNIVERSITARIO EN INGENIERÍA INFORMÁTICA, en la siguiente guía de estudio encontrarás todos los detalles:\n" + 
     			"http://portal.uned.es/GestionGuiasTitulacionesPosgrado/GenerarPDFGuia?c=2020&idT=310601"));
     	conversacion.procesarTextoRecibido("Necesito información general sobre la asignatura estrategias de programación y estructuras de datos avanzadas");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura ESTRATEGIAS DE PROGRAMACIÓN Y ESTRUCTURAS DE DATOS puede pertenecer a distintas titulaciones, seleccione a continuación la correcta:\n" + 
     			"__BOTON_CALLBACK__GRADO EN INGENIERÍA INFORMÁTICA__BOTON_CALLBACK__GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN__BOTON_CALLBACK__Mi consulta no estaba relacionada con eso"));
     	conversacion.procesarTextoRecibido("GRADO EN INGENIERÍA INFORMÁTICA");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si desea información sobre la asignatura ESTRATEGIAS DE PROGRAMACIÓN Y ESTRUCTURAS DE DATOS de la titulación GRADO EN INGENIERÍA INFORMÁTICA, en la siguiente guía de estudio encontrará todos los detalles:\n" + 
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre la asignatura ESTRATEGIAS DE PROGRAMACIÓN Y ESTRUCTURAS DE DATOS de la titulación GRADO EN INGENIERÍA INFORMÁTICA, en la siguiente guía de estudio encontrarás todos los detalles:\n" + 
     			"http://portal.uned.es/GuiasAsignaturasGrados/PDFGuiaPublica?idA=71901043&c=2020&idT=7101"));
     	conversacion.procesarTextoRecibido("Necesito información general de MÉTODOS MATEMÁTICOS de grado en ingeniería informática");
-    	assertTrue(conversacion.obtenerRespuestaActual().equals("Según mis datos, la asignatura que ha nombrado en su mensaje, no pertenece a la titulación GRADO EN INGENIERÍA INFORMÁTICA.\n" + 
-    			"Por favor, intente expresar su consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales desea información.\n"));
+    	assertTrue(conversacion.obtenerRespuestaActual().equals("Según mis datos, la asignatura que has nombrado en tu mensaje, no pertenece a la titulación GRADO EN INGENIERÍA INFORMÁTICA.\n" + 
+    			"Por favor, intenta expresar tu consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales deseas información.\n"));
 
 	}
 	
@@ -211,7 +217,7 @@ public class TestConversacion {
     			"-Curso 2015 - 2016: 8302 matriculados.\n")); 
     	conversacion.procesarTextoRecibido("¿Cuanta gente se matricula de fundamentos de psicobiología en el grado en ingeniería informática?");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura FUNDAMENTOS DE PSICOBIOLOGÍA no forma parte de la titulación GRADO EN INGENIERÍA INFORMÁTICA.\n"
-    			+ "Por favor, intente expresar su consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales desea información.\n")); 
+    			+ "Por favor, intenta expresar tu consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales deseas información.\n")); 
     	conversacion.procesarTextoRecibido("¿Cuantos hacen la matrícula de inglés");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("El número de matriculados en la titulación INGLÉS en los últimos años son los siguientes:\n" + 
     			"-Curso 2019 - 2020: 6861 matriculados.\n" + 
@@ -239,7 +245,7 @@ public class TestConversacion {
     	assertTrue(conversacion.obtenerRespuestaActual().equals("Si deseas información sobre el número de matriculados de una determinada titulación o asignatura, debes nombrar sólo la titulación y la asignatura sobre las que quieres esa información.\n"));
     	conversacion.procesarTextoRecibido("¿Cuanta gente se matricula de fundamentos de psicobiología en el grado en ingeniería informática?");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura FUNDAMENTOS DE PSICOBIOLOGÍA no forma parte de la titulación GRADO EN INGENIERÍA INFORMÁTICA.\n" + 
-    			"Por favor, intente expresar su consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales desea información.\n"));
+    			"Por favor, intenta expresar tu consulta de otra forma, prestando especial atención al nombre de los estudios de los cuales deseas información.\n"));
 	}
 	
 	@Test

@@ -1,6 +1,7 @@
 package es.infouned.conversacion;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -9,6 +10,7 @@ import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.NombreParametro;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
+import es.infouned.solicitudesInformacionBBDD.SolicitudInformacionCallBack;
 
 /**
  * Esta clase simboliza una conversación individual, a través de uno los canales disponibles.
@@ -59,10 +61,17 @@ public class Conversacion {
 			SolicitudInformacion solicitudInformacion = decisionUnitaria.decidirSolicitudInformacion();
 			listasolicitudesInformacion.add(solicitudInformacion);
 		}
-		if(!listasolicitudesInformacion.isEmpty()) return listasolicitudesInformacion.get(0);
+		if(!listasolicitudesInformacion.isEmpty()) return decidirSolicitudInformacionAUsar(listasolicitudesInformacion);
 		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
-		parametros.put(NombreParametro.IDINFORMACIONGENERICA, "mensajeSinFrases");
+		parametros.put(NombreParametro.IDINFORMACIONGENERICA, "noClasificable");
 		return FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.INFORMACIONGENERICA, parametros);
+	}
+	
+	private SolicitudInformacion decidirSolicitudInformacionAUsar(ArrayList<SolicitudInformacion> listasolicitudesInformacion ) {
+		ComparadorSolicitudesInformacion comparadorSolicitudesInformacion = new ComparadorSolicitudesInformacion();
+		listasolicitudesInformacion.sort(comparadorSolicitudesInformacion);
+		if(listasolicitudesInformacion.get(0) instanceof SolicitudInformacionCallBack) callBack.setCallBackPendiente(true);
+		return listasolicitudesInformacion.get(0);
 	}
 	
 	public String obtenerRespuestaActual() {
@@ -77,5 +86,13 @@ public class Conversacion {
 		WEB,
 		TELEGRAM,
 		FACEBOOK
+	}
+	
+	class ComparadorSolicitudesInformacion implements Comparator<SolicitudInformacion>{
+		public int compare(SolicitudInformacion solicitudInformacionA, SolicitudInformacion solicitudInformacionB) {
+			if(solicitudInformacionA.getPrioridad() > solicitudInformacionB.getPrioridad()) return -1;
+			if(solicitudInformacionA.getPrioridad() < solicitudInformacionB.getPrioridad()) return 1;
+			return 0;
+		}
 	}
 }

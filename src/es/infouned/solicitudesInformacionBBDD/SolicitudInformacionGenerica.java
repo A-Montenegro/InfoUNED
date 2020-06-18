@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class SolicitudInformacionGenerica extends SolicitudInformacion{
 	
 	private String idInformacionGenerica;
-	
+
 	public SolicitudInformacionGenerica(String idInformacionGenerica){
 		super();
 		this.idInformacionGenerica = idInformacionGenerica;
@@ -34,4 +34,16 @@ public class SolicitudInformacionGenerica extends SolicitudInformacion{
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
 	}
+
+	public int getPrioridad() {
+		switch(idInformacionGenerica) {
+		case "matriculaAdmisionPorInternet":
+			return 3;
+		case "saludo":
+			return 2;
+		default:
+			return 1;
+		}
+	}
+
 }

@@ -59,4 +59,5 @@ public abstract class SolicitudInformacion {
 	}
 	
 	public abstract String generarCadenaRespuesta(String saltoDeLinea);
+	public abstract int getPrioridad();
 }

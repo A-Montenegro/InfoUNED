@@ -14,8 +14,8 @@ public class SolicitudGuia extends SolicitudInformacion{
 	private String fragmentoURLGuiasTitulaciones;
 	private String fragmentoURLGuiasAsignaturas;
 	private String fragmentoURLTerminacion;
-	
-	
+	private final int prioridad = 4;
+
 	public SolicitudGuia(Titulacion titulacion, Asignatura asignatura){
 		super();
 		this.titulacion = titulacion;
@@ -52,16 +52,21 @@ public class SolicitudGuia extends SolicitudInformacion{
 		if(fragmentoURLGuiasTitulaciones.equals("") && fragmentoURLGuiasAsignaturas.equals("")) return "No se dispone de información adicional para esa titulación/asignatura.";
 		String cadenaRespuesta= new String();
 		if(asignatura == null) {
-			cadenaRespuesta = "Si desea información sobre la titulación " + titulacion.getNombre() + 
-							  ", en la siguiente guía de estudio encontrará todos los detalles:" + saltoDeLinea +
+			cadenaRespuesta = "Si deseas información sobre la titulación " + titulacion.getNombre() + 
+							  ", en la siguiente guía de estudio encontrarás todos los detalles:" + saltoDeLinea +
 							  "http://portal.uned.es/" + fragmentoURLGuiasTitulaciones + "/GenerarPDFGuia?c=2020&idT=" + titulacion.getIdTitulacion() + fragmentoURLTerminacion;
 		}
 		else {
-			cadenaRespuesta = "Si desea información sobre la asignatura " + asignatura.getNombre() + " de la titulación " +
-					  		  titulacion.getNombre() + ", en la siguiente guía de estudio encontrará todos los detalles:" + saltoDeLinea +
+			cadenaRespuesta = "Si deseas información sobre la asignatura " + asignatura.getNombre() + " de la titulación " +
+					  		  titulacion.getNombre() + ", en la siguiente guía de estudio encontrarás todos los detalles:" + saltoDeLinea +
 					  		  "http://portal.uned.es/" + fragmentoURLGuiasAsignaturas +"/PDFGuiaPublica?idA=" + asignatura.getIdAsignatura() + 
 					  		  "&c=2020&idT=" + titulacion.getIdTitulacion();
 		}
 		return cadenaRespuesta;
 	}
+	
+	public int getPrioridad() {
+		return prioridad;
+	}
+
 }

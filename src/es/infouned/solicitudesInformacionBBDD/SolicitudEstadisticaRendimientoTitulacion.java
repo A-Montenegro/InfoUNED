@@ -15,7 +15,8 @@ public class SolicitudEstadisticaRendimientoTitulacion extends SolicitudInformac
 	
 	private ParametroEstadistico parametroEstadistico;
 	private Titulacion titulacion;
-	
+	private final int prioridad = 11;
+
 	public SolicitudEstadisticaRendimientoTitulacion(Titulacion titulacion, ParametroEstadistico parametroEstadistico){
 		super();
 		this.titulacion = titulacion;
@@ -48,5 +49,9 @@ public class SolicitudEstadisticaRendimientoTitulacion extends SolicitudInformac
 		}
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
+	}
+	
+	public int getPrioridad() {
+		return prioridad;
 	}
 }

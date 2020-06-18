@@ -15,7 +15,8 @@ public class SolicitudMatriculadosAsignatura extends SolicitudInformacion{
 	
 	private Titulacion titulacion;
 	private Asignatura asignatura;
-	
+	private final int prioridad = 7;
+
 	public SolicitudMatriculadosAsignatura(Titulacion titulacion, Asignatura asignatura){
 		super();
 		this.titulacion = titulacion;
@@ -47,5 +48,9 @@ public class SolicitudMatriculadosAsignatura extends SolicitudInformacion{
 		}
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
+	}
+	
+	public int getPrioridad() {
+		return prioridad;
 	}
 }

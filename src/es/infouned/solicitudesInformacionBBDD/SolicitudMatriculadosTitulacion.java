@@ -13,7 +13,8 @@ import es.infouned.estudios.Titulacion;
 public class SolicitudMatriculadosTitulacion extends SolicitudInformacion{
 	
 	private Titulacion titulacion;
-	
+	private final int prioridad = 6;
+
 	public SolicitudMatriculadosTitulacion(Titulacion titulacion){
 		super();
 		this.titulacion = titulacion;
@@ -42,5 +43,9 @@ public class SolicitudMatriculadosTitulacion extends SolicitudInformacion{
 		}
 		conexionBaseDeDatos.cerrarConexion();
 		return cadenaRespuesta;
+	}
+	
+	public int getPrioridad() {
+		return prioridad;
 	}
 }
