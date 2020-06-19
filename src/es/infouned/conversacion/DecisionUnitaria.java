@@ -412,11 +412,14 @@ public class DecisionUnitaria {
 
 	@SuppressWarnings("unchecked")
 	private SolicitudInformacion generarSolicitudInformacionCallBack(TipoSolicitud tipoSolicitudInformacionPendiente, TipoCallBack tipoCallBack, HashMap<NombreParametro,Object> parametrosCallBack, ArrayList<?> posiblesEstudiosAludidos) {
-		callBack.setOrigenConversacion(origenConversacion);
-		callBack.setTipoSolicitudInformacionPendiente(tipoSolicitudInformacionPendiente);
-		callBack.setTipoCallBack(tipoCallBack);
-		callBack.setParametros(parametrosCallBack);
-		callBack.setPosiblesEstudiosAludidos((ArrayList<Estudio>) posiblesEstudiosAludidos);
+		if(!callBack.getCallBackPendiente()) {
+			callBack.setOrigenConversacion(origenConversacion);
+			callBack.setTipoSolicitudInformacionPendiente(tipoSolicitudInformacionPendiente);
+			callBack.setTipoCallBack(tipoCallBack);
+			callBack.setParametros(parametrosCallBack);
+			callBack.setPosiblesEstudiosAludidos((ArrayList<Estudio>) posiblesEstudiosAludidos);
+			callBack.setCallBackPendiente(true);
+		}
 		ArrayList<String> opciones = crearListaOpciones((ArrayList<Estudio>)posiblesEstudiosAludidos);
 		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
 		parametros.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
@@ -427,18 +430,21 @@ public class DecisionUnitaria {
 	}
 	
 	private SolicitudInformacion generarSolicitudInformacionCallBack(TipoCallBack tipoCallBack) {
+		ArrayList<String> posiblesOpciones = generarPosiblesOpciones(tipoCallBack);
+		if(!callBack.getCallBackPendiente()) {
 			callBack.setOrigenConversacion(origenConversacion);
 			callBack.setTipoSolicitudInformacionPendiente(TipoSolicitud.INFORMACIONGENERICA);
 			callBack.setTipoCallBack(tipoCallBack);
 			callBack.setParametros(new HashMap<NombreParametro,Object>());
-			ArrayList<String> posiblesOpciones = generarPosiblesOpciones(tipoCallBack);
 			callBack.setPosiblesOpciones(posiblesOpciones);
-			HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
-			parametros.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
-			parametros.put(NombreParametro.OPCIONES, posiblesOpciones);
-			parametros.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
-			parametros.put(NombreParametro.PARAMETROSCALLBACK, new HashMap<NombreParametro,Object>());
-			return FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametros);
+			callBack.setCallBackPendiente(true);
+		}
+		HashMap<NombreParametro,Object> parametros = new HashMap<NombreParametro,Object>();
+		parametros.put(NombreParametro.ORIGENCONVERSACION, origenConversacion);
+		parametros.put(NombreParametro.OPCIONES, posiblesOpciones);
+		parametros.put(NombreParametro.TIPOCALLBACK, tipoCallBack);
+		parametros.put(NombreParametro.PARAMETROSCALLBACK, new HashMap<NombreParametro,Object>());
+		return FactoriaDeSolicitudInformacion.obtenerSolicitudInformacion(TipoSolicitud.CALLBACK, parametros);
 	}
 	
 	private ArrayList<String> generarPosiblesOpciones(TipoCallBack tipoCallBack){

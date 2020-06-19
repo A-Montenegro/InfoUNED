@@ -10,7 +10,6 @@ import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.NombreParametro;
 import es.infouned.solicitudesInformacionBBDD.FactoriaDeSolicitudInformacion.TipoSolicitud;
 import es.infouned.solicitudesInformacionBBDD.SolicitudInformacion;
-import es.infouned.solicitudesInformacionBBDD.SolicitudInformacionCallBack;
 
 /**
  * Esta clase simboliza una conversación individual, a través de uno los canales disponibles.
@@ -70,7 +69,6 @@ public class Conversacion {
 	private SolicitudInformacion decidirSolicitudInformacionAUsar(ArrayList<SolicitudInformacion> listasolicitudesInformacion ) {
 		ComparadorSolicitudesInformacion comparadorSolicitudesInformacion = new ComparadorSolicitudesInformacion();
 		listasolicitudesInformacion.sort(comparadorSolicitudesInformacion);
-		if(listasolicitudesInformacion.get(0) instanceof SolicitudInformacionCallBack) callBack.setCallBackPendiente(true);
 		return listasolicitudesInformacion.get(0);
 	}
 	
