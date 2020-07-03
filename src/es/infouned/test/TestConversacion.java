@@ -147,9 +147,12 @@ public class TestConversacion {
     			"-La titulación GRADO EN TRABAJO SOCIAL obtuvo unos resultados de 7,20.\n" + 
     			"-La titulación GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN obtuvo unos resultados de 7,14.\n" + 
     			"-La titulación GRADO EN GEOGRAFÍA E HISTORIA obtuvo unos resultados de 7,13.\n"));
+    	conversacion.procesarTextoRecibido("¿Cuáles son las asignaturas con mayor nota media del primer cuatrimestre del primer curso de Ingeniería informática?");
+    	System.out.println(conversacion.obtenerRespuestaActual());
     	conversacion.procesarTextoRecibido("¿Cual es la nota media de bases de datos?");
     	assertTrue(conversacion.obtenerRespuestaActual().equals("La asignatura BASES DE DATOS puede pertenecer a distintas titulaciones, seleccione a continuación la correcta:\n" + 
     			"__BOTON_CALLBACK__GRADO EN INGENIERÍA INFORMÁTICA__BOTON_CALLBACK__GRADO EN INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN__BOTON_CALLBACK__Mi consulta no estaba relacionada con eso"));
+
 	}
 	
 	@Test

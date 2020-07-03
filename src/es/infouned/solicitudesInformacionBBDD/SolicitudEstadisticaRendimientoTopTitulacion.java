@@ -47,10 +47,12 @@ public class SolicitudEstadisticaRendimientoTopTitulacion extends SolicitudInfor
 						cursoAcademico = resultSet.getString(1);
 						esPrimeraIteracion = false;
 					}
-					String nombreTitulacion = resultSet.getString(2);
-					String  valorParametroEstadistico = String.format("%.02f", resultSet.getFloat(3)) ;
-					cadenaRespuesta += "-La titulación " + nombreTitulacion + " obtuvo unos resultados de " + valorParametroEstadistico
-							+ "." + complementoDeLinea + saltoDeLinea;
+					if(cursoAcademico.equals(resultSet.getString(1))) {
+						String nombreTitulacion = resultSet.getString(2);
+						String  valorParametroEstadistico = String.format("%.02f", resultSet.getFloat(3)) ;
+						cadenaRespuesta += "-La titulación " + nombreTitulacion + " obtuvo unos resultados de " + valorParametroEstadistico
+								+ "." + complementoDeLinea + saltoDeLinea;
+					}
 				} while(resultSet.next());
 				cadenaRespuesta = "Durante el último curso académico registrado (" + cursoAcademico
 						  + "), estos fueron los estudios de " + nombreNivelEstudios.toUpperCase() + " que obtuvieron " + ordenamiento
