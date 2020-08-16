@@ -15,7 +15,6 @@ import es.infouned.enlaces.EnlaceWeb;
  * Clase principal que se encarga de iniciar todos los servicios de la aplicación.
  * @author Alberto Martínez Montenegro
  * 
- *
  */
 public class Main {
 	
